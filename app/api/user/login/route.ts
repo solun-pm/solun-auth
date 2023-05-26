@@ -3,6 +3,7 @@ import { findOneDocument } from "@/utils/dbUtils";
 import User from "@/models/user";
 import { NextResponse } from "next/server";
 import jwt from 'jsonwebtoken';
+import { decrypt } from "@/utils/encryption";
 
 export async function POST(request: Request) {
     try {
@@ -30,10 +31,12 @@ export async function POST(request: Request) {
         // @ts-ignore: Works fine with it
         const token = jwt.sign({ fqe: user.fqe }, JWT_SECRET_KEY, { expiresIn: '1h' });
 
+        const decryptedPrivateKey = decrypt(user.private_key, password);
+
         if (service === "mail" && user.active) {
             // TODO: Add mail service auth handler, create temp token
         } else if (user.active) {
-            return NextResponse.json({ token: token, message: "Logged in successfully" }, { status: 200 });
+            return NextResponse.json({ token: token, private_key: decryptedPrivateKey, message: "Logged in successfully" }, { status: 200 });
         } else {
             return NextResponse.json({ message: "User is not active" }, { status: 400 });
         }
