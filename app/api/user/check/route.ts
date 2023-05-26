@@ -1,5 +1,5 @@
 import dbConnect from "@/utils/dbConn";
-import { findOneDocument } from "@/utils/dbUtils";
+import { findOneCASEDocument } from "@/utils/dbUtils";
 import User from "@/models/user";
 import { NextResponse } from "next/server";
 
@@ -13,7 +13,7 @@ export async function POST(request: Request) {
         let domain = res.domain;
         let fqe = `${username}${domain}`;
 
-        const user = await findOneDocument(User, { fqe: fqe });
+        const user = await findOneCASEDocument(User, { fqe: fqe });
 
         if (user) {
             return NextResponse.json({ message: "User already exists", exists: true }, { status: 200 });
