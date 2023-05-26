@@ -116,8 +116,8 @@ const RegisterPage = () => {
     }
   };
 
+  // TODO: Move to config file.
   const domains = ['@solun.pm', '@6crypt.com', '@seal.pm', '@xolus.de', '@cipher.pm'];
-
   return (
     <div className="flex items-center justify-center py-8 px-2 min-h-screen animate-gradient-x">
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-md">

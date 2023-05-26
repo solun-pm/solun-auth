@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
@@ -11,6 +11,42 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
 
   const redirectService = params.login[1];
   const [serviceProvider, setServiceProvider] = useState('');
+
+  // TODO: Move this to a config file.
+  const domains = ['@solun.pm', '@6crypt.com', '@seal.pm', '@xolus.de', '@cipher.pm'];
+
+  const [suggestedDomain, setSuggestedDomain] = useState('');
+  const [showSuggestion, setShowSuggestion] = useState(false);
+
+  const emailInputRef = useRef(null);
+
+  const handleEmailChange = (e: any) => {
+    const value = e.target.value;
+    setFormData({ ...formData, 'fqe': value });
+    const atIndex = value.indexOf('@');
+
+    if (atIndex !== -1) {
+      const inputDomain = value.slice(atIndex);
+
+      const matchedDomain = domains.find(domain => domain.startsWith(inputDomain));
+      if (matchedDomain) {
+        setSuggestedDomain(matchedDomain);
+        setShowSuggestion(true);
+      } else {
+        setShowSuggestion(false);
+      }
+    } else {
+      setShowSuggestion(false);
+    }
+  }
+
+  const applySuggestedDomain = () => {
+    if (emailInputRef.current) {
+      const newValue = formData.fqe.split('@')[0] + suggestedDomain;
+      setFormData({ ...formData, 'fqe': newValue });
+      setShowSuggestion(false);
+    }
+  }
 
   useEffect(() => {
     if(redirectService === 'mail') {
@@ -89,17 +125,26 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
           <p className="mb-5">Welcome back! Please login to continue.</p>
         }
         <form onSubmit={handleSubmit} autoComplete="off">
-          <div className="mb-4 flex items-center">
+          <div className="mb-1 flex items-center">
             <FontAwesomeIcon icon={faUser} className="mr-3 text-gray-400"/>
             <input 
               type="text" 
               name="fqe" 
-              onChange={handleChange} 
+              onChange={handleEmailChange} 
               className="bg-slate-950 text-white w-full p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
               placeholder="E-Mail Address"
+              ref={emailInputRef}
+              value={formData.fqe}
             />
           </div>
-          <div className="mb-4">
+          {showSuggestion && 
+              <div 
+                className="text-gray-400 text-xs cursor-pointer ml-7 mb-2" 
+                onClick={applySuggestedDomain}
+              >
+                Do you mean: <span className="text-blue-500">{formData.fqe.split('@')[0] + suggestedDomain}</span>?
+          </div>}
+          <div className="mb-4 mt-4">
             <div className="flex items-center">
               <FontAwesomeIcon icon={faLock} className="mr-3 text-gray-400"/>
               <input 
