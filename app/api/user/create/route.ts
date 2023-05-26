@@ -2,6 +2,9 @@ import dbConnect from "@/utils/dbConn";
 import { findOneDocument } from "@/utils/dbUtils";
 import User from "@/models/user";
 import { NextResponse } from "next/server";
+import { generateKey } from 'openpgp';
+import { encrypt } from "@/utils/encryption";
+var passwordHash = require('password-hash');
 
 export async function POST(request: Request) {
     try {
@@ -10,7 +13,6 @@ export async function POST(request: Request) {
             return uid;
         }
 
-        var passwordHash = require('password-hash');
         const res = await request.json();
 
         await dbConnect();
@@ -31,14 +33,27 @@ export async function POST(request: Request) {
             return NextResponse.json({ message: "User already exists" }, { status: 400 });
         }
 
-        password = passwordHash.generate(password);
+        let passwordHashed = passwordHash.generate(password);
+
+        // Generate OpenPGP key pair
+        const { privateKey, publicKey } = await generateKey({
+            type: 'rsa',
+            rsaBits: 4096,
+            userIDs: [{ name: username, email: fqe }],
+            passphrase: password,
+        });
+
+        // Encrypt private key with password
+        const encryptedPrivateKey = encrypt(privateKey, password);
 
         const newUser = new User({
             user_id: generateUID(),
             username: username,
             domain: domain,
             fqe: fqe,
-            password: password,
+            password: passwordHashed,
+            private_key: encryptedPrivateKey,
+            public_key: publicKey,
         });
 
         await newUser.save();
