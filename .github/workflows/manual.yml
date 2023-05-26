@@ -6,15 +6,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+
+      - name: Rename .env.sample
+        run: mv .env.local .env.sample || true
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 19.6.0
           cache: 'npm'
+
       - name: Install Dependencies
         run: npm ci
 
