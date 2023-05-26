@@ -33,6 +33,14 @@ const userSchema = new mongoose.Schema({
             required: true,
             default: false,
         },
+        private_key: {
+            type: String,
+            required: true,
+        },
+        public_key: {
+            type: String,
+            required: true,
+        },
     },
     {
         timestamps: true,
