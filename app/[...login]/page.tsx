@@ -61,6 +61,7 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
       }
   
       localStorage.setItem('jwt', data.token);
+      localStorage.setItem('privateKey', data.private_key);
       alert('Logged in successfully.');
 
     } catch (error) {
