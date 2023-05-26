@@ -4,6 +4,8 @@ import User from "@/models/user";
 import { NextResponse } from "next/server";
 import jwt from 'jsonwebtoken';
 import { decrypt } from "@/utils/encryption";
+import { generateToken } from "@/utils/generate";
+import TempToken from "@/models/tempToken";
 
 export async function POST(request: Request) {
     try {
@@ -27,18 +29,27 @@ export async function POST(request: Request) {
             return NextResponse.json({ message: "User does not exist or password is incorrect" }, { status: 400 });
         }
 
-        const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
-        // @ts-ignore: Works fine with it
-        const token = jwt.sign({ fqe: user.fqe }, JWT_SECRET_KEY, { expiresIn: '1h' });
-
         const decryptedPrivateKey = decrypt(user.private_key, password);
 
-        if (service === "mail" && user.active) {
-            // TODO: Add mail service auth handler, create temp token
+        const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+        // @ts-ignore: Works fine with it
+        const token = jwt.sign({ fqe: user.fqe, user_id: user.user_id, private_key: decryptedPrivateKey }, JWT_SECRET_KEY, { expiresIn: '1h' });
+
+        if (service === "Mail" && user.active) {
+            const tempToken = generateToken();
+            const newTempToken = new TempToken({
+                user_id: user.user_id,
+                fqe: user.fqe,
+                token: tempToken,
+                service: service,
+            });
+            await newTempToken.save();
+
+            return NextResponse.json({ redirect: true, redirectUrl: 'https://mail.solun.pm/api/user/login?token='+ tempToken, service: service }, { status: 200 });
         } else if (user.active) {
-            return NextResponse.json({ token: token, private_key: decryptedPrivateKey, message: "Logged in successfully" }, { status: 200 });
+            return NextResponse.json({ redirect: false, token: token, message: "Logged in successfully" }, { status: 200 });
         } else {
-            return NextResponse.json({ message: "User is not active" }, { status: 400 });
+            return NextResponse.json({ redirect: false, message: "User is not active" }, { status: 400 });
         }
 
     } catch (error) {

@@ -3,8 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from 'next/navigation';
 
 const LoginPage = ({ params }: { params: { login: string[] } }) => {
+
+  const router = useRouter();
+
   const redirectService = params.login[1];
   const [serviceProvider, setServiceProvider] = useState('');
 
@@ -59,11 +63,15 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
       if (!response.ok) {
         throw new Error(data.message);
       }
-  
-      localStorage.setItem('jwt', data.token);
-      localStorage.setItem('privateKey', data.private_key);
-      alert('Logged in successfully.');
 
+      if (data.redirect) {
+        if (data.service === 'Mail'){
+          window.location.href = data.redirectUrl;
+        }
+      } else {
+        localStorage.setItem('jwt', data.token);
+        router.push('/dashboard');
+      }
     } catch (error) {
       alert(error);
     } finally {
