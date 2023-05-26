@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
         const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
         // @ts-ignore: Works fine with it
-        const token = jwt.sign({ fqe: user.fqe, user_id: user.user_id, private_key: decryptedPrivateKey }, JWT_SECRET_KEY, { expiresIn: '1h' });
+        const token = jwt.sign({ fqe: user.fqe, username: user.username, user_id: user.user_id, private_key: decryptedPrivateKey }, JWT_SECRET_KEY, { expiresIn: '1h' });
 
         if (service === "Mail" && user.active) {
             const tempToken = generateToken();

@@ -52,7 +52,7 @@ const DashboardPage = () => {
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl">
         <h1 className="text-2xl font-bold mb-2">Dashboard</h1>
         {/* @ts-ignore */}
-        <p className="mb-5">Welcome back! {userInfo.fqe} {userInfo.user_id}</p>
+        <p className="mb-5">Welcome back! {userInfo.username}</p>
         <button 
           onClick={handleLogout}
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-3 rounded transition duration-200"
