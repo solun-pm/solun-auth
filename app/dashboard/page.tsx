@@ -51,6 +51,7 @@ const DashboardPage = () => {
     <div className="flex items-center justify-center p-6 min-h-screen animate-gradient-x">
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl">
         <h1 className="text-2xl font-bold mb-2">Dashboard</h1>
+        {/* @ts-ignore */}
         <p className="mb-5">Welcome back! {userInfo.fqe} {userInfo.user_id}</p>
         <button 
           onClick={handleLogout}
