@@ -45,7 +45,7 @@ export async function POST(request: Request) {
             });
             await newTempToken.save();
 
-            return NextResponse.json({ redirect: true, redirectUrl: 'https://mail.solun.pm/api/user/login?token='+ tempToken, service: service }, { status: 200 });
+            return NextResponse.json({ redirect: true, redirectUrl: 'https://'+ process.env.NEXT_PUBLIC_WEBMAIL_DOMAIN +'/api/user/login?token='+ tempToken, service: service }, { status: 200 });
         } else if (user.active) {
             return NextResponse.json({ redirect: false, token: token, message: "Logged in successfully" }, { status: 200 });
         } else {

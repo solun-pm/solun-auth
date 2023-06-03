@@ -204,7 +204,7 @@ const RegisterPage = () => {
         <div className="mt-5 text-center">
           <p className="mb-4">Already have an account? <a href="/login" className="text-blue-500 hover:text-blue-600">Login</a></p>
           <hr className="h-px border-0 bg-gray-500" />
-          <p className="text-sm mt-4 text-slate-400">With your registration you agree to our <a href="https://solun.pm/terms" className="text-blue-500 hover:text-blue-600">Terms of Service</a> and <a href="https://solun.pm/privacy" className="text-blue-500 hover:text-blue-600">Privacy Policy</a>.</p>
+          <p className="text-sm mt-4 text-slate-400">With your registration you agree to our <a href={"https://"+process.env.NEXT_PUBLIC_MAIN_DOMAIN+"/terms"} className="text-blue-500 hover:text-blue-600">Terms of Service</a> and <a href={"https://"+process.env.NEXT_PUBLIC_MAIN_DOMAIN+"/privacy"} className="text-blue-500 hover:text-blue-600">Privacy Policy</a>.</p>
         </div>
       </div>
     </div>

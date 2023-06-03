@@ -89,17 +89,17 @@ const DashboardPage = () => {
             <div className="bg-slate-900 p-5 rounded-lg shadow-md">
               <h2 className="text-xl font-bold mb-2">Webmail</h2>
               <p className="text-gray-400">Send and receive encrypted mails</p>
-              <a href="/webmail" className="text-blue-500 hover:text-blue-400">Go to Webmail</a>
+              <a href={"https://"+process.env.NEXT_PUBLIC_WEBMAIL_DOMAIN} className="text-blue-500 hover:text-blue-400">Go to Webmail</a>
             </div>
             <div className="bg-slate-900 p-5 rounded-lg shadow-md">
               <h2 className="text-xl font-bold mb-2">Encrypt Message</h2>
               <p className="text-gray-400">Encrypt a message for someone else</p>
-              <a href="https://solun.pm/msg/" className="text-blue-500 hover:text-blue-400">Go to Encrypt Message</a>
+              <a href={"https://"+process.env.NEXT_PUBLIC_MAIN_DOMAIN+"/msg/"} className="text-blue-500 hover:text-blue-400">Go to Encrypt Message</a>
             </div>
             <div className="bg-slate-900 p-5 rounded-lg shadow-md">
               <h2 className="text-xl font-bold mb-2">Upload File</h2>
               <p className="text-gray-400">Upload a file to be encrypted</p>
-              <a href="https://solun.pm/file/" className="text-blue-500 hover:text-blue-400">Go to Upload File</a>
+              <a href={"https://"+process.env.NEXT_PUBLIC_MAIN_DOMAIN+"/file/"} className="text-blue-500 hover:text-blue-400">Go to Upload File</a>
             </div>
           </div>
         </div>
