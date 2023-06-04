@@ -11,18 +11,26 @@ const Navigation = () => {
     router.push('/login');
   };
 
+  const goToOverview = () => {
+    router.push('/dashboard');
+  };
+
+  const goToSettings = () => {
+    router.push('/dashboard/settings');
+  };
+
   return (
     <>
     <nav className="flex justify-start bg-slate-950 p-4 mb-4 rounded-lg shadow-xl">
-      <Link href="/dashboard" className={`mr-4 text-white font-bold py-2 px-4 rounded transition-all ${pathname === '/dashboard' ? 'bg-blue-500' : 'hover:bg-blue-500'}`}>
+      <button onClick={goToOverview} className={`mr-4 text-white font-bold py-2 px-4 rounded transition-all ${pathname === '/dashboard' ? 'bg-blue-500' : 'hover:bg-blue-500'}`}>
           Overview
-      </Link>
-      <Link href="/dashboard#2" className={`text-white font-bold py-2 px-4 rounded transition-all ${pathname === '/dashboard#2' ? 'bg-blue-500' : 'hover:bg-blue-500'}`}>
+      </button>
+      <button onClick={goToSettings} className={`text-white font-bold py-2 px-4 rounded transition-all ${pathname === '/dashboard/settings' ? 'bg-blue-500' : 'hover:bg-blue-500'}`}>
           Settings
-      </Link>
-      <Link onClick={handleLogout} href="#" className="ml-auto text-white font-bold py-2 px-4 rounded transition-all hover:bg-blue-500">
+      </button>
+      <button onClick={handleLogout} className="ml-auto text-white font-bold py-2 px-4 rounded transition-all hover:bg-blue-500">
         Logout
-    </Link>
+    </button>
     </nav>
     </>
   );

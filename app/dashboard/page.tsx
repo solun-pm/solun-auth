@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navigation from '@/components/navigation'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 const DashboardPage = () => {
   const router = useRouter();
@@ -76,12 +78,30 @@ const DashboardPage = () => {
         <Navigation />
         {/* @ts-ignore */}
         <h1 className="text-2xl font-bold">Welcome back, {userInfo.username}!</h1>
-        <div className="bg-slate-900 p-5 rounded-lg shadow-md max-w-lg mt-4">
-          <h2 className="text-xl font-bold mb-2">Your account</h2>
-          <p className="text-gray-400">E-Mail: {userInfo.fqe}</p>
-          {/* Display additional user details here */}
-          <p className="text-gray-400">Membership: {userDetails.membership.slice(0, 1).toUpperCase() + userDetails.membership.slice(1)}</p>
-          <p className="text-gray-400">Member since: {memberSince}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-slate-900 p-5 rounded-lg shadow-md max-w-lg mt-4">
+            <h2 className="text-xl font-bold mb-2">Your account</h2>
+            <p className="text-gray-400">E-Mail: {userInfo.fqe}</p>
+            {/* Display additional user details here */}
+            <p className="text-gray-400">Membership: {userDetails.membership.slice(0, 1).toUpperCase() + userDetails.membership.slice(1)}</p>
+            <p className="text-gray-400">Member since: {memberSince}</p>
+          </div>
+          <div className="bg-gradient-to-r from-blue-700 to-blue-600 p-5 rounded-lg shadow-md max-w-lg mt-4">
+              <h2 className="text text-xl font-bold mb-2">
+                  Solun <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-blue-300">Mail Pro</span>
+              </h2>
+              <div className="flex flex-wrap justify-between">
+                  <div className="flex items-center mb-2 w-full md:w-1/2">
+                      <FontAwesomeIcon icon={faCheck} className="text-white mr-2"/>
+                      <p className="text-white">50GB storage space</p>
+                  </div>
+                  <div className="flex items-center mb-2 w-full md:w-1/2">
+                      <FontAwesomeIcon icon={faCheck} className="text-white mr-2"/>
+                      <p className="text-white">Send up to 10.000 messages per day</p>
+                  </div>
+              </div>
+              <button className="mt-4 bg-white text-blue-700 font-bold py-2 px-4 rounded hover:bg-blue-200 transition-colors duration-150">Learn More</button>
+          </div>
         </div>
         <div className="mt-8 text-center">
         <h2 className="text-xl font-bold mb-2">Quick Links</h2>
