@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
+import toast, { Toaster } from 'react-hot-toast';
 
 const LoginPage = ({ params }: { params: { login: string[] } }) => {
 
@@ -76,7 +77,6 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
     setIsSubmitting(true);
   
     if (!isValidForm()) {
-      alert('Please fill in all fields correctly.');
       setIsSubmitting(false);
       return;
     }
@@ -97,7 +97,8 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
       const data = await response.json();
   
       if (!response.ok) {
-        throw new Error(data.message);
+        toast.error(data.message);
+        return;
       }
 
       if (data.redirect) {
@@ -105,11 +106,12 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
           window.location.href = data.redirectUrl;
         }
       } else {
+        toast.success('Login successful!');
         localStorage.setItem('jwt', data.token);
         router.push('/dashboard');
       }
     } catch (error) {
-      alert(error);
+      toast.error('An error occurred. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }
@@ -117,6 +119,9 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
 
   return (
     <div className="flex items-center justify-center py-8 px-2 min-h-screen animate-gradient-x">
+      <Toaster
+        position="top-right"
+      />
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-2">Login</h1>
         {redirectService === 'mail' ?

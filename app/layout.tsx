@@ -19,7 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        {/* Meta tags und Stylesheets hier einfügen */}
+      </head>
+      <body className={inter.className}>
+          {children}
+      </body>
     </html>
   )
 }
