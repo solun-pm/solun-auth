@@ -101,7 +101,7 @@ const DashboardPage = () => {
                       <p className="text-white">10.000 Mails per day</p>
                   </div>
               </div>
-              <button className="mt-4 bg-white text-blue-700 font-bold py-2 px-4 rounded hover:bg-blue-200 transition-colors duration-150">Learn More</button>
+              <button disabled className="mt-4 bg-white text-blue-700 font-bold py-2 px-4 rounded hover:bg-blue-200 transition-colors duration-150">Learn More</button>
           </div>
         </div>
         <div className="mt-8 text-center">
