@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faUser, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faUser, faCircleNotch, faKey } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -18,6 +18,8 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
 
   const [suggestedDomain, setSuggestedDomain] = useState('');
   const [showSuggestion, setShowSuggestion] = useState(false);
+  const [show2FA, setShow2FA] = useState(false);
+  const [twoFACode, setTwoFACode] = useState('');
 
   const emailInputRef = useRef(null);
 
@@ -101,6 +103,12 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
         return;
       }
 
+      if (data.two_fa) {
+        setShow2FA(true);
+        setIsSubmitting(false);
+        return;
+      }
+
       if (data.redirect) {
         if (data.service === 'Mail'){
           window.location.href = data.redirectUrl;
@@ -117,6 +125,52 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
     }
   };
 
+  const handleTwoFACodeChange = (e: any) => {
+    setTwoFACode(e.target.value);
+  };
+
+  const handle2FASubmit = async (e: any) => {
+    e.preventDefault();
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/2fa/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fqe: formData.fqe,
+          twoFACode,
+          password: formData.password,
+          service: serviceProvider,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        toast.error(data.message);
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (data.redirect) {
+        if (data.service === 'Mail'){
+          window.location.href = data.redirectUrl;
+        }
+      } else {
+        toast.success('Login successful!');
+        localStorage.setItem('jwt', data.token);
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      toast.error('An error occurred. Please try again later.');
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="flex items-center justify-center py-8 px-2 min-h-screen animate-gradient-x">
       <Toaster
@@ -129,7 +183,7 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
         :
           <p className="mb-5">Welcome back! Please login to continue.</p>
         }
-        <form onSubmit={handleSubmit} autoComplete="off">
+        <form onSubmit={show2FA ? handle2FASubmit : handleSubmit} autoComplete="off">
           <div className="mb-1 flex items-center">
             <FontAwesomeIcon icon={faUser} className="mr-3 text-gray-400"/>
             <input 
@@ -161,6 +215,20 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
               />
             </div>
           </div>
+          {show2FA && (
+            <div className="mb-4 mt-4">
+              <div className="flex items-center">
+                <FontAwesomeIcon icon={faKey} className="mr-3 text-gray-400"/>
+                <input 
+                  type="numer"
+                  name="twoFACode" 
+                  onChange={handleTwoFACodeChange} 
+                  className="bg-slate-950 text-white w-full p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none" 
+                  placeholder="2FA Code"
+                />
+              </div>
+            </div>
+          )}
           <button 
             type="submit" 
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-3 rounded transition duration-200 flex justify-center items-center"

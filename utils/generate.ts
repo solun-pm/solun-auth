@@ -1,6 +1,7 @@
 import crypto from 'crypto';
+import speakeasy from 'speakeasy';
 
-function generateToken() {
+export function generateToken() {
     return crypto
         .randomBytes(96)
         .toString('base64')
@@ -9,4 +10,6 @@ function generateToken() {
         .slice(0, 64);
 }
 
-export { generateToken };
+export function generate2FASecretKey(){
+    return speakeasy.generateSecret({ length: 20 }).base32;
+}

@@ -20,7 +20,7 @@ const DashboardPage = () => {
         return;
       }
 
-      const response = await fetch('/api/user/info', {
+      const response = await fetch('/api/user/jwt', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ const DashboardPage = () => {
   });
 
   return (
-    <div className="flex items-center justify-center p-6 min-h-screen animate-gradient-x">
+    <div className="flex items-center justify-center min-h-screen p-6 animate-gradient-x">
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl">
         {/* <h1 className="text-2xl font-bold mb-2">Dashboard</h1> */}
         <Navigation />
@@ -98,7 +98,7 @@ const DashboardPage = () => {
                   </div>
                   <div className="flex items-center mb-2 w-full md:w-1/2">
                       <FontAwesomeIcon icon={faCheck} className="text-white mr-2"/>
-                      <p className="text-white">Send up to 10.000 messages per day</p>
+                      <p className="text-white">10.000 Mails per day</p>
                   </div>
               </div>
               <button className="mt-4 bg-white text-blue-700 font-bold py-2 px-4 rounded hover:bg-blue-200 transition-colors duration-150">Learn More</button>

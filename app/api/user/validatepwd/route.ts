@@ -12,11 +12,10 @@ export async function POST(request: Request) {
         await dbConnect();
 
         let user_id = res.user_id;
-        let currentPassword = res.currentPassword;
-        let newPassword = res.newPassword;
+        let password = res.password;
 
-        if (currentPassword === '' || newPassword === '') {
-            return NextResponse.json({ message: "Please fill out all fields" }, { status: 400 });
+        if (password === '') {
+            return NextResponse.json({ message: "Please enter a password" }, { status: 400 });
         }
 
         const user = await findOneDocument(User, { user_id: user_id });
@@ -25,17 +24,11 @@ export async function POST(request: Request) {
             return NextResponse.json({ message: "User does not exist or password is incorrect" }, { status: 400 });
         }
 
-        if(!await comparePassword(currentPassword, user.password)) {
+        if(!await comparePassword(password, user.password)) {
             return NextResponse.json({ message: "Password is incorrect" }, { status: 400 });
         }
 
-        const decryptedPrivateKey = decrypt(user.private_key, currentPassword);
-        const encryptedPrivateKey = encrypt(decryptedPrivateKey, newPassword);
-        const hashedPassword = await hashPassword(newPassword);
-
-        await updateOneDocument(User, { user_id: user_id }, { password: hashedPassword, private_key: encryptedPrivateKey });
-
-        return NextResponse.json({ message: "Password updated successfully" }, { status: 200 });
+        return NextResponse.json({ status: 200 });
 
     } catch (error) {
         console.error(error);
