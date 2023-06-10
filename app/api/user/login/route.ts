@@ -29,6 +29,10 @@ export async function POST(request: Request) {
         }
 
         const decryptedPrivateKey = decrypt(user.private_key, password);
+        
+        if (decryptedPrivateKey == '') {
+            return NextResponse.json({ message: "User does not exist or password is incorrect" }, { status: 400 });
+        }
 
         const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
         // @ts-ignore: Works fine with it

@@ -124,7 +124,7 @@ const RegisterPage = () => {
     <div className="flex items-center justify-center py-8 px-2 min-h-screen animate-gradient-x">
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-2">Register</h1>
-        <p className="mb-5">You're just a few steps away from your new Solun Mail account.</p>
+        <p className="mb-5">You're just a few steps away from your new Solun account.</p>
         <form onSubmit={handleSubmit} autoComplete="off">
           <div className="mb-4 flex items-center">
             <FontAwesomeIcon icon={faUser} className="mr-3 text-gray-400"/>
