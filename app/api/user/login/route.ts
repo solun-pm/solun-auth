@@ -6,11 +6,10 @@ import jwt from 'jsonwebtoken';
 import { decrypt } from "@/utils/encryption";
 import { generateToken } from "@/utils/generate";
 import TempToken from "@/models/tempToken";
+import { comparePassword } from "@/utils/hash";
 
 export async function POST(request: Request) {
     try {
-
-        var passwordHash = require('password-hash');
         const res = await request.json();
 
         await dbConnect();
@@ -25,7 +24,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ message: "User does not exist or password is incorrect" }, { status: 400 });
         }
 
-        if (!passwordHash.verify(password, user.password)) {
+        if(!comparePassword(password, user.password)) {
             return NextResponse.json({ message: "User does not exist or password is incorrect" }, { status: 400 });
         }
 

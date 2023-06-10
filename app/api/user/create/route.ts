@@ -4,7 +4,7 @@ import User from "@/models/user";
 import { NextResponse } from "next/server";
 import { generateKey } from 'openpgp';
 import { encrypt } from "@/utils/encryption";
-var passwordHash = require('password-hash');
+import { hashPassword } from "@/utils/hash";
 
 export async function POST(request: Request) {
     try {
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ message: "User already exists" }, { status: 400 });
         }
 
-        let passwordHashed = passwordHash.generate(password);
+        let passwordHashed = await hashPassword(password);
 
         // Generate OpenPGP key pair
         const { privateKey, publicKey } = await generateKey({
