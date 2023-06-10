@@ -1,4 +1,4 @@
-import { Model, Document } from 'mongoose';
+import { Model, Document, UpdateWriteOpResult  } from 'mongoose';
 
 export async function findOneDocument<T extends Document>(
   model: Model<T>,
@@ -29,4 +29,13 @@ export async function deleteOneDocument<T extends Document>(
 ): Promise<number> {
   const result = await model.deleteOne(query).exec();
   return result.deletedCount;
+}
+
+export async function updateOneDocument<T extends Document>(
+  model: Model<T>,
+  filter: object,
+  update: object
+): Promise<UpdateWriteOpResult> {
+  const result = await model.updateOne(filter, update).exec();
+  return result;
 }

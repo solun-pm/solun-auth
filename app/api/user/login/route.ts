@@ -24,7 +24,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ message: "User does not exist or password is incorrect" }, { status: 400 });
         }
 
-        if(!comparePassword(password, user.password)) {
+        if(!await comparePassword(password, user.password)) {
             return NextResponse.json({ message: "User does not exist or password is incorrect" }, { status: 400 });
         }
 
