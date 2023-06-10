@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navigation from '@/components/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -76,6 +76,7 @@ const DashboardPage = () => {
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl">
         {/* <h1 className="text-2xl font-bold mb-2">Dashboard</h1> */}
         <Navigation />
+        <Suspense fallback={<div>Loading...</div>}>
         {/* @ts-ignore */}
         <h1 className="text-2xl font-bold">Welcome back, {userInfo.username}!</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -113,7 +114,7 @@ const DashboardPage = () => {
             </div>
             <div className="bg-slate-900 p-5 rounded-lg shadow-md">
               <h2 className="text-xl font-bold mb-2">Encrypt Message</h2>
-              <p className="text-gray-400">Encrypt a message for someone else</p>
+              <p className="text-gray-400">Encrypt a message for someone</p>
               <a href={"https://"+process.env.NEXT_PUBLIC_MAIN_DOMAIN+"/msg/"} className="text-blue-500 hover:text-blue-400">Go to Encrypt Message</a>
             </div>
             <div className="bg-slate-900 p-5 rounded-lg shadow-md">
@@ -123,6 +124,7 @@ const DashboardPage = () => {
             </div>
           </div>
         </div>
+        </Suspense>
       </div>
     </div>
   );

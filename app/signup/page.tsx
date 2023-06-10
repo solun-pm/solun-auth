@@ -64,8 +64,10 @@ const RegisterPage = () => {
 
   const isValidForm = () => {
     const trimmedUsername = formData.username.replace(/\s/g, '');
-    
+    const specialCharsRegex = /^[a-zA-Z0-9_.-]+$/;
+  
     return trimmedUsername !== "" &&
+           specialCharsRegex.test(trimmedUsername) &&
            formData.domain &&
            formData.domain !== "Select domain..." &&
            formData.password &&
