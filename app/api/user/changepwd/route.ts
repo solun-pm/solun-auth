@@ -30,10 +30,12 @@ export async function POST(request: Request) {
         }
 
         const decryptedPrivateKey = decrypt(user.private_key, currentPassword);
+        const decryptedTwoFASecret = decrypt(user.two_fa_secret, currentPassword);
         const encryptedPrivateKey = encrypt(decryptedPrivateKey, newPassword);
+        const encryptedTwoFASecret = encrypt(decryptedTwoFASecret, newPassword);
         const hashedPassword = await hashPassword(newPassword);
 
-        await updateOneDocument(User, { user_id: user_id }, { password: hashedPassword, private_key: encryptedPrivateKey });
+        await updateOneDocument(User, { user_id: user_id }, { password: hashedPassword, private_key: encryptedPrivateKey, two_fa_secret: encryptedTwoFASecret });
 
         return NextResponse.json({ message: "Password updated successfully" }, { status: 200 });
 
