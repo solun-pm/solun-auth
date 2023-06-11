@@ -4,8 +4,6 @@ import User from "@/models/user";
 import { NextResponse } from "next/server";
 import jwt from 'jsonwebtoken';
 import { decrypt } from "@/utils/encryption";
-import { generateToken } from "@/utils/generate";
-import TempToken from "@/models/tempToken";
 import { comparePassword } from "@/utils/hash";
 
 export async function POST(request: Request) {
@@ -41,16 +39,27 @@ export async function POST(request: Request) {
         const two_fa = user.two_fa;
 
         if (service === "Mail" && user.active) {
-            const tempToken = generateToken();
             if(!two_fa) {
-                const newTempToken = new TempToken({
-                    user_id: user.user_id,
-                    fqe: user.fqe,
-                    token: tempToken,
-                    service: service,
-                });
-                await newTempToken.save();
-                return NextResponse.json({ redirect: true, redirectUrl: 'https://'+ process.env.NEXT_PUBLIC_WEBMAIL_DOMAIN +'/api/user/login?token='+ tempToken, service: service, two_fa: two_fa }, { status: 200 });
+                const res = await fetch('api/generate/tempTokenURL', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_id: user.user_id,
+                        fqe: user.fqe,
+                        service: service,
+                        token: token
+                    })
+                })
+                const data = await res.json();
+
+                if (!res.ok) {
+                    return NextResponse.json({ message: data.message }, { status: 500 })
+                }
+                const redirectUrl = data.redirectUrl;
+                
+                return NextResponse.json({ redirect: true, redirectUrl: redirectUrl, service: service, two_fa: two_fa }, { status: 200 });
             }
             return NextResponse.json({redirect: false, message: "2FA is needed to login", two_fa: two_fa}, {status: 200})
         } else if (user.active) {

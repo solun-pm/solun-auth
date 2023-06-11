@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Navigation from '@/components/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import toast, { Toaster } from 'react-hot-toast';
 
 const DashboardPage = () => {
   const router = useRouter();
@@ -71,8 +72,36 @@ const DashboardPage = () => {
     day: 'numeric',
   });
 
+  const webmailDirectLogin = async () => {
+    const res = await fetch('api/generate/tempTokenURL', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userDetails.user_id,
+        fqe: userDetails.fqe,
+        service: 'Mail',
+        token: localStorage.getItem('jwt'),
+      })
+    })
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      toast.error(data.message);
+      return;
+    }
+
+    toast.success('Redirecting to Webmail...');
+    window.open(data.redirectUrl, '_blank');
+  }
+
   return (
     <div className="flex items-center justify-center min-h-screen p-6 animate-gradient-x">
+      <Toaster
+        position="top-right"
+      />
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl">
         {/* <h1 className="text-2xl font-bold mb-2">Dashboard</h1> */}
         <Navigation />
@@ -110,7 +139,7 @@ const DashboardPage = () => {
             <div className="bg-slate-900 p-5 rounded-lg shadow-md">
               <h2 className="text-xl font-bold mb-2">Webmail</h2>
               <p className="text-gray-400">Send and receive encrypted mails</p>
-              <a href={"https://"+process.env.NEXT_PUBLIC_WEBMAIL_DOMAIN} className="text-blue-500 hover:text-blue-400">Go to Webmail</a>
+              <a onClick={webmailDirectLogin} className="text-blue-500 hover:text-blue-400 cursor-pointer">Go to Webmail</a>
             </div>
             <div className="bg-slate-900 p-5 rounded-lg shadow-md">
               <h2 className="text-xl font-bold mb-2">Encrypt Message</h2>
