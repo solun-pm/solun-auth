@@ -1,33 +1,33 @@
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState, useEffect, useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faKey } from '@fortawesome/free-solid-svg-icons';
-import QRCode from 'qrcode.react';
-import { totp } from 'otplib';
-import { KeyEncodings } from 'otplib/core';
-import { generate2FASecretKey } from '@/utils/generate';
-import toast, { Toaster } from 'react-hot-toast';
-const base32Decode = require('base32-decode')
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState, useEffect, useRef } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLock, faKey } from "@fortawesome/free-solid-svg-icons";
+import QRCode from "qrcode.react";
+import { totp } from "otplib";
+import { KeyEncodings } from "otplib/core";
+import { generate2FASecretKey } from "@/utils/generate";
+import toast from "react-hot-toast";
+const base32Decode = require("base32-decode");
 
-function TwoFactorAuthentication({ userDetails, userInfo } : any) {
+function TwoFactorAuthentication({ userDetails, userInfo }: any) {
   const [isOpen, setIsOpen] = useState(false);
   const [enableTwoFA, setEnableTwoFA] = useState(false);
-  const [publicTotpSecret, setPublicTotpSecret] = useState('');
-  const [otpAuthUrl, setOtpAuthUrl] = useState('');
-  const [password, setPassword] = useState('');
-  const [twoFaToken, setTwoFaToken] = useState('');
-  const [totpSecret, setTotpSecret] = useState('');
+  const [publicTotpSecret, setPublicTotpSecret] = useState("");
+  const [otpAuthUrl, setOtpAuthUrl] = useState("");
+  const [password, setPassword] = useState("");
+  const [twoFaToken, setTwoFaToken] = useState("");
+  const [totpSecret, setTotpSecret] = useState("");
   const [isPasswordChecked, setIsPasswordChecked] = useState(false);
-  
+
   const cancelButtonRef = useRef(null);
 
   useEffect(() => {
     if (userDetails.two_fa) {
-        setEnableTwoFA(true);
+      setEnableTwoFA(true);
     } else {
-        setEnableTwoFA(false);
+      setEnableTwoFA(false);
     }
-    }, [userDetails]);
+  }, [userDetails]);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -39,13 +39,15 @@ function TwoFactorAuthentication({ userDetails, userInfo } : any) {
 
   const generateSecret = () => {
     const secret = generate2FASecretKey();
-    const hexSecret = Buffer.from(base32Decode(secret, 'RFC4648')).toString('hex');
+    const hexSecret = Buffer.from(base32Decode(secret, "RFC4648")).toString(
+      "hex"
+    );
     setTotpSecret(hexSecret);
     setPublicTotpSecret(secret);
 
-    const issuer = 'Solun'
+    const issuer = "Solun";
     const account = userDetails.fqe;
-  
+
     const otpAuth = totp.keyuri(account, issuer, secret);
     setOtpAuthUrl(otpAuth);
   };
@@ -54,13 +56,13 @@ function TwoFactorAuthentication({ userDetails, userInfo } : any) {
     totp.options = { encoding: KeyEncodings.HEX };
 
     const isValid = totp.verify({ token: twoFaToken, secret: totpSecret });
-  
+
     if (isValid) {
       setEnableTwoFA(true);
-      const res = await fetch('/api/2fa/enable', {
-        method: 'POST',
+      const res = await fetch("/api/2fa/enable", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           user_id: userInfo.user_id,
@@ -68,28 +70,28 @@ function TwoFactorAuthentication({ userDetails, userInfo } : any) {
           password: password,
         }),
       });
-  
+
       const data = await res.json();
-  
+
       if (!res.ok) {
         toast.error(data.message);
         return;
       }
-  
+
       toast.success(data.message);
       onCancel();
       return;
     } else {
-      toast.error('Invalid token');
+      toast.error("Invalid token");
       return;
     }
   };
 
   const disable2FA = async () => {
-    const res = await fetch('/api/2fa/disable', {
-      method: 'POST',
+    const res = await fetch("/api/2fa/disable", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         user_id: userInfo.user_id,
@@ -104,14 +106,14 @@ function TwoFactorAuthentication({ userDetails, userInfo } : any) {
     }
 
     toast.success(data.message);
-    setTotpSecret('');
-    setOtpAuthUrl('');
+    setTotpSecret("");
+    setOtpAuthUrl("");
     setEnableTwoFA(false);
     return;
   };
 
   const enable2FA = async () => {
-      openModal();
+    openModal();
   };
 
   const checkPasswordAndProceed = async () => {
@@ -123,10 +125,10 @@ function TwoFactorAuthentication({ userDetails, userInfo } : any) {
   };
 
   const validate2FAPassword = async () => {
-    const res = await fetch('/api/user/validatepwd', {
-      method: 'POST',
+    const res = await fetch("/api/user/validatepwd", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         user_id: userInfo.user_id,
@@ -135,23 +137,23 @@ function TwoFactorAuthentication({ userDetails, userInfo } : any) {
     });
 
     const data = await res.json();
-  
+
     if (!res.ok) {
       toast.error(data.message);
       return false;
     }
-  
+
     return true;
   };
 
   const onCancel = async () => {
     closeModal();
     setIsPasswordChecked(false);
-    setPassword('');
-    setTwoFaToken('');
-    setTotpSecret('');
-    setOtpAuthUrl('');
-    setPublicTotpSecret('');
+    setPassword("");
+    setTwoFaToken("");
+    setTotpSecret("");
+    setOtpAuthUrl("");
+    setPublicTotpSecret("");
   };
 
   return (
@@ -218,7 +220,10 @@ function TwoFactorAuthentication({ userDetails, userInfo } : any) {
                   <>
                     <div className="mb-4">
                       <div className="flex items-center">
-                        <FontAwesomeIcon icon={faLock} className="mr-3 text-gray-400" />
+                        <FontAwesomeIcon
+                          icon={faLock}
+                          className="mr-3 text-gray-400"
+                        />
                         <input
                           type="password"
                           name="password"
@@ -248,16 +253,25 @@ function TwoFactorAuthentication({ userDetails, userInfo } : any) {
                 ) : (
                   <>
                     <div className="flex flex-wrap justify-center items-center">
-                        <h1 className="text-white text-2xl">Scan the QR code below</h1>
-                        <p className="text-slate-300 text-sm mb-2">or use the secret key to setup your 2FA</p>
-                        <div className="mt-4">
-                            <QRCode value={otpAuthUrl} size={200} />
-                        </div>
-                        <p className="text-white font-mono text-sm mt-2 mb-4">{publicTotpSecret}</p>
+                      <h1 className="text-white text-2xl">
+                        Scan the QR code below
+                      </h1>
+                      <p className="text-slate-300 text-sm mb-2">
+                        or use the secret key to setup your 2FA
+                      </p>
+                      <div className="mt-4">
+                        <QRCode value={otpAuthUrl} size={200} />
+                      </div>
+                      <p className="text-white font-mono text-sm mt-2 mb-4">
+                        {publicTotpSecret}
+                      </p>
                     </div>
                     <div className="mb-4">
                       <div className="flex items-center">
-                        <FontAwesomeIcon icon={faLock} className="mr-3 text-gray-400" />
+                        <FontAwesomeIcon
+                          icon={faKey}
+                          className="mr-3 text-gray-400"
+                        />
                         <input
                           type="text"
                           name="token"
