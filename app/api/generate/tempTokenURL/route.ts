@@ -33,7 +33,7 @@ export async function POST(request: Request) {
             });
             await newTempToken.save();
 
-            const redirectUrl = 'https://'+ process.env.NEXT_PUBLIC_WEBMAIL_DOMAIN +'/api/user/login?token='+ tempToken;
+            const redirectUrl = 'https://'+ process.env.NEXT_PUBLIC_WEBMAIL_AUTH_DOMAIN + tempToken;
 
             return NextResponse.json({ redirectUrl: redirectUrl }, { status: 200 });
         } catch (error) {
