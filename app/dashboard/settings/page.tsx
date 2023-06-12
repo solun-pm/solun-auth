@@ -75,9 +75,11 @@ const SettingsPage = () => {
       />
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl">
         <Navigation />
-        <ChangePassword userInfo={userInfo} />
-        <TwoFactorAuthSetup userDetails={userDetails} userInfo={userInfo} />
-        <PrivacySettings userDetails={userDetails} userInfo={userInfo} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ChangePassword userInfo={userInfo} />
+          <PrivacySettings userDetails={userDetails} userInfo={userInfo} />
+          <TwoFactorAuthSetup userDetails={userDetails} userInfo={userInfo} />
+        </div>
       </div>
     </div>
   );
