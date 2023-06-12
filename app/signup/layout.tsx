@@ -1,4 +1,4 @@
-import './globals.css'
+import '../globals.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 config.autoAddCss = false
@@ -8,14 +8,13 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   metadataBase: new URL('https://' + process.env.NEXT_PUBLIC_AUTH_DOMAIN),
-  title: 'Solun • Authentication',
-  tags: ['Solun', 'Privacy', 'Anonymous', 'Encryption', 'Files', 'Text', 'Emails', 'Share Files', 'Upload Files', 'Send Encrypted Texts'],
+  title: 'Solun • Sign Up',
   locale: 'en_US',
   type: 'website',
-  description: 'Manage your Solun account, and access your Solun services.',
+  description: 'Sign up for a Solun account.',
   openGraph: {
-    title: 'Solun • Authentication',
-    description: 'Manage your Solun account, and access your Solun services.',
+    title: 'Solun • Sign Up',
+    description: 'Sign up for a Solun account.',
     siteName: 'Solun',
     images: [
       {
