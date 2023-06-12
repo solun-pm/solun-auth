@@ -40,7 +40,7 @@ export async function POST(request: Request) {
             type: 'rsa',
             rsaBits: 4096,
             userIDs: [{ name: username, email: fqe }],
-            passphrase: password,
+            //passphrase: password, idk if we need this
         });
 
         // Encrypt private key with password
