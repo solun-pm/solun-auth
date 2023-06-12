@@ -6,11 +6,7 @@ import Navigation from '@/components/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faCircleNotch, faKey } from '@fortawesome/free-solid-svg-icons';
 import toast, { Toaster } from 'react-hot-toast';
-import QRCode from 'qrcode.react';
-import { totp } from 'otplib';
-import { KeyEncodings } from 'otplib/core';
-import { generate2FASecretKey } from '@/utils/generate';
-const base32Decode = require('base32-decode')
+import TwoFactorAuthSetup from '@/components/twoFactorAuthSetup';
 
 const SettingsPage = () => {
   const router = useRouter();
@@ -18,12 +14,6 @@ const SettingsPage = () => {
   const [userInfo, setUserInfo] = useState(null) as any;
   const [userDetails, setUserDetails] = useState(null) as any;
   const [passwordChangeLoading, setPasswordChangeLoading] = useState(false);
-  const [totpSecret, setTotpSecret] = useState('');
-  const [publicTotpSecret, setPublicTotpSecret] = useState('');
-  const [otpAuthUrl, setOtpAuthUrl] = useState('');
-  const [enableTwoFA, setEnableTwoFA] = useState(false);
-  const [twoFaToken, setTwoFaToken] = useState('');
-  const [password, setPassword] = useState('');
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -70,12 +60,6 @@ const SettingsPage = () => {
       }
       const userDetailsData = await detailsResponse.json();
       setUserDetails(userDetailsData);
-
-      if (userDetailsData.two_fa) {
-        setEnableTwoFA(true);
-      } else {
-        setEnableTwoFA(false);
-      }
     };
 
     fetchUserInfo();
@@ -119,108 +103,6 @@ const SettingsPage = () => {
     event.target.currentPassword.value = '';
     event.target.newPassword.value = '';
     return;
-  };
-
-  const generateSecret = () => {
-    const secret = generate2FASecretKey();
-    const hexSecret = Buffer.from(base32Decode(secret, 'RFC4648')).toString('hex');
-    setTotpSecret(hexSecret);
-    setPublicTotpSecret(secret);
-
-    const issuer = 'Solun'
-    const account = userDetails.fqe;
-  
-    const otpAuth = totp.keyuri(account, issuer, secret);
-    setOtpAuthUrl(otpAuth);
-  };
-
-  const verifyToken = async () => {
-    totp.options = { encoding: KeyEncodings.HEX };
-
-    const isValid = totp.verify({ token: twoFaToken, secret: totpSecret });
-  
-    if (isValid) {
-      setEnableTwoFA(true);
-      const res = await fetch('/api/2fa/enable', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user_id: userInfo.user_id,
-          secret: publicTotpSecret,
-          password: password,
-        }),
-      });
-  
-      const data = await res.json();
-  
-      if (!res.ok) {
-        toast.error(data.message);
-        return;
-      }
-  
-      toast.success(data.message);
-      return;
-    } else {
-      toast.error('Invalid token');
-      return;
-    }
-  };
-
-  const disable2FA = async () => {
-    const res = await fetch('/api/2fa/disable', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: userInfo.user_id,
-      }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      toast.error(data.message);
-      return;
-    }
-
-    toast.success(data.message);
-    setTotpSecret('');
-    setOtpAuthUrl('');
-    setEnableTwoFA(false);
-    return;
-  };
-
-  const enable2FA = async () => {
-    const isPasswordValid = await validate2FAPassword();
-  
-    if (isPasswordValid) {
-      generateSecret();
-    }
-  };
-
-  const validate2FAPassword = async () => {
-    const res = await fetch('/api/user/validatepwd', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: userInfo.user_id,
-        password: password,
-      }),
-    });
-
-    const data = await res.json();
-  
-    if (!res.ok) {
-      toast.error(data.message);
-      return false;
-    }
-  
-    return true;
   };
 
   return (
@@ -274,94 +156,7 @@ const SettingsPage = () => {
             </div>
           </form>
         </div>
-
-        <div className="bg-slate-900 p-5 rounded-lg shadow-md max-w-lg mt-4">
-          <h2 className="text-xl font-bold mb-2">Two-Factor Authentication</h2>
-          {!enableTwoFA ? (
-            <>
-              {!publicTotpSecret ? (
-                <>
-              <div className="mb-4">
-                <div className="flex items-center">
-                  <FontAwesomeIcon icon={faLock} className="mr-3 text-gray-400" />
-                  <input
-                    type="password"
-                    name="password"
-                    className="bg-slate-950 text-white w-full p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter your password"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-              </div>
-                <div className="flex justify-end">
-                  <button
-                    type="button"
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-3 rounded transition duration-200"
-                    onClick={enable2FA}
-                  >
-                    Enable
-                  </button>
-                </div>
-                </>
-              ) : (
-                <>
-                  <div className="flex justify-center flex-col items-center">
-                    <div className="my-4">
-                      <QRCode value={otpAuthUrl} />
-                    </div>
-                    <div className="my-2 text-center">
-                      <p>Or use this secret:</p>
-                      <p className="font-mono text-sm">{publicTotpSecret}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <FontAwesomeIcon icon={faKey} className="mr-3 text-gray-400" />
-                    <input
-                      type="text"
-                      name="token"
-                      className="bg-slate-950 text-white w-full p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="Enter your token"
-                      onChange={(e) => setTwoFaToken(e.target.value)}
-                    />
-                  </div>
-                  <div className="flex justify-end">
-                    <button
-                      type="button"
-                      className="bg-gray-500 hover:bg-gray-600 text-white font-bold px-3 py-3 rounded transition duration-200 mt-4 mr-2"
-                      onClick={() => {
-                        setTotpSecret('');
-                        setOtpAuthUrl('');
-                        setPublicTotpSecret('');
-                        setPassword('');
-                      }}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="button"
-                      className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-3 rounded transition duration-200 mt-4"
-                      onClick={verifyToken}
-                    >
-                      Activate
-                    </button>
-                  </div>
-                </>
-              )}
-            </>
-          ) : (
-            <>
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  className="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-3 rounded transition duration-200"
-                  onClick={disable2FA}
-                >
-                  Disable
-                </button>
-              </div>
-            </>
-          )}
-        </div>
+        <TwoFactorAuthSetup userDetails={userDetails} userInfo={userInfo} />
       </div>
     </div>
   );
