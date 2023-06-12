@@ -6,6 +6,7 @@ import Navigation from '@/components/navigation';
 import { Toaster } from 'react-hot-toast';
 import TwoFactorAuthSetup from '@/components/settings/twoFactorAuthSetup';
 import ChangePassword from '@/components/settings/changePassword';
+import PrivacySettings from '@/components/settings/privacySettings';
 
 const SettingsPage = () => {
   const router = useRouter();
@@ -76,6 +77,7 @@ const SettingsPage = () => {
         <Navigation />
         <ChangePassword userInfo={userInfo} />
         <TwoFactorAuthSetup userDetails={userDetails} userInfo={userInfo} />
+        <PrivacySettings userDetails={userDetails} userInfo={userInfo} />
       </div>
     </div>
   );
