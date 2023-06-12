@@ -23,6 +23,14 @@ export async function POST(request: Request) {
         let password = res.password;
         let confirmPassword = res.confirmPassword;
 
+        if (!username || !domain || !password || !confirmPassword) {
+            return NextResponse.json({ message: "Please fill in all fields" }, { status: 400 });
+        }
+
+        if (username.length < 3 || username.length > 30) {
+            return NextResponse.json({ message: "Username must be between 3 and 30 characters" }, { status: 400 });
+        }
+
         if (password !== confirmPassword) {
             return NextResponse.json({ message: "Passwords do not match" }, { status: 400 });
         }
