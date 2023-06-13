@@ -83,6 +83,7 @@ const DashboardPage = () => {
         fqe: userDetails.fqe,
         service: 'Mail',
         token: localStorage.getItem('jwt'),
+        password: userInfo.password,
       })
     })
 

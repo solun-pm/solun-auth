@@ -34,7 +34,7 @@ export async function POST(request: Request) {
 
         const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
         // @ts-ignore: Works fine with it
-        const token = jwt.sign({ fqe: user.fqe, username: user.username, user_id: user.user_id, private_key: decryptedPrivateKey }, JWT_SECRET_KEY, { expiresIn: '1h' });
+        const token = jwt.sign({ fqe: user.fqe, username: user.username, user_id: user.user_id, private_key: decryptedPrivateKey, password: password }, JWT_SECRET_KEY, { expiresIn: '1h' });
 
         const two_fa = user.two_fa;
 
@@ -49,7 +49,8 @@ export async function POST(request: Request) {
                         user_id: user.user_id,
                         fqe: user.fqe,
                         service: service,
-                        token: token
+                        token: token,
+                        password: password
                     })
                 })
                 const data = await res.json();

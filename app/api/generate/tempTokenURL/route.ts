@@ -14,6 +14,9 @@ export async function POST(request: Request) {
         let fqe = res.fqe;
         let service = res.service;
         let token = res.token;
+        let password = res.password;
+
+        console.log(password)
 
         const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
