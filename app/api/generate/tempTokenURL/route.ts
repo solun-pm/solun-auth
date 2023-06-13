@@ -38,6 +38,8 @@ export async function POST(request: Request) {
 
             const redirectUrl = 'https://'+ process.env.NEXT_PUBLIC_WEBMAIL_AUTH_DOMAIN + tempToken;
 
+            console.log(redirectUrl)
+
             return NextResponse.json({ redirectUrl: redirectUrl }, { status: 200 });
         } catch (error) {
             return NextResponse.json({ message: "Invalid token, please Login again" }, { status: 401 });

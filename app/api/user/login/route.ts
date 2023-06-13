@@ -60,6 +60,8 @@ export async function POST(request: Request) {
                 }
                 const redirectUrl = data.redirectUrl;
                 
+                console.log(redirectUrl);
+
                 return NextResponse.json({ redirect: true, redirectUrl: redirectUrl, service: service, two_fa: two_fa }, { status: 200 });
             }
             return NextResponse.json({redirect: false, message: "2FA is needed to login", two_fa: two_fa}, {status: 200})
