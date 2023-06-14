@@ -4,7 +4,7 @@ import User from "@/models/user";
 import { NextResponse } from "next/server";
 import { generateKey } from 'openpgp';
 import { encrypt } from "@/utils/encryption";
-var passwordHash = require('password-hash');
+import { hashPassword } from "@/utils/hash";
 
 export async function POST(request: Request) {
     try {
@@ -23,6 +23,14 @@ export async function POST(request: Request) {
         let password = res.password;
         let confirmPassword = res.confirmPassword;
 
+        if (!username || !domain || !password || !confirmPassword) {
+            return NextResponse.json({ message: "Please fill in all fields" }, { status: 400 });
+        }
+
+        if (username.length < 3 || username.length > 30) {
+            return NextResponse.json({ message: "Username must be between 3 and 30 characters" }, { status: 400 });
+        }
+
         if (password !== confirmPassword) {
             return NextResponse.json({ message: "Passwords do not match" }, { status: 400 });
         }
@@ -33,14 +41,14 @@ export async function POST(request: Request) {
             return NextResponse.json({ message: "User already exists" }, { status: 400 });
         }
 
-        let passwordHashed = passwordHash.generate(password);
+        let passwordHashed = await hashPassword(password);
 
         // Generate OpenPGP key pair
         const { privateKey, publicKey } = await generateKey({
             type: 'rsa',
             rsaBits: 4096,
             userIDs: [{ name: username, email: fqe }],
-            passphrase: password,
+            //passphrase: password, idk if we need this
         });
 
         // Encrypt private key with password

@@ -23,6 +23,31 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: false,
         },
+        two_fa: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+        two_fa_secret: {
+            type: String,
+            required: false,
+            default: "",
+        },
+        membership: {
+            type: String,
+            required: true,
+            default: "free",
+        },
+        fast_login: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+        beta: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
         active: {
             type: Boolean,
             required: true,

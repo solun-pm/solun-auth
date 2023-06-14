@@ -12,14 +12,19 @@ function encrypt(text: string, password: string) {
 }
 
 function decrypt(text: string, password: string) {
-    let textParts = text.split(':');
-    // @ts-ignore
-    let iv = Buffer.from(textParts.shift(), 'hex');
-    let encryptedText = Buffer.from(textParts.join(':'), 'hex');
-    let decipher = crypto.createDecipheriv(ALGORITHM, crypto.createHash('sha256').update(password).digest(), iv);
-    let decrypted = decipher.update(encryptedText);
-    decrypted = Buffer.concat([decrypted, decipher.final()]);
-    return decrypted.toString();
+    try {
+        let textParts = text.split(':');
+        // @ts-ignore
+        let iv = Buffer.from(textParts.shift(), 'hex');
+        let encryptedText = Buffer.from(textParts.join(':'), 'hex');
+        let decipher = crypto.createDecipheriv(ALGORITHM, crypto.createHash('sha256').update(password).digest(), iv);
+        let decrypted = decipher.update(encryptedText);
+        decrypted = Buffer.concat([decrypted, decipher.final()]);
+        return decrypted.toString();
+    } catch (error) {
+        console.error('@utils/encryption.ts | Solun Auth Error - Decrypting | ' + error);
+        return '';
+    }
 }
 
 export { encrypt, decrypt };

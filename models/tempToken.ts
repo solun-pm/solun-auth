@@ -18,6 +18,14 @@ const tempTokenSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
+        password: {
+            type: String,
+            required: false,
+        },
+        fast_login: {
+            type: Boolean,
+            required: true,
+        },
         expiresAt: { 
             type: Date,
             default: Date.now,

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser, faCircleNotch, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
+import toast, { Toaster } from 'react-hot-toast';
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -64,8 +65,10 @@ const RegisterPage = () => {
 
   const isValidForm = () => {
     const trimmedUsername = formData.username.replace(/\s/g, '');
-    
+    const specialCharsRegex = /^[a-zA-Z0-9_.-]+$/;
+  
     return trimmedUsername !== "" &&
+           specialCharsRegex.test(trimmedUsername) &&
            formData.domain &&
            formData.domain !== "Select domain..." &&
            formData.password &&
@@ -80,13 +83,13 @@ const RegisterPage = () => {
     setIsSubmitting(true);
   
     if (!isValidForm()) {
-      alert('Please fill in all fields correctly.');
+      toast.error('Please fill out all fields correctly.');
       setIsSubmitting(false);
       return;
     }
   
     try {
-      const response = await fetch('/api/user/create', {
+      const res = await fetch('/api/user/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -99,10 +102,12 @@ const RegisterPage = () => {
         }),
       });
   
-      const data = await response.json();
+      const data = await res.json();
   
-      if (!response.ok) {
-        throw new Error(data.message);
+      if (!res.ok) {
+        toast.error(data.message);
+        setIsSubmitting(false);
+        return;
       }
   
       setStatus('resolved');
@@ -110,7 +115,7 @@ const RegisterPage = () => {
       //alert('User registered successfully.');
   
     } catch (error) {
-      alert(error);
+      console.error('Error:', error);
     } finally {
       setIsSubmitting(false);
     }
@@ -120,9 +125,12 @@ const RegisterPage = () => {
   const domains = ['@solun.pm', '@6crypt.com', '@seal.pm', '@xolus.de', '@cipher.pm'];
   return (
     <div className="flex items-center justify-center py-8 px-2 min-h-screen animate-gradient-x">
+      <Toaster
+        position="top-right"
+      />
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-2">Register</h1>
-        <p className="mb-5">You're just a few steps away from your new Solun Mail account.</p>
+        <p className="mb-5">You're just a few steps away from your new Solun account.</p>
         <form onSubmit={handleSubmit} autoComplete="off">
           <div className="mb-4 flex items-center">
             <FontAwesomeIcon icon={faUser} className="mr-3 text-gray-400"/>
@@ -204,7 +212,7 @@ const RegisterPage = () => {
         <div className="mt-5 text-center">
           <p className="mb-4">Already have an account? <a href="/login" className="text-blue-500 hover:text-blue-600">Login</a></p>
           <hr className="h-px border-0 bg-gray-500" />
-          <p className="text-sm mt-4 text-slate-400">With your registration you agree to our <a href="https://solun.pm/terms" className="text-blue-500 hover:text-blue-600">Terms of Service</a> and <a href="https://solun.pm/privacy" className="text-blue-500 hover:text-blue-600">Privacy Policy</a>.</p>
+          <p className="text-sm mt-4 text-slate-400">With your registration you agree to our <a href={"https://"+process.env.NEXT_PUBLIC_MAIN_DOMAIN+"/tos"} className="text-blue-500 hover:text-blue-600">Terms of Service</a> and <a href={"https://"+process.env.NEXT_PUBLIC_MAIN_DOMAIN+"/privacy"} className="text-blue-500 hover:text-blue-600">Privacy Policy</a>.</p>
         </div>
       </div>
     </div>
