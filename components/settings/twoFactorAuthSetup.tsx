@@ -159,6 +159,11 @@ function TwoFactorAuthentication({ userDetails, userInfo }: any) {
   return (
     <div className="bg-slate-900 p-5 rounded-lg shadow-md max-w-lg mt-4">
       <h2 className="text-xl font-bold mb-2">Two-Factor Authentication</h2>
+      <p className="text-gray-300 mb-4">
+        Two-factor authentication adds an extra layer of security to your
+        account. Once enabled, you will be prompted to enter a code from your
+        authenticator app when logging in.
+      </p>
       {!enableTwoFA ? (
         <div className="flex justify-end">
           <button
