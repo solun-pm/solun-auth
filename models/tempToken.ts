@@ -20,6 +20,10 @@ const tempTokenSchema = new mongoose.Schema({
         },
         password: {
             type: String,
+            required: false,
+        },
+        fast_login: {
+            type: Boolean,
             required: true,
         },
         expiresAt: { 

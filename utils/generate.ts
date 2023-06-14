@@ -17,7 +17,8 @@ export async function generateTempToken(
   fqe: string,
   service: string,
   token: any,
-  password: string
+  password: string,
+  fast_login: boolean
 ) {
   try {
 
@@ -45,8 +46,8 @@ export async function generateTempToken(
     }
 
       const tempToken = generateToken();
-      const e2eeSecretKey = generateToken();
-      const encryptedPwd = encrypt(password, e2eeSecretKey);
+      const e2eeSecretKey = fast_login ? generateToken() : '';
+      const encryptedPwd = fast_login ? encrypt(password, e2eeSecretKey) : '';
       const res = await fetch(`http://${process.env.NEXT_PUBLIC_AUTH_DOMAIN}/api/db/saveTempToken`, {
         method: "POST",
         headers: {
@@ -58,17 +59,21 @@ export async function generateTempToken(
           token: tempToken,
           service: service,
           password: encryptedPwd,
+          fast_login: fast_login,
         }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        return data.message;
+        toast.error(data.message);
+        return;
       }
 
-      const redirectUrl =
-        "https://" + process.env.NEXT_PUBLIC_WEBMAIL_AUTH_DOMAIN + tempToken + "/" + e2eeSecretKey;
+      const redirectUrl = 
+      fast_login ?
+      "https://" + process.env.NEXT_PUBLIC_WEBMAIL_AUTH_DOMAIN + tempToken + "/" + e2eeSecretKey
+      : "https://" + process.env.NEXT_PUBLIC_WEBMAIL_AUTH_DOMAIN + tempToken;
 
       return redirectUrl;
     } catch (error) {

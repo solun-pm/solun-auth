@@ -58,7 +58,7 @@ export async function POST(request: Request) {
             const two_fa = user.two_fa;
 
             if (service === "Mail" && user.active) {
-                const url = await generateTempToken(user.user_id, user.fqe, 'Mail', token, password);
+                const url = await generateTempToken(user.user_id, user.fqe, 'Mail', token, password, user.fast_login);
 
                 if (typeof url ==='string') {
                     return NextResponse.json({ redirect: true, redirectUrl: url, service: service, two_fa: two_fa }, { status: 200 });

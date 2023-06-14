@@ -77,7 +77,7 @@ const DashboardPage = () => {
   const webmailDirectLogin = async () => {
 
 
-    const url = await generateTempToken(userDetails.user_id, userDetails.fqe, 'Mail', localStorage.getItem('jwt'), userInfo.password);
+    const url = await generateTempToken(userDetails.user_id, userDetails.fqe, 'Mail', localStorage.getItem('jwt'), userInfo.password, userDetails.fast_login);
 
     if (typeof url ==='string') {
       toast.success('Redirecting to Webmail...');

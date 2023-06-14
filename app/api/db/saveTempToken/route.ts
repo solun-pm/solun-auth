@@ -13,6 +13,7 @@ export async function POST(request: Request) {
     let service = res.service;
     let tempToken = res.token;
     let password = res.password;
+    let fast_login = res.fast_login;
 
     const newTempToken = new TempToken({
       user_id: user_id,
@@ -20,6 +21,7 @@ export async function POST(request: Request) {
       token: tempToken,
       service: service,
       password: password,
+      fast_login: fast_login,
     });
     await newTempToken.save();
 
