@@ -7,7 +7,6 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  metadataBase: new URL('https://' + process.env.NEXT_PUBLIC_AUTH_DOMAIN),
   title: 'Solun • Authentication',
   tags: ['Solun', 'Privacy', 'Anonymous', 'Encryption', 'Files', 'Text', 'Emails', 'Share Files', 'Upload Files', 'Send Encrypted Texts'],
   locale: 'en_US',

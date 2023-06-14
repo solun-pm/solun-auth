@@ -6,6 +6,8 @@ import Navigation from '@/components/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import toast, { Toaster } from 'react-hot-toast';
+import { generateTempToken } from '@/utils/generate';
+import { stringify } from 'querystring';
 
 const DashboardPage = () => {
   const router = useRouter();
@@ -73,29 +75,14 @@ const DashboardPage = () => {
   });
 
   const webmailDirectLogin = async () => {
-    const res = await fetch('api/generate/tempTokenURL', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: userDetails.user_id,
-        fqe: userDetails.fqe,
-        service: 'Mail',
-        token: localStorage.getItem('jwt'),
-        password: userInfo.password,
-      })
-    })
 
-    const data = await res.json();
 
-    if (!res.ok) {
-      toast.error(data.message);
-      return;
+    const url = await generateTempToken(userDetails.user_id, userDetails.fqe, 'Mail', localStorage.getItem('jwt'), userInfo.password);
+
+    if (typeof url ==='string') {
+      toast.success('Redirecting to Webmail...');
+      window.open(url, '_blank');
     }
-
-    toast.success('Redirecting to Webmail...');
-    window.open(data.redirectUrl, '_blank');
   }
 
   return (

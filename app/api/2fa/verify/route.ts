@@ -4,7 +4,7 @@ import User from "@/models/user";
 import { NextResponse } from "next/server";
 import jwt from 'jsonwebtoken';
 import { decrypt } from "@/utils/encryption";
-import { generateToken } from "@/utils/generate";
+import { generateTempToken } from "@/utils/generate";
 import TempToken from "@/models/tempToken";
 import { comparePassword } from "@/utils/hash";
 import { totp } from 'otplib';
@@ -53,21 +53,18 @@ export async function POST(request: Request) {
 
             const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
             // @ts-ignore: Works fine with it
-            const token = jwt.sign({ fqe: user.fqe, username: user.username, user_id: user.user_id, private_key: decryptedPrivateKey }, JWT_SECRET_KEY, { expiresIn: '1h' });
+            const token = jwt.sign({ fqe: user.fqe, username: user.username, user_id: user.user_id, private_key: decryptedPrivateKey, password: password }, JWT_SECRET_KEY, { expiresIn: '1h' });
 
             const two_fa = user.two_fa;
 
             if (service === "Mail" && user.active) {
-                const tempToken = generateToken();
-                const newTempToken = new TempToken({
-                    user_id: user.user_id,
-                    fqe: user.fqe,
-                    token: tempToken,
-                    service: service,
-                });
-                await newTempToken.save();
+                const url = await generateTempToken(user.user_id, user.fqe, 'Mail', token, password);
 
-                return NextResponse.json({ redirect: true, redirectUrl: 'https://'+ process.env.NEXT_PUBLIC_WEBMAIL_DOMAIN +'/api/user/login?token='+ tempToken, service: service, two_fa: two_fa }, { status: 200 });
+                if (typeof url ==='string') {
+                    return NextResponse.json({ redirect: true, redirectUrl: url, service: service, two_fa: two_fa }, { status: 200 });
+                } else {
+                    return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
+                }
             } else if (user.active) {
                 return NextResponse.json({ redirect: false, token: token, message: "Logged in successfully", two_fa: two_fa }, { status: 200 });
             } else {

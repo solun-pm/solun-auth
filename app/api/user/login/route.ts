@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 import jwt from 'jsonwebtoken';
 import { decrypt } from "@/utils/encryption";
 import { comparePassword } from "@/utils/hash";
+import { generateTempToken } from "@/utils/generate";
 
 export async function POST(request: Request) {
     try {
@@ -40,29 +41,13 @@ export async function POST(request: Request) {
 
         if (service === "Mail" && user.active) {
             if(!two_fa) {
-                const res = await fetch('api/generate/tempTokenURL', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        user_id: user.user_id,
-                        fqe: user.fqe,
-                        service: service,
-                        token: token,
-                        password: password
-                    })
-                })
-                const data = await res.json();
+                const url = await generateTempToken(user.user_id, user.fqe, 'Mail', token, password);
 
-                if (!res.ok) {
-                    return NextResponse.json({ message: data.message }, { status: 500 })
+                if (typeof url ==='string') {
+                    return NextResponse.json({ redirect: true, redirectUrl: url, service: service, two_fa: two_fa }, { status: 200 });
+                } else {
+                    return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
                 }
-                const redirectUrl = data.redirectUrl;
-                
-                console.log(redirectUrl);
-
-                return NextResponse.json({ redirect: true, redirectUrl: redirectUrl, service: service, two_fa: two_fa }, { status: 200 });
             }
             return NextResponse.json({redirect: false, message: "2FA is needed to login", two_fa: two_fa}, {status: 200})
         } else if (user.active) {

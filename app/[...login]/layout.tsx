@@ -7,7 +7,6 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  metadataBase: new URL('https://' + process.env.NEXT_PUBLIC_AUTH_DOMAIN),
   title: 'Solun • Login',
   locale: 'en_US',
   type: 'website',
