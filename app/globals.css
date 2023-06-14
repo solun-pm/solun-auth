@@ -19,3 +19,8 @@ body {
   animation: gradient-x 10s ease infinite;
 
 }
+
+/* for settings page dashboard */
+.align-start {
+  align-content: start;
+}

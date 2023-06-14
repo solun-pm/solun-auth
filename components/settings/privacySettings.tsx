@@ -1,7 +1,7 @@
-import React, { useState, Fragment, useRef } from 'react';
+import React, { useState, Fragment, useRef, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import toast from 'react-hot-toast';
 
 const PublicKeyModal = ({isOpen, onClose, onDownload}: any) => (
@@ -144,6 +144,23 @@ function PrivacySettings({ userDetails, userInfo } : any) {
   const [isPublicKeyOpen, setIsPublicKeyOpen] = useState(false);
   const [isPrivateKeyOpen, setIsPrivateKeyOpen] = useState(false);
   const [password, setPassword] = useState("");
+  const [fastLogin, setFastLogin] = useState(false);
+  const [fastLoginLoading, setFastLoginLoading] = useState(false);
+  const [betaFeatures, setBetaFeatures] = useState(false);
+  const [betaFeaturesLoading, setBetaFeaturesLoading] = useState(false);
+
+  useEffect(() => {
+    if (userDetails.fast_login) {
+      setFastLogin(true);
+    } else {
+      setFastLogin(false);
+    }
+    if (userDetails.beta) {
+      setBetaFeatures(true);
+    } else {
+      setBetaFeatures(false);
+    }
+  }, [userDetails]);
 
   const validatePassword = async () => {
     const res = await fetch("/api/user/validatepwd", {
@@ -206,6 +223,58 @@ const downloadPrivateKey = async () => {
   }
 };
 
+const toggleFastLogin = async () => {
+  setFastLoginLoading(true);
+  const res = await fetch("/api/user/fastLogin", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user_id: userInfo.user_id,
+      fast_login: !fastLogin,
+    }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    toast.error(data.message);
+    setFastLoginLoading(false);
+    return;
+  }
+
+  setFastLoginLoading(false);
+  setFastLogin(!fastLogin);
+  toast.success(data.message);
+};
+
+const toggleBetaFeatures = async () => {
+  setBetaFeaturesLoading(true);
+  const res = await fetch("/api/user/betaFeatures", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user_id: userInfo.user_id,
+      beta_features: !betaFeatures,
+    }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    setBetaFeaturesLoading(false);
+    toast.error(data.message);
+    return;
+  }
+
+  setBetaFeaturesLoading(false);
+  setBetaFeatures(!betaFeatures);
+  toast.success(data.message);
+};
+
 
   return (
     <div className="bg-slate-900 p-5 rounded-lg shadow-md max-w-lg mt-4">
@@ -213,6 +282,9 @@ const downloadPrivateKey = async () => {
 
       <div className="mt-6">
         <h3 className="text-lg font-semibold mb-2">Mail Encryption</h3>
+        <p className="text-md mb-4 text-slate-300">
+          You can download your public and private keys here. Your public key is used to encrypt your emails, and your private key is used to decrypt them.
+        </p>
         <div className="flex justify-between gap-4">
           <button
             type="button"
@@ -228,6 +300,86 @@ const downloadPrivateKey = async () => {
           >
             Download Private Key
           </button>
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <h3 className="text-lg font-semibold mb-2">Fast Login</h3>
+        <p className="text-md mb-4 text-slate-300">
+          You can enable Fast Login to skip the password prompt when logging into other Solun services.
+        </p>
+        <div className="flex justify-between gap-4">
+          {!fastLogin ? ( 
+          <button
+            type="button"
+            onClick={toggleFastLogin}
+            disabled={fastLoginLoading}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-3 rounded transition duration-200"
+          >
+            {fastLoginLoading && 
+              <FontAwesomeIcon 
+              icon={faCircleNotch} 
+              className="animate-spin mr-2"
+              />
+            }
+            Enable
+          </button>
+          ) : (
+          <button
+            type="button"
+            onClick={toggleFastLogin}
+            disabled={fastLoginLoading}
+            className="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-3 rounded transition duration-200"
+          >
+            {fastLoginLoading &&
+              <FontAwesomeIcon
+              icon={faCircleNotch}
+              className="animate-spin mr-2"
+              />
+            }
+            Disable
+          </button>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <h3 className="text-lg font-semibold mb-2">Beta Features</h3>
+        <p className="text-md mb-4 text-slate-300">
+          You can enable beta features to test out new features before they are released to the public.
+        </p>
+        <div className="flex justify-between gap-4">
+          {!betaFeatures ? (
+          <button
+            type="button"
+            onClick={toggleBetaFeatures}
+            disabled={betaFeaturesLoading}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-3 rounded transition duration-200"
+          >
+            {betaFeaturesLoading &&
+              <FontAwesomeIcon
+              icon={faCircleNotch}
+              className="animate-spin mr-2"
+              />
+            }
+            Enable
+          </button>
+           ) : (
+          <button
+            type="button"
+            onClick={toggleBetaFeatures}
+            disabled={betaFeaturesLoading}
+            className="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-3 rounded transition duration-200"
+          >
+            {betaFeaturesLoading &&
+              <FontAwesomeIcon
+              icon={faCircleNotch}
+              className="animate-spin mr-2"
+              />
+            }
+            Disable
+          </button>
+          )}
         </div>
       </div>
 

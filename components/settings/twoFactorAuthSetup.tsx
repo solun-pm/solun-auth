@@ -219,6 +219,12 @@ function TwoFactorAuthentication({ userDetails, userInfo }: any) {
                 {!isPasswordChecked ? (
                   <>
                     <div className="mb-4">
+                      <h1 className="text-white text-2xl">
+                        Enable Two-Factor Authentication
+                      </h1>
+                      <p className="text-slate-300 text-md mb-4">
+                        Enter your password to start the 2FA setup process
+                      </p>
                       <div className="flex items-center">
                         <FontAwesomeIcon
                           icon={faLock}
