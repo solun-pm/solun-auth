@@ -38,6 +38,16 @@ const userSchema = new mongoose.Schema({
             required: true,
             default: "free",
         },
+        fast_login: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+        beta: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
         active: {
             type: Boolean,
             required: true,

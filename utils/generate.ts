@@ -21,7 +21,7 @@ export async function generateTempToken(
 ) {
   try {
 
-    // @todo -> add password encryption and e2ee
+    // @todo -> add fast login call from userDetails and check if enabled or not / then pwd passthrough or not
 
     const resCheck = await fetch(`http://${process.env.NEXT_PUBLIC_AUTH_DOMAIN}/api/user/jwt`, {
         method: "POST",
