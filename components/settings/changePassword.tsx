@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import toast from 'react-hot-toast';
 
 function ChangePassword({ userInfo } : any) {
+    const router = useRouter();
     const [passwordChangeLoading, setPasswordChangeLoading] = useState(false);
 
     const handlePasswordChange = async (event: any) => {
@@ -39,12 +41,15 @@ function ChangePassword({ userInfo } : any) {
     
         event.target.currentPassword.value = '';
         event.target.newPassword.value = '';
+        localStorage.removeItem('jwt');
+        router.push('/login');
         return;
       };
 
     return (
         <div className="bg-slate-900 p-5 rounded-lg shadow-md max-w-lg mt-4">
           <h2 className="text-xl font-bold mb-2">Change Password</h2>
+          <p className="text-gray-300 mb-4">You can change your password here, you will be logged out after changing your password.</p>
           <form autoComplete="off" onSubmit={handlePasswordChange}>
             <div>
               <div className="mb-4 mt-4">
