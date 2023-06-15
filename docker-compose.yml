@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  solun:
+    image: ghcr.io/solun-pm/solun-auth:main
+    container_name: solun-auth
+    ports:
+      - 3000:3000
+    environment:
+      - MONGODB_URL=
+      - JWT_SECRET_KEY=
+      - NEXT_PUBLIC_MAIN_DOMAIN=
+      - NEXT_PUBLIC_AUTH_DOMAIN=
+      - NEXT_PUBLIC_WEBMAIL_DOMAIN=
+      - NEXT_PUBLIC_WEBMAIL_AUTH_DOMAIN=
+    volumes:
+      - /your/path:/app/public/uploads/files
+    restart: always
