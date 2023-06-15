@@ -2,7 +2,7 @@ version: '3.8'
 services:
   solun:
     image: ghcr.io/solun-pm/solun-auth:main
-    container_name: solun
+    container_name: solun-auth
     ports:
       - 3000:3000
     environment:
