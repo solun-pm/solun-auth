@@ -339,16 +339,14 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
           <p className="text-sm mt-4 text-slate-400">
             By logging in, you agree to our{" "}
             <a
-              href={"https://" + process.env.NEXT_PUBLIC_MAIN_DOMAIN + "/tos"}
+              href={process.env.NEXT_PUBLIC_MAIN_DOMAIN + "/tos"}
               className="text-blue-500 hover:text-blue-600"
             >
               Terms of Service
             </a>{" "}
             and{" "}
             <a
-              href={
-                "https://" + process.env.NEXT_PUBLIC_MAIN_DOMAIN + "/privacy"
-              }
+              href={process.env.NEXT_PUBLIC_MAIN_DOMAIN + "/privacy"}
               className="text-blue-500 hover:text-blue-600"
             >
               Privacy Policy
