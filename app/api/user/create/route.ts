@@ -35,6 +35,10 @@ export async function POST(request: Request) {
             return NextResponse.json({ message: "Passwords do not match" }, { status: 400 });
         }
 
+        if (password.length < 6 || !password.match(/[^a-zA-Z0-9]/)) {
+            return NextResponse.json({ message: "Password must be at least 6 characters long and contain at least 1 special character" }, { status: 400 });
+        }
+
         const user = await findOneDocument(User, { fqe: fqe });
 
         if (user) {
