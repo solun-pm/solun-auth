@@ -16,6 +16,10 @@ export async function POST(request: Request) {
 
     const hasValidCharacters = /^[A-Za-z][A-Za-z0-9._-]*[A-Za-z0-9]$/.test(trimmedUsername);
 
+    if (trimmedUsername.length < 3 || trimmedUsername.length > 30) {
+      return NextResponse.json({ message: "Username must be between 3 and 30 characters", exists: true }, { status: 400 });
+    }
+
     if (!hasValidCharacters) {
       return NextResponse.json({ message: "Username must contain at least 3 alphabetical characters and can only include A-Z, numbers, dot, underscore, and hyphen. It cannot start or end with dot, underscore, or hyphen.", exists: true }, { status: 400 });
     }
