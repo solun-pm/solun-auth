@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 import { generateKey } from 'openpgp';
 import { encrypt } from "@/utils/encryption";
 import { hashPassword } from "@/utils/hash";
+const { MailcowApiClient } = require("@/utils/mail");
 
 export async function POST(request: Request) {
     try {
@@ -16,6 +17,7 @@ export async function POST(request: Request) {
         const res = await request.json();
 
         await dbConnect();
+        const mcc = new MailcowApiClient(process.env.MAILSERVER_BASEURL, process.env.MAILSERVER_API_KEY);
 
         let username = res.username;
         let domain = res.domain;
@@ -33,6 +35,10 @@ export async function POST(request: Request) {
 
         if (password !== confirmPassword) {
             return NextResponse.json({ message: "Passwords do not match" }, { status: 400 });
+        }
+
+        if (password.length < 6 || !password.match(/[^a-zA-Z0-9]/)) {
+            return NextResponse.json({ message: "Password must be at least 6 characters long and contain at least 1 special character" }, { status: 400 });
         }
 
         const user = await findOneDocument(User, { fqe: fqe });
@@ -54,6 +60,37 @@ export async function POST(request: Request) {
         // Encrypt private key with password
         const encryptedPrivateKey = encrypt(privateKey, password);
 
+        // Create user in mailserver
+        const createMail = await mcc.addMailbox({
+            active: 1,
+            password: password,
+            password2: password,
+            quota: 1024,
+            domain: domain.replace("@", ""),
+            name: username,
+            local_part: username,
+        })
+
+        if (!createMail) {
+            return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
+        }
+
+        // Set rate limit for user
+        const updateRateLimit = await mcc.rateLimitMailbox({
+            attr: {
+                rl_value: "100",
+                rl_frame: "d",
+              },
+              items: [
+                fqe,
+              ],
+            });
+
+        if (!updateRateLimit) {
+            return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
+        }
+
+        // Create user in database
         const newUser = new User({
             user_id: generateUID(),
             username: username,
