@@ -346,9 +346,7 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
             </a>{" "}
             and{" "}
             <a
-              href={
-                process.env.NEXT_PUBLIC_MAIN_DOMAIN + "/privacy"
-              }
+              href={process.env.NEXT_PUBLIC_MAIN_DOMAIN + "/privacy"}
               className="text-blue-500 hover:text-blue-600"
             >
               Privacy Policy

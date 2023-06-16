@@ -8,16 +8,21 @@ body {
 
 /* css file or style tag in head of your html */
 @keyframes gradient-x {
-  0% {background-position: 0% 50%;}
-  50% {background-position: 100% 50%;}
-  100% {background-position: 0% 50%;}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .animate-gradient-x {
   background: linear-gradient(20deg, #11141f, #1d233d);
   background-size: 200% 200%;
   animation: gradient-x 10s ease infinite;
-
 }
 
 /* for settings page dashboard */
