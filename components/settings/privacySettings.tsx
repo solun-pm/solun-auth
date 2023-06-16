@@ -50,6 +50,13 @@ const PublicKeyModal = ({isOpen, onClose, onDownload}: any) => (
               </p>
             </div>
             <div className="mt-4">
+            <button
+                        type="button"
+                        className="bg-gray-500 hover:bg-gray-600 text-white font-bold px-3 py-3 rounded transition duration-200 mt-4 mr-2"
+                        onClick={onClose}
+                      >
+                        Cancel
+                      </button>
               <button
                 type="button"
                 className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-3 rounded transition duration-200"
@@ -125,6 +132,13 @@ const PrivateKeyModal = ({isOpen, onClose, onValidate, password, setPassword}: a
                   </div>
             </div>
             <div className="mt-4">
+            <button
+                        type="button"
+                        className="bg-gray-500 hover:bg-gray-600 text-white font-bold px-3 py-3 rounded transition duration-200 mt-4 mr-2"
+                        onClick={onClose}
+                      >
+                        Cancel
+                      </button>
               <button
                 type="button"
                 className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-3 rounded transition duration-200"
@@ -346,8 +360,9 @@ const toggleBetaFeatures = async () => {
       <div className="mt-6">
         <h3 className="text-lg font-semibold mb-2">Beta Features</h3>
         <p className="text-md mb-4 text-slate-300">
-          You can enable beta features to test out new features before they are released to the public.
-        </p>
+          You can enable beta features to test out new features before they are released to the production environment.
+          This option is also called "Public Beta".
+          </p>
         <div className="flex justify-between gap-4">
           {!betaFeatures ? (
           <button
