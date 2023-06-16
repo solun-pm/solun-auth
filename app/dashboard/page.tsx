@@ -4,7 +4,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navigation from '@/components/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faDatabase, faBolt, faUser, faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import toast, { Toaster } from 'react-hot-toast';
 import { generateTempToken } from '@/utils/generate';
 import { stringify } from 'querystring';
@@ -13,6 +13,7 @@ const DashboardPage = () => {
   const router = useRouter();
   const [userInfo, setUserInfo] = useState(null) as any;
   const [userDetails, setUserDetails] = useState(null) as any;
+  const [showTooltipMailPro, setShowTooltipMailPro] = useState(false);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -110,15 +111,35 @@ const DashboardPage = () => {
               </h2>
               <div className="flex flex-wrap justify-between">
                   <div className="flex items-center mb-2 w-full md:w-1/2">
-                      <FontAwesomeIcon icon={faCheck} className="text-white mr-2"/>
+                      <FontAwesomeIcon icon={faDatabase} className="text-white mr-2"/>
                       <p className="text-white">50GB storage space</p>
                   </div>
                   <div className="flex items-center mb-2 w-full md:w-1/2">
-                      <FontAwesomeIcon icon={faCheck} className="text-white mr-2"/>
-                      <p className="text-white">10.000 Mails per day</p>
+                      <FontAwesomeIcon icon={faBolt} className="text-white mr-2"/>
+                      <p className="text-white">No Limits</p>
                   </div>
+                  <div className="flex items-center mb-2 w-full md:w-1/2">
+                      <FontAwesomeIcon icon={faUser} className="text-white mr-2"/>
+                      <p className="text-white">5 custom aliases</p>
+                  </div>
+                  <div className="flex items-center mb-2 w-full md:w-1/2">
+                      <FontAwesomeIcon icon={faUserSecret} className="text-white mr-2"/>
+                      <p className="text-white">Hide my E-Mail</p>
+                  </div>
+              </div>       
+              <div className="relative">
+              {showTooltipMailPro && 
+                  <div className="absolute w-64 left-1/2 transform md:-translate-x-72 -translate-x-52 -translate-y-20 bg-black text-white p-2 text-md rounded-md shadow-lg mt-2">
+                    This feature is currently in development. Mail Pro will be available in the near future.
+                  </div>
+                }
+                <button className="mt-4 bg-white text-blue-700 font-bold py-2 px-4 rounded hover:bg-blue-200 transition-colors duration-150"
+                  onMouseEnter={() => setShowTooltipMailPro(true)}
+                  onMouseLeave={() => setShowTooltipMailPro(false)}
+                >
+                  Learn More
+                </button>
               </div>
-              <button disabled className="mt-4 bg-white text-blue-700 font-bold py-2 px-4 rounded hover:bg-blue-200 transition-colors duration-150">Learn More</button>
           </div>
         </div>
         <div className="mt-8 text-center">
