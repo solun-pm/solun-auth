@@ -24,7 +24,7 @@ export async function generateTempToken(
 
     // @todo -> add fast login call from userDetails and check if enabled or not / then pwd passthrough or not
 
-    const resCheck = await fetch(`http://${process.env.NEXT_PUBLIC_AUTH_DOMAIN}/api/user/jwt`, {
+    const resCheck = await fetch(`${process.env.NEXT_PUBLIC_AUTH_DOMAIN}/api/user/jwt`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -41,6 +41,7 @@ export async function generateTempToken(
     }
 
     if (dataCheck.fqe !== fqe) {
+        console.error("Invalid token, please Login again");
         toast.error("Invalid token, please Login again");
         return;
     }
@@ -48,7 +49,7 @@ export async function generateTempToken(
       const tempToken = generateToken();
       const e2eeSecretKey = fast_login ? generateToken() : '';
       const encryptedPwd = fast_login ? encrypt(password, e2eeSecretKey) : '';
-      const res = await fetch(`http://${process.env.NEXT_PUBLIC_AUTH_DOMAIN}/api/db/saveTempToken`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH_DOMAIN}/api/db/saveTempToken`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,12 +73,12 @@ export async function generateTempToken(
 
       const redirectUrl = 
       fast_login ?
-      "https://" + process.env.NEXT_PUBLIC_WEBMAIL_AUTH_DOMAIN + tempToken + "/" + e2eeSecretKey
-      : "https://" + process.env.NEXT_PUBLIC_WEBMAIL_AUTH_DOMAIN + tempToken;
+      process.env.NEXT_PUBLIC_WEBMAIL_AUTH_DOMAIN + tempToken + "/" + e2eeSecretKey
+      : process.env.NEXT_PUBLIC_WEBMAIL_AUTH_DOMAIN + tempToken;
 
       return redirectUrl;
     } catch (error) {
-        console.error(error);
+      console.error(error);
       toast.error("Something went wrong");
       return 0;
     }
