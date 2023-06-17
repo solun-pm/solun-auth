@@ -112,4 +112,49 @@ module.exports.MailcowApiClient = class {
       return false;
     }
   }
+
+  async addAppPassword(mailbox: any): Promise<boolean> {
+      if (!mailbox) throw new Error("Mailbox must be provided as Mailbox Object");
+
+      const response = await fetch(`${this.baseurl}/api/v1/add/app-passwd`, {
+        method: "POST",
+        headers: {
+          "X-Api-Key": this.apikey,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(mailbox),
+      });
+
+      const responseData = await response.json();
+
+      if (responseData && responseData[0] && responseData[0].type === "success") {
+        return true;
+      } else {
+        console.error(responseData);
+        return false;
+      }
+    }
+
+  async deleteAppPassword(passwordId: string[]): Promise<boolean> {
+      if (!passwordId || !Array.isArray(passwordId)) throw new Error("Password ID(s) must be provided as an array of strings.");
+
+      const response = await fetch(`${this.baseurl}/api/v1/delete/app-passwd`, {
+        method: "POST",
+        headers: {
+          "X-Api-Key": this.apikey,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(passwordId),
+      });
+
+      const responseData = await response.json();
+
+      if (responseData && responseData[0] && responseData[0].type === "success") {
+        return true;
+      } else {
+        console.error(responseData);
+        return false;
+      }
+  }
+
 };
