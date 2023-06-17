@@ -96,7 +96,7 @@ const DashboardPage = () => {
 
     if (typeof url === "string") {
       toast.success("Redirecting to Webmail...");
-      window.open(url, "_blank");
+      router.push(url);
     }
   };
 

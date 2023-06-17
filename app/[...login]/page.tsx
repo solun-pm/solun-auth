@@ -125,7 +125,7 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
 
       if (data.redirect) {
         if (data.service === "Mail") {
-          window.location.href = data.redirectUrl;
+          router.push(data.redirectUrl)
         }
       } else {
         toast.success("Login successful!");
@@ -173,7 +173,7 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
 
       if (data.redirect) {
         if (data.service === "Mail") {
-          window.location.href = data.redirectUrl;
+          router.push(data.redirectUrl)
         }
       } else {
         toast.success("Login successful!");
