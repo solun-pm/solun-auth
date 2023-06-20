@@ -5,7 +5,7 @@ import { faLock, faKey } from "@fortawesome/free-solid-svg-icons";
 import QRCode from "qrcode.react";
 import { totp } from "otplib";
 import { KeyEncodings } from "otplib/core";
-import { generate2FASecretKey } from "@/utils/generate";
+import { generate2FASecretKey } from "solun-general-package";
 import toast from "react-hot-toast";
 const base32Decode = require("base32-decode");
 
@@ -38,7 +38,7 @@ function TwoFactorAuthentication({ userDetails, userInfo }: any) {
   };
 
   const generateSecret = () => {
-    const secret = generate2FASecretKey();
+    const secret = generate2FASecretKey() as any;
     const hexSecret = Buffer.from(base32Decode(secret, "RFC4648")).toString(
       "hex"
     );
@@ -59,7 +59,7 @@ function TwoFactorAuthentication({ userDetails, userInfo }: any) {
 
     if (isValid) {
       setEnableTwoFA(true);
-      const res = await fetch("/api/2fa/enable", {
+      const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/two_factor/enable", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +88,7 @@ function TwoFactorAuthentication({ userDetails, userInfo }: any) {
   };
 
   const disable2FA = async () => {
-    const res = await fetch("/api/2fa/disable", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/two_factor/disable", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -125,7 +125,7 @@ function TwoFactorAuthentication({ userDetails, userInfo }: any) {
   };
 
   const validate2FAPassword = async () => {
-    const res = await fetch("/api/user/validatepwd", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/validate_pwd", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
