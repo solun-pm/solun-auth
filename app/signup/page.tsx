@@ -35,7 +35,7 @@ const RegisterPage = () => {
     if (formData.username && formData.domain) {
       setStatus("loading");
       timer = setTimeout(async () => {
-        await fetch("/api/user/check", {
+        await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/check", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -97,7 +97,7 @@ const RegisterPage = () => {
     }
 
     try {
-      const res = await fetch("/api/user/create", {
+      const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

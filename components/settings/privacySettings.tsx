@@ -182,7 +182,7 @@ function PrivacySettings({ userDetails, userInfo }: any) {
   }, [userDetails]);
 
   const validatePassword = async () => {
-    const res = await fetch("/api/user/validatepwd", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/validate_pwd", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -243,7 +243,7 @@ function PrivacySettings({ userDetails, userInfo }: any) {
 
   const toggleFastLogin = async () => {
     setFastLoginLoading(true);
-    const res = await fetch("/api/user/fastLogin", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/fast_login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -269,7 +269,7 @@ function PrivacySettings({ userDetails, userInfo }: any) {
 
   const toggleBetaFeatures = async () => {
     setBetaFeaturesLoading(true);
-    const res = await fetch("/api/user/betaFeatures", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/beta_features", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

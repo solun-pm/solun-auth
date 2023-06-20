@@ -16,7 +16,7 @@ function ChangePassword({ userInfo }: any) {
     const currentPassword = event.target.currentPassword.value;
     const newPassword = event.target.newPassword.value;
 
-    const res = await fetch("/api/user/changepwd", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/change_pwd", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

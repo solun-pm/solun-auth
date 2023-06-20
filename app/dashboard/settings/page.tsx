@@ -23,7 +23,7 @@ const SettingsPage = () => {
         return;
       }
 
-      const response = await fetch("/api/user/jwt", {
+      const response = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/jwt_details", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +42,7 @@ const SettingsPage = () => {
       const data = await response.json();
       setUserInfo(data);
 
-      const detailsResponse = await fetch("/api/user/details", {
+      const detailsResponse = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/user_details", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -12,8 +12,7 @@ import {
   faUserSecret,
 } from "@fortawesome/free-solid-svg-icons";
 import toast, { Toaster } from "react-hot-toast";
-import { generateTempToken } from "@/utils/generate";
-import { stringify } from "querystring";
+import { generateTempToken } from "solun-general-package";
 
 const DashboardPage = () => {
   const router = useRouter();
@@ -30,7 +29,7 @@ const DashboardPage = () => {
         return;
       }
 
-      const response = await fetch("/api/user/jwt", {
+      const response = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/jwt_details", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +48,7 @@ const DashboardPage = () => {
       const data = await response.json();
       setUserInfo(data);
 
-      const detailsResponse = await fetch("/api/user/details", {
+      const detailsResponse = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/user_details", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
