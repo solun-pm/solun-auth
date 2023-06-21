@@ -180,7 +180,7 @@ const RegisterPage = () => {
               <select
                 name="domain"
                 onChange={handleChange}
-                className="bg-slate-950 p-2 w-1/2 focus:outline-none focus:border-transparent"
+                className="bg-slate-950 p-2 w-1/2 focus:outline-none focus:border-transparent appearance-none"
               >
                 <option value="">Select domain...</option>
                 {domains.map((domain, index) => (
