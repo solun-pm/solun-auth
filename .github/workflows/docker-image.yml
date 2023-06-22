@@ -12,9 +12,9 @@ name: Create and publish a Docker image
 on:
   push:
     branches:
-        - main
-        - dev
-        - docker
+      - main
+      - dev
+      - docker
   workflow_dispatch:
 
 env:
@@ -52,3 +52,15 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          
+      - name: Restart Node 1
+        run: |
+          curl -X POST ${{ secrets.WEBHOOK_DOMAIN }}/hooks/restart-app-1
+          
+      - name: Wait for server 1 to restart
+        run: |
+          sleep 60s
+
+      - name: Restart Node 2
+        run: |
+          curl -X POST ${{ secrets.WEBHOOK_DOMAIN }}/hooks/restart-app-2
