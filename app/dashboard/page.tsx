@@ -175,7 +175,7 @@ const DashboardPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               <div className="bg-slate-900 p-5 rounded-lg shadow-md">
                 <h2 className="text-xl font-bold mb-2">
-                  Webmail <span className="text-red-500">(Open Beta)</span>
+                  Webmail <span className="text-red-500">(Production Beta)</span>
                 </h2>
                 <p className="text-gray-400">
                   Send and receive encrypted mails
