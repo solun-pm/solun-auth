@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import toast, { Toaster } from "react-hot-toast";
 import { generateTempToken } from "solun-general-package";
+import Link from "next/link";
 
 const DashboardPage = () => {
   const router = useRouter();
@@ -21,7 +22,7 @@ const DashboardPage = () => {
   const [showTooltipMailPro, setShowTooltipMailPro] = useState(false);
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
+    /*const fetchUserInfo = async () => {
       const token = localStorage.getItem("jwt");
 
       if (!token) {
@@ -67,7 +68,9 @@ const DashboardPage = () => {
       setUserDetails(userDetailsData);
     };
 
-    fetchUserInfo();
+    fetchUserInfo();*/
+    setUserInfo({ username: "test", fqe: "2", user_id: "3" });
+    setUserDetails({ membership: "free", createdAt: "2021-01-01", fast_login: false });
   }, []);
 
   if (!userInfo || !userDetails) {
@@ -82,6 +85,7 @@ const DashboardPage = () => {
       day: "numeric",
     }
   );
+
 
   const webmailDirectLogin = async () => {
     const url = await generateTempToken(
@@ -175,27 +179,26 @@ const DashboardPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               <div className="bg-slate-900 p-5 rounded-lg shadow-md">
                 <h2 className="text-xl font-bold mb-2">
-                  Webmail <Link href="https://solun.pm/features">
-                <span className="ml-2 inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
-                  Production Beta
-                </span>
-                </Link>
+                  Webmail
                 </h2>
                 <p className="text-gray-400">
                   Send and receive encrypted mails
                 </p>
-                <div className="flex items-center justify-center flex-col mt-4 gap-2">
+                <div className="flex items-center justify-center flex-col gap-2">
                 <a
                   onClick={webmailDirectLogin}
                   className="text-blue-500 hover:text-blue-400 cursor-pointer"
                 >
-                  Go to Webmail
+                  Go to Webmail 
                 </a>
+                <Link href="https://solun.pm/features">
+                  <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">Production Beta</span>
+                </Link>
                 </div>
               </div>
               <div className="bg-slate-900 p-5 rounded-lg shadow-md">
                 <h2 className="text-xl font-bold mb-2">Encrypt Message</h2>
-                <p className="text-gray-400">Encrypt a message for someone</p>
+                <p className="text-gray-400">Send an encrypted message to your colleagues and share private information</p>
                 <a
                   href={process.env.NEXT_PUBLIC_MAIN_DOMAIN + "/msg/"}
                   className="text-blue-500 hover:text-blue-400"
@@ -205,7 +208,7 @@ const DashboardPage = () => {
               </div>
               <div className="bg-slate-900 p-5 rounded-lg shadow-md">
                 <h2 className="text-xl font-bold mb-2">Upload File</h2>
-                <p className="text-gray-400">Upload a file to be encrypted</p>
+                <p className="text-gray-400">Upload a file to Solun and let us encrypt it for you and send it to your colleagues</p>
                 <a
                   href={process.env.NEXT_PUBLIC_MAIN_DOMAIN + "/file/"}
                   className="text-blue-500 hover:text-blue-400"
