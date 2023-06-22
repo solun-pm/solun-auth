@@ -175,17 +175,23 @@ const DashboardPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               <div className="bg-slate-900 p-5 rounded-lg shadow-md">
                 <h2 className="text-xl font-bold mb-2">
-                  Webmail <span className="text-red-500">(Production Beta)</span>
+                  Webmail <Link href="https://solun.pm/features">
+                <span className="ml-2 inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+                  Production Beta
+                </span>
+                </Link>
                 </h2>
                 <p className="text-gray-400">
                   Send and receive encrypted mails
                 </p>
+                <div className="flex items-center justify-center flex-col mt-4 gap-2">
                 <a
                   onClick={webmailDirectLogin}
                   className="text-blue-500 hover:text-blue-400 cursor-pointer"
                 >
                   Go to Webmail
                 </a>
+                </div>
               </div>
               <div className="bg-slate-900 p-5 rounded-lg shadow-md">
                 <h2 className="text-xl font-bold mb-2">Encrypt Message</h2>
