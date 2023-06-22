@@ -22,7 +22,7 @@ const DashboardPage = () => {
   const [showTooltipMailPro, setShowTooltipMailPro] = useState(false);
 
   useEffect(() => {
-    /*const fetchUserInfo = async () => {
+    const fetchUserInfo = async () => {
       const token = localStorage.getItem("jwt");
 
       if (!token) {
@@ -68,9 +68,7 @@ const DashboardPage = () => {
       setUserDetails(userDetailsData);
     };
 
-    fetchUserInfo();*/
-    setUserInfo({ username: "test", fqe: "2", user_id: "3" });
-    setUserDetails({ membership: "free", createdAt: "2021-01-01", fast_login: false });
+    fetchUserInfo();
   }, []);
 
   if (!userInfo || !userDetails) {
