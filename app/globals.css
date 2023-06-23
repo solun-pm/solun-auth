@@ -29,3 +29,69 @@ body {
 .align-start {
   align-content: start;
 }
+
+
+/* Captcha */
+
+.frc-captcha * {
+  /* Mostly a CSS reset so existing website styles don't clash */
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-align: initial;
+  border-radius: px;
+  filter: none !important;
+  transition: none !important;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.2;
+  text-decoration: none;
+  background-color: initial;
+  color: #222;
+}
+
+/* Solun theme */
+
+.solun.frc-captcha {
+  color: #fff;
+  background-color: rgb(15 23 42);
+  border-color: rgb(59 130 246);
+}
+
+.solun.frc-captcha * {
+  color: #fff;
+}
+
+.solun.frc-captcha button {
+  background-color: #444;
+}
+
+.solun .frc-icon {
+  fill: rgb(59 130 246);
+  stroke: rgb(59 130 246);
+}
+
+.solun .frc-progress {
+  background-color: #444;
+}
+
+.solun .frc-progress::-webkit-progress-bar {
+  background: #444;
+}
+
+.solun .frc-progress::-webkit-progress-value {
+  background: rgb(59 130 246);
+}
+
+.solun .frc-progress::-moz-progress-bar {
+  background: rgb(59 130 246);
+}
+
+@keyframes frc-fade-in {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
