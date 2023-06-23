@@ -11,6 +11,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
+import { FriendlyCaptcha } from "@/components/captcha";
+
+const { version } = require("../../package.json");
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -29,6 +32,8 @@ const RegisterPage = () => {
   const [status, setStatus] = useState("idle");
   const [exists, setExists] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [disabled, setDisabled] = useState(true)
+  const [solution, setSolution] = useState(null)
 
   useEffect(() => {
     let timer: any;
@@ -107,6 +112,7 @@ const RegisterPage = () => {
           domain: formData.domain,
           password: formData.password,
           confirmPassword: formData.confirmPassword,
+          solution: solution,
         }),
       });
 
@@ -215,10 +221,13 @@ const RegisterPage = () => {
               />
             </div>
           </div>
+          <div className="mb-4 flex justify-center">
+            <FriendlyCaptcha setDisabled={setDisabled} setSolution={setSolution} />
+          </div>
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-3 rounded transition duration-200 flex justify-center items-center"
-            disabled={!isValidForm() || isSubmitting}
+            disabled={!isValidForm() || isSubmitting || disabled}
           >
             {isSubmitting && (
               <FontAwesomeIcon
@@ -253,6 +262,9 @@ const RegisterPage = () => {
               Privacy Policy
             </a>
             .
+          </p>
+          <p className="text-sm mt-4 text-slate-400">
+            Solun Auth {version}
           </p>
         </div>
       </div>
