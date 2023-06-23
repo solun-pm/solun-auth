@@ -13,6 +13,8 @@ import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import { FriendlyCaptcha } from "@/components/captcha";
 
+const { version } = require("../../package.json");
+
 const RegisterPage = () => {
   const router = useRouter();
 
@@ -260,6 +262,9 @@ const RegisterPage = () => {
               Privacy Policy
             </a>
             .
+          </p>
+          <p className="text-sm mt-4 text-slate-400">
+            Solun Auth {version}
           </p>
         </div>
       </div>
