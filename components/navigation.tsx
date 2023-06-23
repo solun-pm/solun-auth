@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
+import { version } from '../package.json';
 
 const Navigation = () => {
   const router = useRouter();
@@ -40,6 +41,9 @@ const Navigation = () => {
         >
           Settings
         </button>
+        <div className="ml-auto text-white font-bold py-2 px-4 rounded transition-all">
+          {version}
+        </div>
         <button
           onClick={handleLogout}
           className="ml-auto text-white font-bold py-2 px-4 rounded transition-all hover:bg-blue-500"
