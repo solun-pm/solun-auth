@@ -20,6 +20,7 @@ const DashboardPage = () => {
   const [userInfo, setUserInfo] = useState(null) as any;
   const [userDetails, setUserDetails] = useState(null) as any;
   const [showTooltipMailPro, setShowTooltipMailPro] = useState(false);
+  const [showTooltipWebmail, setShowTooltipWebmail] = useState(false);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -183,15 +184,25 @@ const DashboardPage = () => {
                   Send and receive encrypted mails
                 </p>
                 <div className="flex items-center justify-center flex-col gap-2">
-                <a
-                  onClick={webmailDirectLogin}
-                  className="text-blue-500 hover:text-blue-400 cursor-pointer"
+                {showTooltipWebmail && (
+                  <div className="absolute w-64 left-1/2 transform md:-translate-x-72 -translate-x-52 -translate-y-20 bg-black text-white p-2 text-md rounded-md shadow-lg mt-2">
+                    This feature is currently in development. You can already use your Mail in software like Thunderbird or Outlook.
+                    But without Soluns security features.
+                  </div>
+                )}
+                <button
+                  /*onClick={webmailDirectLogin}*/
+                  className="text-blue-500 hover:text-slate-300 cursor-pointer"
+                  onMouseEnter={() => setShowTooltipWebmail(true)}
+                  onMouseLeave={() => setShowTooltipWebmail(false)}
                 >
                   Go to Webmail 
-                </a>
+                </button>
+                {/*
                 <Link href="https://solun.pm/features">
                   <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">Production Beta</span>
                 </Link>
+                */}
                 </div>
               </div>
               <div className="bg-slate-900 p-5 rounded-lg shadow-md">
