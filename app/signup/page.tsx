@@ -135,12 +135,16 @@ const RegisterPage = () => {
   };
 
   // TODO: Move to config file.
-  const domains = [
+  /*const domains = [
     "@solun.pm",
     "@6crypt.com",
     "@seal.pm",
     "@xolus.de",
     "@cipher.pm",
+  ];*/
+
+  const domains = [
+    "@solun.pm"
   ];
   return (
     <div className="flex items-center justify-center py-8 px-2 min-h-screen animate-gradient-x">

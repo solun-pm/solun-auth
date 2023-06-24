@@ -181,15 +181,9 @@ const DashboardPage = () => {
                   Webmail
                 </h2>
                 <p className="text-gray-400">
-                  Send and receive encrypted mails
+                  This feature is currently in development. You can already use your Mail in software like Thunderbird or Outlook.
                 </p>
                 <div className="flex items-center justify-center flex-col gap-2">
-                {showTooltipWebmail && (
-                  <div className="absolute w-64 left-1/2 transform md:-translate-x-72 -translate-x-52 -translate-y-20 bg-black text-white p-2 text-md rounded-md shadow-lg mt-2">
-                    This feature is currently in development. You can already use your Mail in software like Thunderbird or Outlook.
-                    But without Soluns security features.
-                  </div>
-                )}
                 <button
                   /*onClick={webmailDirectLogin}*/
                   className="text-blue-500 hover:text-slate-300 cursor-pointer"
