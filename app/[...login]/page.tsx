@@ -22,12 +22,16 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
   const [serviceProvider, setServiceProvider] = useState("");
 
   // TODO: Move this to a config file.
-  const domains = [
+  /*const domains = [
     "@solun.pm",
     "@6crypt.com",
     "@seal.pm",
     "@xolus.de",
     "@cipher.pm",
+  ];*/
+
+  const domains = [
+    "@solun.pm"
   ];
 
   const [suggestedDomain, setSuggestedDomain] = useState("");
