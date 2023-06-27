@@ -14,63 +14,14 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import { generateTempToken } from "solun-general-package";
 import Link from "next/link";
+import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
 
 const DashboardPage = () => {
   const router = useRouter();
-  const [userInfo, setUserInfo] = useState(null) as any;
-  const [userDetails, setUserDetails] = useState(null) as any;
   const [showTooltipMailPro, setShowTooltipMailPro] = useState(false);
   const [showTooltipWebmail, setShowTooltipWebmail] = useState(false);
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      const token = localStorage.getItem("jwt");
-
-      if (!token) {
-        router.push("/login");
-        return;
-      }
-
-      const response = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/jwt_details", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token: token,
-        }),
-      });
-
-      if (!response.ok) {
-        localStorage.removeItem("jwt");
-        router.push("/login");
-        return;
-      }
-
-      const data = await response.json();
-      setUserInfo(data);
-
-      const detailsResponse = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/user_details", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: data.user_id,
-        }),
-      });
-
-      if (!detailsResponse.ok) {
-        localStorage.removeItem("jwt");
-        router.push("/login");
-        return;
-      }
-      const userDetailsData = await detailsResponse.json();
-      setUserDetails(userDetailsData);
-    };
-
-    fetchUserInfo();
-  }, []);
+  const { userInfo, userDetails } = useFetchUserInfo() as any;
 
   if (!userInfo || !userDetails) {
     return null;
@@ -146,7 +97,7 @@ const DashboardPage = () => {
                 </div>
                 <div className="flex items-center mb-2 w-full md:w-1/2">
                   <FontAwesomeIcon icon={faUser} className="text-white mr-2" />
-                  <p className="text-white">5 custom aliases</p>
+                  <p className="text-white">Custom aliases</p>
                 </div>
                 <div className="flex items-center mb-2 w-full md:w-1/2">
                   <FontAwesomeIcon
