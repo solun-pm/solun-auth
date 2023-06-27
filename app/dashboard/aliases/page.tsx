@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Navigation from "@/components/navigation";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 import AliasCard from "@/components/aliases/aliasCard";
 import AliasesTopBar from "@/components/aliases/aliasTopBar";
@@ -33,10 +33,16 @@ const AliasesPage = () => {
       }),
     });
     const data = await res.json();
-    setAliases(data);
+    
+    if (!res.ok) {
+      toast.error('Failed to fetch aliases');
+      return;
+    }
+
+    return data;
   };
 
-  console.log(aliases);
+  console.log(getAliases());
 
   const aliasesToShow = aliases.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage);
 
