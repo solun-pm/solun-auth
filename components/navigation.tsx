@@ -59,6 +59,7 @@ const Navigation = () => {
             >
               Aliases
             </button>
+            {/*
             <button
               onClick={goToDomains}
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
@@ -69,6 +70,7 @@ const Navigation = () => {
             >
               Domains
             </button>
+            */}
           </div>
           <button
             onClick={handleLogout}
