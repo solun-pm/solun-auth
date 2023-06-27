@@ -32,8 +32,9 @@ const AliasesPage = () => {
         user_id: userInfo.user_id,
       }),
     });
+    console.log(res)
     const data = await res.json();
-    
+    console.log(data)
     if (!res.ok) {
       toast.error('Failed to fetch aliases');
       return;
@@ -42,7 +43,7 @@ const AliasesPage = () => {
     return data;
   };
 
-  console.log(getAliases());
+  getAliases();
 
   const aliasesToShow = aliases.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage);
 
