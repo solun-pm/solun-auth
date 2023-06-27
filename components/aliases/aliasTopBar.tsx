@@ -5,7 +5,7 @@ import { faPlus, faEnvelope, faUser, faGlobe, faCircleNotch } from "@fortawesome
 import { generateAliasName } from 'solun-general-package';
 import toast from "react-hot-toast";
 
-const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
+const AliasesTopBar = ({ userInfo, aliasCount, refreshAliases }: any) => {
   const [isOpen, setIsOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const [selectedDomain, setSelectedDomain] = useState("");
@@ -13,15 +13,6 @@ const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
   const [goto, setGoto] = useState("");
   const [addAliasLoading, setAddAliasLoading] = useState(false);
   const [domainNames, setDomainNames] = useState([]) as any;
-
-  const openModal = () => {
-    setAliasName(generateAliasName());
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
 
   useEffect(() => {
     async function fetchDomainNames() {
@@ -41,7 +32,16 @@ const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
 
     fetchDomainNames();
     setGoto(userInfo.fqe);
-  }, []);
+  }, [userInfo.user_id, userInfo.fqe]);
+
+  const openModal = () => {
+    setAliasName(generateAliasName());
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   const handleSubmit = async () => {
     setAddAliasLoading(true);
@@ -76,6 +76,7 @@ const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
     }
 
     toast.success('Alias added successfully');
+    refreshAliases();
     setAddAliasLoading(false);
     setAliasName("");
     setSelectedDomain("");

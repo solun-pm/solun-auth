@@ -35,7 +35,7 @@ const AliasesPage = () => {
     }
 
     setAliases(data);
-  }, [userInfo]);
+  }, [userInfo.user_id]);
 
   useEffect(() => {
     getAliases();
@@ -53,7 +53,7 @@ const AliasesPage = () => {
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl">
         <Navigation />
         <h1 className="text-2xl font-bold">Manage Aliases</h1>
-        <AliasesTopBar userInfo={userInfo} aliasCount={aliases.length}/>
+        <AliasesTopBar userInfo={userInfo} aliasCount={aliases.length} refreshAliases={getAliases} />
         {aliases.length === 0 ? (
           <div className="text-slate-300 text-center mt-16 mb-8 text-md">
             You don't have any aliases yet. They're handy, why not add some?
