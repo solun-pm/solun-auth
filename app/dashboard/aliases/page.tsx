@@ -34,7 +34,7 @@ const AliasesPage = () => {
     });
     const data = await res.json();
     setAliases(data);
-  }, [userInfo.user_id]);
+  }, []);
 
   useEffect(() => {
     getAliases();
