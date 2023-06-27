@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Navigation from "@/components/navigation";
 import { Toaster } from "react-hot-toast";
@@ -16,12 +16,29 @@ const AliasesPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4*2;
   const { userInfo, userDetails } = useFetchUserInfo() as any;
+  const [aliases, setAliases] = useState([]) as any;
 
   if (!userInfo || !userDetails) {
     return null;
   }
 
-  const aliases = [] as any;
+  const getAliases = useCallback(async () => {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/get_alias", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: userInfo.user_id,
+      }),
+    });
+    const data = await res.json();
+    setAliases(data);
+  }, [userInfo.user_id]);
+
+  useEffect(() => {
+    getAliases();
+  }, [getAliases]);
 
   const aliasesToShow = aliases.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage);
 
@@ -31,7 +48,7 @@ const AliasesPage = () => {
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl">
         <Navigation />
         <h1 className="text-2xl font-bold">Manage Aliases</h1>
-        <AliasesTopBar userInfo={userInfo} aliasCount={aliases.length} />
+        <AliasesTopBar userInfo={userInfo} aliasCount={aliases.length} refreshAliases={getAliases} />
         {aliases.length === 0 ? (
           <div className="text-slate-300 text-center mt-16 mb-8 text-md">
             You don't have any aliases yet. They're handy, why not add some?

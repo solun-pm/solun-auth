@@ -5,7 +5,7 @@ import { faPlus, faEnvelope, faUser, faGlobe, faCircleNotch } from "@fortawesome
 import { generateAliasName } from 'solun-general-package';
 import toast from "react-hot-toast";
 
-const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
+const AliasesTopBar = ({ userInfo, aliasCount, refreshAliases }: any) => {
   const [isOpen, setIsOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const [selectedDomain, setSelectedDomain] = useState("");
@@ -77,6 +77,7 @@ const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
 
     toast.success('Alias added successfully');
     setAddAliasLoading(false);
+    refreshAliases();
     setAliasName("");
     setSelectedDomain("");
     closeModal();
