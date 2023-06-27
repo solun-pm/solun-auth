@@ -32,7 +32,7 @@ const AliasesTopBar = ({ userInfo, aliasCount, refreshAliases }: any) => {
 
     fetchDomainNames();
     setGoto(userInfo.fqe);
-  }, [userInfo.user_id, userInfo.fqe]);
+  }, []);
 
   const openModal = () => {
     setAliasName(generateAliasName());
