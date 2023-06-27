@@ -18,10 +18,6 @@ const AliasesPage = () => {
   const { userInfo, userDetails } = useFetchUserInfo() as any;
   const [aliases, setAliases] = useState([]) as any;
 
-  if (!userInfo || !userDetails) {
-    return null;
-  }
-
   const getAliases = useCallback(async () => {
     const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/get_alias", {
       method: "POST",
@@ -44,6 +40,10 @@ const AliasesPage = () => {
   useEffect(() => {
     getAliases();
   }, [getAliases]);
+
+  if (!userInfo || !userDetails) {
+    return null;
+  }
 
   const aliasesToShow = aliases.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage);
 
