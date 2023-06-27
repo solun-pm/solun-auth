@@ -36,9 +36,9 @@ const AliasesPage = () => {
     setAliases(data);
   }, []);
 
-  useEffect(() => {
-    getAliases();
-  }, [getAliases]);
+  console.log(aliases);
+
+  getAliases();
 
   const aliasesToShow = aliases.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage);
 
@@ -48,6 +48,7 @@ const AliasesPage = () => {
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl">
         <Navigation />
         <h1 className="text-2xl font-bold">Manage Aliases</h1>
+        <AliasesTopBar userInfo={userInfo} aliasCount={aliases.length} refreshAliases={getAliases} />
         {aliases.length === 0 ? (
           <div className="text-slate-300 text-center mt-16 mb-8 text-md">
             You don't have any aliases yet. They're handy, why not add some?
@@ -56,7 +57,7 @@ const AliasesPage = () => {
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
               {aliasesToShow.map((alias: any, index: any) => (
-                <AliasCard key={index} aliasName={alias.aliasName} domain={alias.domain} />
+                <AliasCard key={index} aliasName={alias.alias_name} domain={alias.domain} />
               ))}
             </div>
             <div className="flex justify-center mt-4">
