@@ -8,6 +8,8 @@ import { Toaster } from "react-hot-toast";
 import AliasCard from "@/components/aliases/aliasCard";
 import AliasesTopBar from "@/components/aliases/aliasTopBar";
 
+import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
+
 const AliasesPage = () => {
   const router = useRouter();
 
@@ -16,9 +18,7 @@ const AliasesPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4*2;
 
-  const aliases = [
-    { aliasName: "test", domain: "test.com" },
-  ];
+  const aliases = [] as any;
 
   const aliasesToShow = aliases.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage);
 
@@ -30,13 +30,13 @@ const AliasesPage = () => {
         <h1 className="text-2xl font-bold">Manage Aliases</h1>
         <AliasesTopBar aliasCount={aliases.length} />
         {aliases.length === 0 ? (
-          <div className="text-slate-300 text-center mt-16 text-md">
+          <div className="text-slate-300 text-center mt-16 mb-8 text-md">
             You don't have any aliases yet. They're handy, why not add some?
           </div>
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
-              {aliasesToShow.map((alias, index) => (
+              {aliasesToShow.map((alias: any, index: any) => (
                 <AliasCard key={index} aliasName={alias.aliasName} domain={alias.domain} />
               ))}
             </div>
