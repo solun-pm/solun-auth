@@ -13,10 +13,13 @@ import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
 const AliasesPage = () => {
   const router = useRouter();
 
-  const [userInfo, setUserInfo] = useState(null) as any;
-  const [userDetails, setUserDetails] = useState(null) as any;
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4*2;
+  const { userInfo, userDetails } = useFetchUserInfo() as any;
+
+  if (!userInfo || !userDetails) {
+    return null;
+  }
 
   const aliases = [] as any;
 
@@ -28,7 +31,7 @@ const AliasesPage = () => {
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl">
         <Navigation />
         <h1 className="text-2xl font-bold">Manage Aliases</h1>
-        <AliasesTopBar aliasCount={aliases.length} />
+        <AliasesTopBar userInfo={userInfo} aliasCount={aliases.length} />
         {aliases.length === 0 ? (
           <div className="text-slate-300 text-center mt-16 mb-8 text-md">
             You don't have any aliases yet. They're handy, why not add some?
