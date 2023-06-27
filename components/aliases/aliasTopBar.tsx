@@ -1,4 +1,4 @@
-import { useState, Fragment, useRef } from 'react';
+import { useState, Fragment, useRef, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faEnvelope, faUser, faGlobe, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
@@ -12,7 +12,7 @@ const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
   const [aliasName, setAliasName] = useState("");
   const [goto, setGoto] = useState("");
   const [addAliasLoading, setAddAliasLoading] = useState(false);
-  const [setDomainNames, domainNames] = useState([]) as any;
+  const [domainNames, setDomainNames] = useState([]) as any;
 
   const openModal = () => {
     setAliasName(generateAliasName());
@@ -23,24 +23,25 @@ const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
     setIsOpen(false);
   };
 
-  async function getDomainNames() {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/get_domains", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: userInfo.user_id,
-      }),
-    });
+  useEffect(() => {
+    async function fetchDomainNames() {
+      const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/get_domains", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userInfo.user_id,
+        }),
+      });
 
-    const data = await res.json();
-    return data;
-  }
+      const data = await res.json();
+      setDomainNames(data);
+    }
 
-  setDomainNames(getDomainNames());
-  setGoto(userInfo.fqe);
-
+    fetchDomainNames();
+    setGoto(userInfo.fqe);
+  }, []);
 
   const handleSubmit = async () => {
     setAddAliasLoading(true);
@@ -48,7 +49,7 @@ const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
       toast.error("Please enter an alias name");
       setAddAliasLoading(false);
       return;
-      }
+    }
     if (selectedDomain === "") {
       toast.error("Please select a domain");
       setAddAliasLoading(false);
@@ -68,7 +69,6 @@ const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
       }),
     });
 
-    const data = res.json();
     if (!res.ok) {
       toast.error('Something went wrong');
       setAddAliasLoading(false);
@@ -77,6 +77,9 @@ const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
 
     toast.success('Alias added successfully');
     setAddAliasLoading(false);
+    setAliasName("");
+    setSelectedDomain("");
+    closeModal();
   }
 
   return (
