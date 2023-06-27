@@ -10,6 +10,7 @@ const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
   const cancelButtonRef = useRef(null);
   const [selectedDomain, setSelectedDomain] = useState("");
   const [aliasName, setAliasName] = useState("");
+  const [goto, setGoto] = useState("");
   const [addAliasLoading, setAddAliasLoading] = useState(false);
   const [setDomainNames, domainNames] = useState([]) as any;
 
@@ -23,7 +24,7 @@ const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
   };
 
   async function getDomainNames() {
-    const data = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/get_domains", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/get_domains", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,23 +34,49 @@ const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
       }),
     });
 
-    const res = await data.json();
-    return res;
+    const data = await res.json();
+    return data;
   }
 
   setDomainNames(getDomainNames());
+  setGoto(userInfo.fqe);
 
 
-  const handleSubmit = () => {
-
+  const handleSubmit = async () => {
+    setAddAliasLoading(true);
     if (aliasName === "") {
       toast.error("Please enter an alias name");
+      setAddAliasLoading(false);
       return;
-    }
+      }
     if (selectedDomain === "") {
       toast.error("Please select a domain");
+      setAddAliasLoading(false);
       return;
     }
+
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/add_alias", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: userInfo.user_id,
+        aliasName: aliasName,
+        domain: selectedDomain,
+        goto: goto,
+      }),
+    });
+
+    const data = res.json();
+    if (!res.ok) {
+      toast.error('Something went wrong');
+      setAddAliasLoading(false);
+      return;
+    }
+
+    toast.success('Alias added successfully');
+    setAddAliasLoading(false);
   }
 
   return (
@@ -101,6 +128,9 @@ const AliasesTopBar = ({ userInfo, aliasCount }: any) => {
             >
               <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-slate-900 shadow-xl rounded-2xl">
                 <h1 className="text-white text-2xl">Add a new Alias</h1>
+                <p className="text-slate-300 text-md mt-2 mb-4 break-words">
+                  You can add a new alias here, at the moment you can only add aliases for your solun email.
+                </p>
                 <div className="my-4">
                   <label className="text-slate-300 text-md">Alias Name</label>
                   <div className="flex items-center mt-1">
