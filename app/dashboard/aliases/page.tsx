@@ -22,7 +22,7 @@ const AliasesPage = () => {
     return null;
   }
 
-  const getAliases = async () => {
+  const getAliases = useCallback(async () => {
     const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/get_alias", {
       method: "POST",
       headers: {
@@ -32,18 +32,18 @@ const AliasesPage = () => {
         user_id: userInfo.user_id,
       }),
     });
-    console.log(res)
     const data = await res.json();
-    console.log(data)
     if (!res.ok) {
       toast.error('Failed to fetch aliases');
       return;
     }
 
-    return data;
-  };
+    setAliases(data);
+  }, [userInfo]);
 
-  getAliases();
+  useEffect(() => {
+    getAliases();
+  }, [getAliases]);
 
   const aliasesToShow = aliases.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage);
 
