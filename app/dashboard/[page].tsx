@@ -13,6 +13,7 @@ import { Toaster } from "react-hot-toast";
 const MainPage = () => {
   const router = useRouter();
   const { page } = router.query;
+  console.log(page);
 
   let Subpage;
 
