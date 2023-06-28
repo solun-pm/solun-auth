@@ -1,93 +1,66 @@
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import Loader from "./loader";
-import { usePathname } from 'next/navigation'
+import { useRouter } from "next/router";
 
 const Navigation = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const pathname = usePathname()
-
-  const navigate = (path: string) => {
-    router.push(path);
-  };
 
   const handleLogout = () => {
     localStorage.removeItem("jwt");
-    navigate("/login");
-  };
-
-  const goToOverview = () => {
-    navigate("/dash/overview");
-  };
-
-  const goToSettings = () => {
-    navigate("/dash/settings");
-  };
-
-  const goToAliases = () => {
-    navigate("/dash/aliases");
-  };
-
-  const goToDomains = () => {
-    navigate("/dash/domains");
+    router.push("/login");
   };
 
   return (
-      <>
-      {loading && <Loader />}
-        <nav className="flex flex-col md:flex-row md:justify-between items-center md:space-x-4 space-y-2 md:space-y-0 bg-slate-950 p-4 mb-4 rounded-lg shadow-xl">
-          <div className="flex flex-col md:flex-row justify-start md:space-x-4 space-y-2 md:space-y-0 w-full">
-            <button
-              onClick={goToOverview}
+    <>
+      <nav className="flex flex-col md:flex-row md:justify-between items-center md:space-x-4 space-y-2 md:space-y-0 bg-slate-950 p-4 mb-4 rounded-lg shadow-xl">
+        <div className="flex flex-col md:flex-row justify-start md:space-x-4 space-y-2 md:space-y-0 w-full">
+          <Link href="/dash/overview"
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                pathname === "/dash/overview" ? "bg-blue-500" : "hover:bg-blue-500"
+                router.pathname === "/dash/overview"
+                  ? "bg-blue-500"
+                  : "hover:bg-blue-500"
               }`}
             >
               Overview
-            </button>
-            <button
-              onClick={goToSettings}
+          </Link>
+          <Link href="/dash/settings"
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                pathname === "/dash/settings"
+                router.pathname === "/dash/settings"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
             >
               Settings
-            </button>
-            <button
-              onClick={goToAliases}
+          </Link>
+          <Link href="/dash/aliases"
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                pathname === "/dash/aliases"
+                router.pathname === "/dash/aliases"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
             >
               Aliases
-            </button>
-            {/*
-            <button
-              onClick={goToDomains}
+          </Link>
+          {/*
+          <Link href="/dash/domains"
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                pathname === "/dash/domains"
+                router.pathname === "/dash/domains"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
             >
               Domains
-            </button>
-            */}
-          </div>
-          <button
-            onClick={handleLogout}
-            className="text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center md:text-left hover:bg-blue-500 mt-4 md:mt-0"
-          >
-            Logout
-          </button>
-        </nav>
-      </>
+          </Link>
+          */}
+        </div>
+        <button
+          onClick={handleLogout}
+          className="text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center md:text-left hover:bg-blue-500 mt-4 md:mt-0"
+        >
+          Logout
+        </button>
+      </nav>
+    </>
   );
 };
 
