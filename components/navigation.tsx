@@ -1,16 +1,15 @@
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 import Loader from "./loader";
 
 const Navigation = () => {
   const router = useRouter();
-  const pathname = usePathname();
   const [loading, setLoading] = useState(false);
 
   const navigate = async (path: any) => {
     setLoading(true);
-    router.push(path);
+    await router.push(path);
     setLoading(false);
   };
 
@@ -43,7 +42,7 @@ const Navigation = () => {
             <button
               onClick={goToOverview}
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                pathname === "/dashboard" ? "bg-blue-500" : "hover:bg-blue-500"
+                router.pathname === "/dashboard" ? "bg-blue-500" : "hover:bg-blue-500"
               }`}
             >
               Overview
@@ -51,7 +50,7 @@ const Navigation = () => {
             <button
               onClick={goToSettings}
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                pathname === "/dashboard/settings"
+                router.pathname === "/dashboard/settings"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
@@ -61,7 +60,7 @@ const Navigation = () => {
             <button
               onClick={goToAliases}
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                pathname === "/dashboard/aliases"
+                router.pathname === "/dashboard/aliases"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
@@ -72,7 +71,7 @@ const Navigation = () => {
             <button
               onClick={goToDomains}
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                pathname === "/dashboard/domains"
+                router.pathname === "/dashboard/domains"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
