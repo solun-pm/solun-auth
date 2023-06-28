@@ -14,11 +14,17 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import { generateTempToken } from "solun-general-package";
 import Link from "next/link";
+import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
 
-const DashboardPage = ({userInfo, userDetails}: any) => {
+const DashboardPage = () => {
   const router = useRouter();
   const [showTooltipMailPro, setShowTooltipMailPro] = useState(false);
   const [showTooltipWebmail, setShowTooltipWebmail] = useState(false);
+  const { userInfo, userDetails } = useFetchUserInfo() as any;
+
+  if (!userInfo || !userDetails) {
+    return null;
+  }
 
   const memberSince = new Date(userDetails.createdAt).toLocaleDateString(
     "en-US",

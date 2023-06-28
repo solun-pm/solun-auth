@@ -21,13 +21,13 @@ const MainPage = ({params}: {params: { path: string }}) => {
   useEffect(() => {
     switch (params.path) {
       case 'overview':
-        setSubpage(<OverviewPage userInfo={userInfo} userDetails={userDetails} /> as any);
+        setSubpage(<OverviewPage /> as any);
         break;
       case 'settings':
-        setSubpage(<SettingsPage userInfo={userInfo} userDetails={userDetails} /> as any);
+        setSubpage(<SettingsPage /> as any);
         break;
       case 'aliases':
-        setSubpage(<AliasesPage userInfo={userInfo} userDetails={userDetails} /> as any);
+        setSubpage(<AliasesPage /> as any);
         break;
       default:
         router.push('/');
