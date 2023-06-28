@@ -19,19 +19,19 @@ const Navigation = () => {
   };
 
   const goToOverview = () => {
-    navigate("/dashboard");
+    navigate("/dash/overview");
   };
 
   const goToSettings = () => {
-    navigate("/dashboard/settings");
+    navigate("/dash/settings");
   };
 
   const goToAliases = () => {
-    navigate("/dashboard/aliases");
+    navigate("/dash/aliases");
   };
 
   const goToDomains = () => {
-    navigate("/dashboard/domains");
+    navigate("/dash/domains");
   };
 
   return (
@@ -42,7 +42,7 @@ const Navigation = () => {
             <button
               onClick={goToOverview}
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                pathname === "/dashboard" ? "bg-blue-500" : "hover:bg-blue-500"
+                pathname === "/dash/overview" ? "bg-blue-500" : "hover:bg-blue-500"
               }`}
             >
               Overview
@@ -50,7 +50,7 @@ const Navigation = () => {
             <button
               onClick={goToSettings}
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                pathname === "/dashboard/settings"
+                pathname === "/dash/settings"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
@@ -60,7 +60,7 @@ const Navigation = () => {
             <button
               onClick={goToAliases}
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                pathname === "/dashboard/aliases"
+                pathname === "/dash/aliases"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
@@ -71,7 +71,7 @@ const Navigation = () => {
             <button
               onClick={goToDomains}
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                pathname === "/dashboard/domains"
+                pathname === "/dash/domains"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}

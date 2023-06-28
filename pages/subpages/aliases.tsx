@@ -8,14 +8,11 @@ import toast, { Toaster } from "react-hot-toast";
 import AliasCard from "@/components/aliases/aliasCard";
 import AliasesTopBar from "@/components/aliases/aliasTopBar";
 
-import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
-
-const AliasesPage = () => {
+const AliasesPage = ({userInfo, userDetails}: any) => {
   const router = useRouter();
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4*2;
-  const { userInfo, userDetails } = useFetchUserInfo() as any;
   const [aliases, setAliases] = useState([]) as any;
 
   const getAliases = useCallback(async () => {
