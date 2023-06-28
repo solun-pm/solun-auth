@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import { usePathname } from 'next/navigation'
 
 const Navigation = () => {
   const router = useRouter();
+  const pathname = usePathname()
 
   const handleLogout = () => {
     localStorage.removeItem("jwt");
@@ -16,7 +18,7 @@ const Navigation = () => {
         <div className="flex flex-col md:flex-row justify-start md:space-x-4 space-y-2 md:space-y-0 w-full">
           <Link href="/dash/overview"
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                router.pathname === "/dash/overview"
+                pathname === "/dash/overview"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
@@ -25,7 +27,7 @@ const Navigation = () => {
           </Link>
           <Link href="/dash/settings"
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                router.pathname === "/dash/settings"
+                pathname === "/dash/settings"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
@@ -34,7 +36,7 @@ const Navigation = () => {
           </Link>
           <Link href="/dash/aliases"
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                router.pathname === "/dash/aliases"
+                pathname === "/dash/aliases"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
@@ -44,7 +46,7 @@ const Navigation = () => {
           {/*
           <Link href="/dash/domains"
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                router.pathname === "/dash/domains"
+                pathname === "/dash/domains"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
