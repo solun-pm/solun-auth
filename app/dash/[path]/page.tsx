@@ -9,7 +9,6 @@ const SettingsPage = lazy(() => import("@/pages/subpages/settings"));
 const AliasesPage = lazy(() => import("@/pages/subpages/aliases"));
 
 import { Toaster } from "react-hot-toast";
-import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
 
 import Loader from "@/components/loader";
 
@@ -22,23 +21,18 @@ const PageContent = ({ path }: any) => {
     case "aliases":
       return <AliasesPage />;
     default:
-      return <div>Page not found</div>;
+      return <Loader />;
   }
 };
 
 const MainPage = ({ params }: { params: { path: string } }) => {
   const router = useRouter();
-  const { userInfo, userDetails } = useFetchUserInfo() as any;
 
   useEffect(() => {
     if (!["overview", "settings", "aliases"].includes(params.path)) {
       router.push("/");
     }
   }, [params.path, router]);
-
-  if (!userInfo || !userDetails) {
-    return null;
-  }
 
   return (
     <div className="flex items-center justify-center min-h-screen p-6 animate-gradient-x">
