@@ -1,16 +1,16 @@
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Loader from "./loader";
+import { usePathname } from 'next/navigation'
 
 const Navigation = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const pathname = usePathname()
 
   const navigate = async (path: any) => {
-    setLoading(true);
     await router.push(path);
-    setLoading(false);
   };
 
   const handleLogout = () => {
@@ -42,7 +42,7 @@ const Navigation = () => {
             <button
               onClick={goToOverview}
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                router.pathname === "/dashboard" ? "bg-blue-500" : "hover:bg-blue-500"
+                pathname === "/dashboard" ? "bg-blue-500" : "hover:bg-blue-500"
               }`}
             >
               Overview
@@ -50,7 +50,7 @@ const Navigation = () => {
             <button
               onClick={goToSettings}
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                router.pathname === "/dashboard/settings"
+                pathname === "/dashboard/settings"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
@@ -60,7 +60,7 @@ const Navigation = () => {
             <button
               onClick={goToAliases}
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                router.pathname === "/dashboard/aliases"
+                pathname === "/dashboard/aliases"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
@@ -71,7 +71,7 @@ const Navigation = () => {
             <button
               onClick={goToDomains}
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                router.pathname === "/dashboard/domains"
+                pathname === "/dashboard/domains"
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
