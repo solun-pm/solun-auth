@@ -46,9 +46,9 @@ const MainPage = ({params}: {params: { path: string }}) => {
   return (
     <div className="flex items-center justify-center min-h-screen p-6 animate-gradient-x">
     <Toaster position="top-right" />
-      <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl min-h-[600px]">
-        <Navigation />
-        <Suspense fallback={<Loader />}>
+      <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl min-h-[750px]">
+      <Suspense fallback={<Loader />}>
+          <Navigation />
           {Subpage}
         </Suspense>
       </div>
