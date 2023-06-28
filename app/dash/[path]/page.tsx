@@ -1,3 +1,5 @@
+"use client";
+
 import { Suspense, lazy, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Navigation from "@/components/navigation";
