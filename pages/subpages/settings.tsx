@@ -7,9 +7,15 @@ import { Toaster } from "react-hot-toast";
 import TwoFactorAuthSetup from "@/components/settings/twoFactorAuthSetup";
 import ChangePassword from "@/components/settings/changePassword";
 import PrivacySettings from "@/components/settings/privacySettings";
+import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
 
-const SettingsPage = ({userInfo, userDetails}: any) => {
+const SettingsPage = () => {
   const router = useRouter();
+  const { userInfo, userDetails } = useFetchUserInfo() as any;
+
+  if (!userInfo || !userDetails) {
+    return null;
+  }
 
   return (
     <>
