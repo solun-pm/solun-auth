@@ -30,15 +30,15 @@ const MainPage = ({ params }: { params: { path: string } }) => {
   const router = useRouter();
   const { userInfo, userDetails } = useFetchUserInfo() as any;
 
-  if (!userInfo || !userDetails) {
-    return null;
-  }
-
   useEffect(() => {
     if (!["overview", "settings", "aliases"].includes(params.path)) {
       router.push("/");
     }
   }, [params.path, router]);
+
+  if (!userInfo || !userDetails) {
+    return null;
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen p-6 animate-gradient-x">
