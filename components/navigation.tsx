@@ -1,34 +1,43 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
+import Loader from "./loader";
 
 const Navigation = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const [loading, setLoading] = useState(false);
+
+  const navigate = async (path: any) => {
+    setLoading(true);
+    router.push(path);
+    setLoading(false);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("jwt");
-    router.push("/login");
+    navigate("/login");
   };
 
   const goToOverview = () => {
-    router.push("/dashboard");
+    navigate("/dashboard");
   };
 
   const goToSettings = () => {
-    router.push("/dashboard/settings");
+    navigate("/dashboard/settings");
   };
 
   const goToAliases = () => {
-    router.push("/dashboard/aliases");
+    navigate("/dashboard/aliases");
   };
 
   const goToDomains = () => {
-    router.push("/dashboard/domains");
+    navigate("/dashboard/domains");
   };
 
   return (
       <>
+      {loading && <Loader />}
         <nav className="flex flex-col md:flex-row md:justify-between items-center md:space-x-4 space-y-2 md:space-y-0 bg-slate-950 p-4 mb-4 rounded-lg shadow-xl">
           <div className="flex flex-col md:flex-row justify-start md:space-x-4 space-y-2 md:space-y-0 w-full">
             <button
