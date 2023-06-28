@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import "../app/globals.css";
 
 const Loader = () => {
   const [fadeIn, setFadeIn] = useState(true);
@@ -10,7 +11,7 @@ const Loader = () => {
 
   return (
     <div
-      className={`fixed inset-0 flex items-center justify-center bg-slate-800 transition-opacity duration-500 ${
+      className={`fixed inset-0 flex text-center items-center justify-center animate-gradient-x"> transition-opacity duration-500 ${
         fadeIn ? 'opacity-100' : 'opacity-0'
       }`}
     >
@@ -19,6 +20,7 @@ const Loader = () => {
         className="animate-pulse w-20 h-20"
         alt="Logo"
       />
+      Loading...
     </div>
   );
 };

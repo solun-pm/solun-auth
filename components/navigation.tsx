@@ -10,9 +10,7 @@ const Navigation = () => {
   const pathname = usePathname()
 
   const navigate = (path: string) => {
-    setLoading(true);
     router.push(path);
-    setLoading(false);
   };
 
   const handleLogout = () => {
