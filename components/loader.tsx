@@ -20,7 +20,6 @@ const Loader = () => {
         className="animate-pulse w-20 h-20"
         alt="Logo"
       />
-      Loading...
     </div>
   );
 };
