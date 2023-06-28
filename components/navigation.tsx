@@ -9,8 +9,10 @@ const Navigation = () => {
   const [loading, setLoading] = useState(false);
   const pathname = usePathname()
 
-  const navigate = async (path: any) => {
-    await router.push(path);
+  const navigate = (path: string) => {
+    setLoading(true);
+    router.push(path);
+    setLoading(false);
   };
 
   const handleLogout = () => {

@@ -136,7 +136,7 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
       } else {
         toast.success("Login successful!");
         localStorage.setItem("jwt", data.token);
-        router.push("/dashboard");
+        router.push("/dash/overview");
       }
     } catch (error) {
       toast.error("An error occurred. Please try again later.");
@@ -184,7 +184,7 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
       } else {
         toast.success("Login successful!");
         localStorage.setItem("jwt", data.token);
-        router.push("/dashboard");
+        router.push("/dash/overview");
       }
     } catch (error) {
       toast.error("An error occurred. Please try again later.");

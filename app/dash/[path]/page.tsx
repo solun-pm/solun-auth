@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import Navigation from "@/components/navigation";
 
@@ -11,6 +11,7 @@ import AliasesPage from "@/pages/subpages/aliases";
 import { Toaster } from "react-hot-toast";
 
 import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
+import Loader from "@/components/loader";
 
 const MainPage = ({params}: {params: { path: string }}) => {
   const router = useRouter();
@@ -47,7 +48,9 @@ const MainPage = ({params}: {params: { path: string }}) => {
     <Toaster position="top-right" />
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl">
         <Navigation />
-        {Subpage}
+        <Suspense fallback={<Loader />}>
+          {Subpage}
+        </Suspense>
       </div>
     </div>
   );
