@@ -11,6 +11,7 @@ import AliasesPage from "@/pages/aliases";
 import { Toaster } from "react-hot-toast";
 
 const MainPage = ({params}: {params: { path: string }}) => {
+  const router = useRouter();
   let Subpage;
 
   switch (params.path) {
