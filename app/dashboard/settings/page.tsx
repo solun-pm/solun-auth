@@ -7,62 +7,12 @@ import { Toaster } from "react-hot-toast";
 import TwoFactorAuthSetup from "@/components/settings/twoFactorAuthSetup";
 import ChangePassword from "@/components/settings/changePassword";
 import PrivacySettings from "@/components/settings/privacySettings";
+import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
 
 const SettingsPage = () => {
   const router = useRouter();
 
-  const [userInfo, setUserInfo] = useState(null) as any;
-  const [userDetails, setUserDetails] = useState(null) as any;
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      const token = localStorage.getItem("jwt");
-
-      if (!token) {
-        router.push("/login");
-        return;
-      }
-
-      const response = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/jwt_details", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token: token,
-        }),
-      });
-
-      if (!response.ok) {
-        localStorage.removeItem("jwt");
-        router.push("/login");
-        return;
-      }
-
-      const data = await response.json();
-      setUserInfo(data);
-
-      const detailsResponse = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/user_details", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: data.user_id,
-        }),
-      });
-
-      if (!detailsResponse.ok) {
-        localStorage.removeItem("jwt");
-        router.push("/login");
-        return;
-      }
-      const userDetailsData = await detailsResponse.json();
-      setUserDetails(userDetailsData);
-    };
-
-    fetchUserInfo();
-  }, []);
+  const { userInfo, userDetails } = useFetchUserInfo() as any;
 
   if (!userInfo || !userDetails) {
     return null;
