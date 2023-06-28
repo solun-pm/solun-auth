@@ -3,6 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
+import { decryptAuthPM } from "solun-general-package";
 
 const PublicKeyModal = ({ isOpen, onClose, onDownload }: any) => (
   <Transition show={isOpen} as={Fragment}>
@@ -223,17 +224,20 @@ function PrivacySettings({ userDetails, userInfo }: any) {
 
   const downloadPrivateKey = async () => {
     if (await validatePassword()) {
-      const key = userInfo.private_key; // Get from JWT
+      const key = userDetails.private_key;
+      // Encrypt private key with password
+      const decryptedKey = decryptAuthPM(key, password);
       setIsPrivateKeyOpen(false);
 
       const element = document.createElement("a");
-      const file = new Blob([key], { type: "text/plain" });
+      const file = new Blob([decryptedKey], { type: "text/plain" });
       element.href = URL.createObjectURL(file);
       element.download = "privatekey." + userInfo.fqe + ".asc";
       document.body.appendChild(element);
       element.click();
 
       toast.success("Private key downloaded successfully.");
+      setPassword("");
 
       setTimeout(function () {
         document.body.removeChild(element);
