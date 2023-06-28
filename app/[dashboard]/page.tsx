@@ -10,14 +10,10 @@ import AliasesPage from "@/pages/aliases";
 
 import { Toaster } from "react-hot-toast";
 
-const MainPage = () => {
-  const router = useRouter();
-  const { page } = router.query;
-  console.log(page);
-
+const MainPage = ({params}: {params: { path: string }}) => {
   let Subpage;
 
-  switch (page) {
+  switch (params.path) {
     case 'dashboard':
       Subpage = DashboardPage;
       break;
