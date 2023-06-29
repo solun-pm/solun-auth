@@ -119,7 +119,7 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
         },
         body: JSON.stringify({
           fqe: formData.fqe,
-          password: formData.password,
+          password: password,
           service: serviceProvider,
         }),
       });
@@ -172,7 +172,7 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
         body: JSON.stringify({
           fqe: formData.fqe,
           twoFACode,
-          password: formData.password,
+          password: password,
           service: serviceProvider,
         }),
       });
