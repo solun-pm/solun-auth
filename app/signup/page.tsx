@@ -246,7 +246,7 @@ const RegisterPage = () => {
             <div className="relative flex items-center">
               <FontAwesomeIcon icon={faLock} className="mr-3 text-gray-400" />
               <input
-                type="password"
+                type={passwordConfirmVisible ? "text" : "password"}
                 name="confirmPassword"
                 onChange={handlePasswordConfirmChange}
                 className="bg-slate-950 text-white w-full p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
