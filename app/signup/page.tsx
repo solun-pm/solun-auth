@@ -232,7 +232,7 @@ const RegisterPage = () => {
                 placeholder="Password"
               />
               {password.length > 0 && (
-                <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 text-slate-300 cursor-pointer hover:text-blue-500">
                   <FontAwesomeIcon
                     icon={passwordVisible ? faEyeSlash : faEye}
                     className="cursor-pointer"
@@ -243,7 +243,7 @@ const RegisterPage = () => {
             </div>
           </div>
           <div className="mb-4">
-            <div className="flex items-center">
+            <div className="relative flex items-center">
               <FontAwesomeIcon icon={faLock} className="mr-3 text-gray-400" />
               <input
                 type="password"
@@ -252,6 +252,15 @@ const RegisterPage = () => {
                 className="bg-slate-950 text-white w-full p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Confirm Password"
               />
+              {passwordConfirm.length > 0 && (
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 text-slate-300 cursor-pointer hover:text-blue-500">
+                  <FontAwesomeIcon
+                    icon={passwordConfirmVisible ? faEyeSlash : faEye}
+                    className="cursor-pointer"
+                    onClick={handlePasswordConfirmVisibility}
+                  />
+                </div>
+              )}
             </div>
           </div>
           <div className="mb-4 flex justify-center">
