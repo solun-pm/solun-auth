@@ -11,7 +11,6 @@ import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
 
 const SettingsPage = () => {
   const router = useRouter();
-
   const { userInfo, userDetails } = useFetchUserInfo() as any;
 
   if (!userInfo || !userDetails) {
@@ -19,21 +18,17 @@ const SettingsPage = () => {
   }
 
   return (
-    <div className="flex items-center justify-center p-6 min-h-screen animate-gradient-x">
-      <Toaster position="top-right" />
-      <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl">
-        <Navigation />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="grid grid-cols-1 gap-5 align-start">
-            <ChangePassword userInfo={userInfo} />
-            <TwoFactorAuthSetup userDetails={userDetails} userInfo={userInfo} />
-          </div>
-          <div className="flex flex-col">
-            <PrivacySettings userDetails={userDetails} userInfo={userInfo} />
-          </div>
+    <>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 gap-5 align-start">
+        <ChangePassword userInfo={userInfo} />
+        <TwoFactorAuthSetup userDetails={userDetails} userInfo={userInfo} />
         </div>
-      </div>
+        <div className="flex flex-col">
+        <PrivacySettings userDetails={userDetails} userInfo={userInfo} />
+        </div>
     </div>
+    </>
   );
 };
 

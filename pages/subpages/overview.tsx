@@ -20,7 +20,6 @@ const DashboardPage = () => {
   const router = useRouter();
   const [showTooltipMailPro, setShowTooltipMailPro] = useState(false);
   const [showTooltipWebmail, setShowTooltipWebmail] = useState(false);
-
   const { userInfo, userDetails } = useFetchUserInfo() as any;
 
   if (!userInfo || !userDetails) {
@@ -54,11 +53,7 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-6 animate-gradient-x">
-      <Toaster position="top-right" />
-      <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-6xl">
-        {/* <h1 className="text-2xl font-bold mb-2">Dashboard</h1> */}
-        <Navigation />
+    <>
         <Suspense fallback={<div>Loading...</div>}>
           {/* @ts-ignore */}
           <h1 className="text-2xl font-bold">
@@ -173,8 +168,7 @@ const DashboardPage = () => {
             </div>
           </div>
         </Suspense>
-      </div>
-    </div>
+      </>
   );
 };
 
