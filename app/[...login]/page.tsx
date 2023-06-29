@@ -8,6 +8,8 @@ import {
   faCircleNotch,
   faKey,
   faTimes,
+  faEye,
+  faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -34,6 +36,8 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
   const [showSuggestion, setShowSuggestion] = useState(false);
   const [twoFACode, setTwoFACode] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const emailInputRef = useRef(null);
 
@@ -85,8 +89,16 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
     setFormData({ ...formData, [name]: e.target.value });
   };
 
+  const handlePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const handlePasswordChange = (event : any) => {
+    setPassword(event.target.value);
+  };
+
   const isValidForm = () => {
-    return formData.fqe && formData.password;
+    return formData.fqe && password;
   };
 
   const handleSubmit = async (e: any) => {
@@ -305,15 +317,24 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
             </div>
           )}
           <div className="mb-4 mt-4">
-            <div className="flex items-center">
+            <div className="relative flex items-center">
               <FontAwesomeIcon icon={faLock} className="mr-3 text-gray-400" />
               <input
-                type="password"
+                type={passwordVisible ? "text" : "password"}
                 name="password"
-                onChange={handleChange}
+                onChange={handlePasswordChange}
                 className="bg-slate-950 text-white w-full p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Password"
               />
+              {password.length > 0 && (
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 text-slate-300 cursor-pointer hover:text-blue-500">
+                  <FontAwesomeIcon
+                    icon={passwordVisible ? faEyeSlash : faEye}
+                    className="cursor-pointer"
+                    onClick={handlePasswordVisibility}
+                  />
+                </div>
+              )}
             </div>
           </div>
           <button
