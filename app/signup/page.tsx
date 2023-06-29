@@ -89,8 +89,8 @@ const RegisterPage = () => {
       specialCharsRegex.test(trimmedUsername) &&
       formData.domain &&
       formData.domain !== "Select domain..." &&
-      formData.password &&
-      formData.confirmPassword &&
+      password &&
+      passwordConfirm &&
       status === "resolved" &&
       !exists
     );
