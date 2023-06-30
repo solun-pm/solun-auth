@@ -43,7 +43,7 @@ const AliasCard = ({ userInfo, aliasName, domain, refreshAliases }: any) => {
   }, [copySuccess]);
 
   return (
-    <div className="bg-slate-900 rounded p-4 shadow-md flex flex-col justify-between space-y-4 h-full text-center">
+    <div className="bg-slate-900 rounded p-4 shadow-md flex flex-col justify-between h-full text-center">
       <div>
         {/*<FontAwesomeIcon icon={faMailBulk} className="h-6 w-6" />*/}
         <div className="text-center break-all">
@@ -51,23 +51,24 @@ const AliasCard = ({ userInfo, aliasName, domain, refreshAliases }: any) => {
           <p className="text-gray-400">{domain}</p>
         </div>
       </div>
-      <div className="flex gap-2 flex-grow">
+      <div className="flex-grow flex flex-col justify-end">
         <CopyToClipboard text={aliasName + domain} onCopy={handleCopy}>
-        <button 
-          className={`flex-grow h-10 py-2 px-4 rounded font-bold transition-all text-center ${copySuccess ? 'text-white bg-green-500 hover:bg-green-600' : 'text-white bg-blue-500 hover:bg-blue-600'}`} 
-          disabled={copySuccess}
-        >
-          <FontAwesomeIcon icon={copySuccess ? faCheck : faCopy} className="h-5 inline-block mr-1" /> {copySuccess ? 'Copied' : 'Copy'}
-        </button>
+          <button
+            className={`h-10 py-2 px-4 rounded font-bold transition-all text-center ${copySuccess ? 'text-white bg-green-500 hover:bg-green-600' : 'text-white bg-blue-500 hover:bg-blue-600'}`}
+            disabled={copySuccess}
+          >
+            <FontAwesomeIcon icon={copySuccess ? faCheck : faCopy} className="h-5 inline-block mr-1" /> {copySuccess ? 'Copied' : 'Copy'}
+          </button>
         </CopyToClipboard>
-        <button 
+        <button
           onClick={() => handleDeleteAlias(aliasName, domain)}
-          className="flex-grow h-10 text-white bg-red-500 py-2 px-4 rounded font-bold hover:bg-red-600 transition-all text-center">
+          className="h-10 text-white bg-red-500 py-2 px-4 rounded font-bold hover:bg-red-600 transition-all text-center mt-2"
+        >
           <FontAwesomeIcon icon={faTrash} className="h-5 inline-block mr-1" /> Delete
         </button>
       </div>
     </div>
-  );
+  );  
 };
 
 export default AliasCard;
