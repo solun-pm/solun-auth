@@ -8,6 +8,8 @@ import {
   faCircleNotch,
   faCheck,
   faTimes,
+  faEye,
+  faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -32,8 +34,12 @@ const RegisterPage = () => {
   const [status, setStatus] = useState("idle");
   const [exists, setExists] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [disabled, setDisabled] = useState(true)
-  const [solution, setSolution] = useState(null)
+  const [disabled, setDisabled] = useState(true);
+  const [solution, setSolution] = useState(null);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordConfirmVisible, setPasswordConfirmVisible] = useState(false);
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   useEffect(() => {
     let timer: any;
@@ -83,12 +89,29 @@ const RegisterPage = () => {
       specialCharsRegex.test(trimmedUsername) &&
       formData.domain &&
       formData.domain !== "Select domain..." &&
-      formData.password &&
-      formData.confirmPassword &&
+      password &&
+      passwordConfirm &&
       status === "resolved" &&
       !exists
     );
   };
+
+  const handlePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const handlePasswordConfirmVisibility = () => {
+    setPasswordConfirmVisible(!passwordConfirmVisible);
+  };
+
+  const handlePasswordChange = (event : any) => {
+    setPassword(event.target.value);
+  };
+
+  const handlePasswordConfirmChange = (event : any) => {
+    setPasswordConfirm(event.target.value);
+  };
+
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -110,8 +133,8 @@ const RegisterPage = () => {
         body: JSON.stringify({
           username: formData.username.replace(/\s/g, ""),
           domain: formData.domain,
-          password: formData.password,
-          confirmPassword: formData.confirmPassword,
+          password: password,
+          confirmPassword: passwordConfirm,
           solution: solution,
         }),
       });
@@ -135,17 +158,14 @@ const RegisterPage = () => {
   };
 
   // TODO: Move to config file.
-  /*const domains = [
+  const domains = [
     "@solun.pm",
     "@6crypt.com",
     "@seal.pm",
     "@xolus.de",
     "@cipher.pm",
-  ];*/
-
-  const domains = [
-    "@solun.pm"
   ];
+
   return (
     <div className="flex items-center justify-center py-8 px-2 min-h-screen animate-gradient-x">
       <Toaster position="top-right" />
@@ -202,27 +222,45 @@ const RegisterPage = () => {
             </div>
           </div>
           <div className="mb-4">
-            <div className="flex items-center">
+            <div className="relative flex items-center">
               <FontAwesomeIcon icon={faLock} className="mr-3 text-gray-400" />
               <input
-                type="password"
+                type={passwordVisible ? "text" : "password"}
                 name="password"
-                onChange={handleChange}
-                className="bg-slate-950 text-white w-full p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onChange={handlePasswordChange}
+                className="bg-slate-950 text-white w-full p-2 pr-8 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Password"
               />
+              {password.length > 0 && (
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 text-slate-300 cursor-pointer hover:text-blue-500">
+                  <FontAwesomeIcon
+                    icon={passwordVisible ? faEyeSlash : faEye}
+                    className="cursor-pointer"
+                    onClick={handlePasswordVisibility}
+                  />
+                </div>
+              )}
             </div>
           </div>
           <div className="mb-4">
-            <div className="flex items-center">
+            <div className="relative flex items-center">
               <FontAwesomeIcon icon={faLock} className="mr-3 text-gray-400" />
               <input
-                type="password"
+                type={passwordConfirmVisible ? "text" : "password"}
                 name="confirmPassword"
-                onChange={handleChange}
-                className="bg-slate-950 text-white w-full p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onChange={handlePasswordConfirmChange}
+                className="bg-slate-950 text-white w-full p-2 pr-8 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Confirm Password"
               />
+              {passwordConfirm.length > 0 && (
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 text-slate-300 cursor-pointer hover:text-blue-500">
+                  <FontAwesomeIcon
+                    icon={passwordConfirmVisible ? faEyeSlash : faEye}
+                    className="cursor-pointer"
+                    onClick={handlePasswordConfirmVisibility}
+                  />
+                </div>
+              )}
             </div>
           </div>
           <div className="mb-4 flex justify-center">

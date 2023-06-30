@@ -1,20 +1,37 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faCircleNotch, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 
 function ChangePassword({ userInfo }: any) {
   const router = useRouter();
   const [passwordChangeLoading, setPasswordChangeLoading] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [currentPasswordVisible, setCurrentPasswordVisible] = useState(false);
+  const [newPasswordVisible, setNewPasswordVisible] = useState(false);
+
+  const handleCurrentPasswordVisible = () => {
+    setCurrentPasswordVisible(!currentPasswordVisible);
+  };
+
+  const handleNewPasswordVisible = () => {
+    setNewPasswordVisible(!newPasswordVisible);
+  };
+
+  const handleCurrentPasswordChange = (event: any) => {
+    setCurrentPassword(event.target.value);
+  };
+
+  const handleNewPasswordChange = (event: any) => {
+    setNewPassword(event.target.value);
+  };
 
   const handlePasswordChange = async (event: any) => {
     event.preventDefault();
 
     setPasswordChangeLoading(true);
-
-    const currentPassword = event.target.currentPassword.value;
-    const newPassword = event.target.newPassword.value;
 
     const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/change_pwd", {
       method: "POST",
@@ -56,25 +73,45 @@ function ChangePassword({ userInfo }: any) {
       <form autoComplete="off" onSubmit={handlePasswordChange}>
         <div>
           <div className="mb-4 mt-4">
-            <div className="flex items-center">
+            <div className="relative flex items-center">
               <FontAwesomeIcon icon={faLock} className="mr-3 text-gray-400" />
               <input
-                type="password"
+                type={currentPasswordVisible ? "text" : "password"}
                 name="currentPassword"
-                className="bg-slate-950 text-white w-full p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="bg-slate-950 text-white w-full p-2 pr-8 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Current Password"
+                onChange={handleCurrentPasswordChange}
               />
+              {currentPassword.length > 0 && (
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 text-slate-300 cursor-pointer hover:text-blue-500">
+                  <FontAwesomeIcon
+                    icon={currentPasswordVisible ? faEyeSlash : faEye}
+                    className="cursor-pointer"
+                    onClick={handleCurrentPasswordVisible}
+                  />
+                </div>
+              )}
             </div>
           </div>
           <div className="mb-4">
-            <div className="flex items-center">
+            <div className="relative flex items-center">
               <FontAwesomeIcon icon={faLock} className="mr-3 text-gray-400" />
               <input
-                type="password"
+                type={newPasswordVisible ? "text" : "password"}
                 name="newPassword"
-                className="bg-slate-950 text-white w-full p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="bg-slate-950 text-white w-full p-2 pr-8 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="New Password"
+                onChange={handleNewPasswordChange}
               />
+              {newPassword.length > 0 && (
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 text-slate-300 cursor-pointer hover:text-blue-500">
+                  <FontAwesomeIcon
+                    icon={newPasswordVisible ? faEyeSlash : faEye}
+                    className="cursor-pointer"
+                    onClick={handleNewPasswordVisible}
+                  />
+                </div>
+              )}
             </div>
           </div>
           <div className="flex justify-end">
