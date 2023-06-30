@@ -45,7 +45,7 @@ const AliasCard = ({ userInfo, aliasName, domain, refreshAliases }: any) => {
   return (
     <div className="bg-slate-900 rounded p-4 shadow-md flex flex-col justify-between space-y-4 h-full text-center">
       <div>
-        <div className="text-center break-all">
+        <div className="text-center">
           <h2 className="font-bold text-xl inline-block mr-2">{aliasName}</h2>
           <CopyToClipboard text={aliasName + domain} onCopy={handleCopy}>
             <button 
