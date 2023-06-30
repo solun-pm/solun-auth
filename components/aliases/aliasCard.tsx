@@ -51,7 +51,7 @@ const AliasCard = ({ userInfo, aliasName, domain, refreshAliases }: any) => {
           <p className="text-gray-400">{domain}</p>
         </div>
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-center gap-2 mt-4">
         <CopyToClipboard text={aliasName + domain} onCopy={handleCopy}>
           <button
             className={`h-10 py-2 px-4 rounded font-bold transition-all text-center ${copySuccess ? 'text-white bg-green-500 hover:bg-green-600' : 'text-white bg-blue-500 hover:bg-blue-600'}`}
