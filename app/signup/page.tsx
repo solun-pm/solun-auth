@@ -131,6 +131,7 @@ const RegisterPage = () => {
     const recoveryCode = generateRecoveryCode();
     setRecoveryCode(recoveryCode);
     setShowRecoveryModal(true);
+    const recoveryCodeHash = hashPassword(recoveryCode);
 
     try {
       const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/create-testing-", {
@@ -144,7 +145,7 @@ const RegisterPage = () => {
           password: password,
           confirmPassword: passwordConfirm,
           solution: solution,
-          recoveryCode: hashPassword(recoveryCode),
+          recoveryCode: recoveryCodeHash,
         }),
       });
 
