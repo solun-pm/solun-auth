@@ -356,14 +356,14 @@ const RegisterPage = () => {
             <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-slate-900 shadow-xl rounded-2xl">
               <Dialog.Title
                 as="h3"
-                className="text-lg font-medium leading-6 text-white"
+                className="text-xl font-medium leading-6 text-white"
               >
                 Your recovery code
               </Dialog.Title>
               <div className="mt-2">
                 <p className="text-sm text-slate-300">
                   Write down this recovery code. With this key, you can reset your account password and your 2FA status, if applicable.                </p>
-                <p className="mt-4 font-bold">{recoveryCode}</p>
+                <p className="mt-4 font-extrabold text-white break-all">{recoveryCode}</p>
               </div>
               <div className="mt-4">
                 <button
