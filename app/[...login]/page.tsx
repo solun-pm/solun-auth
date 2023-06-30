@@ -323,7 +323,7 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
                 type={passwordVisible ? "text" : "password"}
                 name="password"
                 onChange={handlePasswordChange}
-                className="bg-slate-950 text-white w-full p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="bg-slate-950 text-white w-full p-2 pr-8 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Password"
               />
               {password.length > 0 && (
