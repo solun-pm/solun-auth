@@ -53,16 +53,16 @@ const AliasCard = ({ userInfo, aliasName, domain, refreshAliases }: any) => {
       </div>
       <div className="flex gap-2 flex-grow">
         <CopyToClipboard text={aliasName + domain} onCopy={handleCopy}>
-          <button 
-            className={`flex-grow py-2 px-4 rounded font-bold transition-all text-center ${copySuccess ? 'text-white bg-green-500 hover:bg-green-600' : 'text-white bg-blue-500 hover:bg-blue-600'}`} 
-            disabled={copySuccess}
-          >
-            <FontAwesomeIcon icon={copySuccess ? faCheck : faCopy} className="h-5 inline-block mr-1" /> {copySuccess ? 'Copied' : 'Copy'}
-          </button>
+        <button 
+          className={`flex-grow h-10 py-2 px-4 rounded font-bold transition-all text-center ${copySuccess ? 'text-white bg-green-500 hover:bg-green-600' : 'text-white bg-blue-500 hover:bg-blue-600'}`} 
+          disabled={copySuccess}
+        >
+          <FontAwesomeIcon icon={copySuccess ? faCheck : faCopy} className="h-5 inline-block mr-1" /> {copySuccess ? 'Copied' : 'Copy'}
+        </button>
         </CopyToClipboard>
         <button 
           onClick={() => handleDeleteAlias(aliasName, domain)}
-          className="flex-grow text-white bg-red-500 py-2 px-4 rounded font-bold hover:bg-red-600 transition-all text-center">
+          className="flex-grow h-10 text-white bg-red-500 py-2 px-4 rounded font-bold hover:bg-red-600 transition-all text-center">
           <FontAwesomeIcon icon={faTrash} className="h-5 inline-block mr-1" /> Delete
         </button>
       </div>
