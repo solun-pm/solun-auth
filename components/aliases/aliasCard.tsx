@@ -51,7 +51,7 @@ const AliasCard = ({ userInfo, aliasName, domain, refreshAliases }: any) => {
           <p className="text-gray-400">{domain}</p>
         </div>
       </div>
-      <div className="flex-grow flex flex-col justify-end">
+      <div className="flex justify-between">
         <CopyToClipboard text={aliasName + domain} onCopy={handleCopy}>
           <button
             className={`h-10 py-2 px-4 rounded font-bold transition-all text-center ${copySuccess ? 'text-white bg-green-500 hover:bg-green-600' : 'text-white bg-blue-500 hover:bg-blue-600'}`}
@@ -62,7 +62,7 @@ const AliasCard = ({ userInfo, aliasName, domain, refreshAliases }: any) => {
         </CopyToClipboard>
         <button
           onClick={() => handleDeleteAlias(aliasName, domain)}
-          className="h-10 text-white bg-red-500 py-2 px-4 rounded font-bold hover:bg-red-600 transition-all text-center mt-2"
+          className="h-10 text-white bg-red-500 py-2 px-4 rounded font-bold hover:bg-red-600 transition-all text-center"
         >
           <FontAwesomeIcon icon={faTrash} className="h-5 inline-block mr-1" /> Delete
         </button>
