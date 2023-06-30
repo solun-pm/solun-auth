@@ -73,7 +73,7 @@ function ChangePassword({ userInfo }: any) {
       <form autoComplete="off" onSubmit={handlePasswordChange}>
         <div>
           <div className="mb-4 mt-4">
-            <div className="flex items-center">
+            <div className="relative flex items-center">
               <FontAwesomeIcon icon={faLock} className="mr-3 text-gray-400" />
               <input
                 type={currentPasswordVisible ? "text" : "password"}
@@ -94,7 +94,7 @@ function ChangePassword({ userInfo }: any) {
             </div>
           </div>
           <div className="mb-4">
-            <div className="flex items-center">
+            <div className="relative flex items-center">
               <FontAwesomeIcon icon={faLock} className="mr-3 text-gray-400" />
               <input
                 type={newPasswordVisible ? "text" : "password"}
