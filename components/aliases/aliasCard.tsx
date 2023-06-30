@@ -45,24 +45,27 @@ const AliasCard = ({ userInfo, aliasName, domain, refreshAliases }: any) => {
   return (
     <div className="bg-slate-900 rounded p-4 shadow-md flex flex-col justify-between space-y-4 h-full text-center">
       <div>
-        <div className="text-center">
-          <h2 className="font-bold text-xl inline-block mr-2">{aliasName}</h2>
-          <CopyToClipboard text={aliasName + domain} onCopy={handleCopy}>
-            <button 
-              className="transition duration-500 ease-in-out transform hover:text-blue-500 text-slate-300" 
-              disabled={copySuccess}
-            >
-              <FontAwesomeIcon icon={copySuccess ? faCheck : faCopy} className={copySuccess ? 'text-green-500' : ''} />
-            </button>
-          </CopyToClipboard>
+        {/*<FontAwesomeIcon icon={faMailBulk} className="h-6 w-6" />*/}
+        <div className="text-center break-all">
+          <h2 className="font-bold text-xl">{aliasName}</h2>
           <p className="text-gray-400">{domain}</p>
         </div>
       </div>
-      <button 
-        onClick={() => handleDeleteAlias(aliasName, domain)}
-        className="text-white bg-red-500 py-2 px-4 rounded font-bold hover:bg-red-600 transition-all self-stretch text-center">
-        <FontAwesomeIcon icon={faTrash} className="h-5 w-5 inline-block mr-1" /> Delete
-      </button>
+      <div className="flex space-x-2">
+        <CopyToClipboard text={aliasName + domain} onCopy={handleCopy}>
+          <button 
+            className={`py-2 px-4 rounded font-bold transition-all self-stretch text-center ${copySuccess ? 'text-white bg-green-500 hover:bg-green-600' : 'text-white bg-blue-500 hover:bg-blue-600'}`} 
+            disabled={copySuccess}
+          >
+            <FontAwesomeIcon icon={copySuccess ? faCheck : faCopy} className="h-5 w-5 inline-block mr-1" /> {copySuccess ? 'Copied' : 'Copy'}
+          </button>
+        </CopyToClipboard>
+        <button 
+          onClick={() => handleDeleteAlias(aliasName, domain)}
+          className="text-white bg-red-500 py-2 px-4 rounded font-bold hover:bg-red-600 transition-all self-stretch text-center">
+          <FontAwesomeIcon icon={faTrash} className="h-5 w-5 inline-block mr-1" /> Delete
+        </button>
+      </div>
     </div>
   );
 };
