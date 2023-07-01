@@ -128,8 +128,8 @@ const RegisterPage = () => {
       return;
     }
 
-    const recoveryCode = generateRecoveryCode();
-    setRecoveryCode(recoveryCode);
+    const recovery = generateRecoveryCode();
+    setRecoveryCode(recovery);
     const recoveryCodeHash = hashPassword(recoveryCode);
 
     try {
