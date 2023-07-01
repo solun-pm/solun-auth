@@ -130,7 +130,7 @@ const RegisterPage = () => {
 
     const recovery = generateRecoveryCode();
     setRecoveryCode(recovery);
-    const recoveryCodeHash = hashPassword(recoveryCode);
+    const recoveryCodeHash = await hashPassword(recoveryCode);
 
     try {
       const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/create", {
