@@ -134,7 +134,7 @@ const RegisterPage = () => {
     const recoveryCodeHash = hashPassword(recoveryCode);
 
     try {
-      const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/create-testing-", {
+      const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -363,8 +363,9 @@ const RegisterPage = () => {
               </Dialog.Title>
               <div className="mt-2">
                 <p className="text-sm text-slate-300">
-                  Write down this recovery code. With this key, you can reset your account password and your 2FA status, if applicable.                </p>
-                <p className="mt-4 font-extrabold text-white break-all">{recoveryCode}</p>
+                  Write down this recovery code. With this key, you can reset your account password and your 2FA status, if applicable.
+                </p>
+                <p className="bg-slate-800 rounded p-4 mt-4 font-extrabold text-white break-all">{recoveryCode}</p>
               </div>
               <div className="mt-4">
                 <button
