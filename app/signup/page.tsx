@@ -130,7 +130,6 @@ const RegisterPage = () => {
 
     const recoveryCode = generateRecoveryCode();
     setRecoveryCode(recoveryCode);
-    setShowRecoveryModal(true);
     const recoveryCodeHash = hashPassword(recoveryCode);
 
     try {
@@ -158,7 +157,7 @@ const RegisterPage = () => {
       }
 
       setStatus("resolved");
-      goToLogin();
+      setShowRecoveryModal(true);
       //alert('User registered successfully.');
     } catch (error) {
       console.error("Error:", error);
@@ -175,6 +174,11 @@ const RegisterPage = () => {
     "@xolus.de",
     "@cipher.pm",
   ];
+
+  const closeRecoveryModal = () => {
+    setShowRecoveryModal(false);
+    goToLogin();
+  };
 
   return (
     <div className="flex items-center justify-center py-8 px-2 min-h-screen animate-gradient-x">
@@ -371,7 +375,7 @@ const RegisterPage = () => {
                 <button
                   type="button"
                   className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-3 rounded transition duration-200"
-                  onClick={() => setShowRecoveryModal(false)}
+                  onClick={() => closeRecoveryModal()}
                 >
                   Close
                 </button>
