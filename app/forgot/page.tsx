@@ -139,6 +139,11 @@ const LoginPage = () => {
         toast.error(data.message);
         return;
       }
+
+      if(!data.correct) {
+        toast.error(data.message);
+        return;
+      }
       
       setIsSubmitting(false);
       setSuccess(true);
@@ -168,7 +173,8 @@ const LoginPage = () => {
         fqe: formData.fqe,
         password: password,
         confirmPassword: confirmPassword,
-        recoveryCode: recoveryCodeHash,
+        oldRecoveryCode: code,
+        newRecoveryCode: recoveryCodeHash,
       }),
     });
 
@@ -196,7 +202,8 @@ const LoginPage = () => {
       <div className="bg-slate-800 text-white p-5 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-2">Reset Password</h1>
         {!success ? (
-          <p className="mb-5">Forgot your password? No problem! Enter your account mail address and your recovery code to reset your password.</p>
+          <p className="mb-5">Forgot your password? No problem! Enter your account mail address and your recovery code to reset your password.
+          Warning: This will disable your 2FA if you have it enabled, also this action will create a new private key for your account.</p>
         ) : (
           <p className="mb-5">Please enter your new password and confirm it.</p>
         )}
