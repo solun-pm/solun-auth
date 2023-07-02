@@ -352,10 +352,16 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
           </button>
         </form>
         <div className="mt-5 text-center">
-          <p className="mb-4">
+          <p>
             Don't have an account?{" "}
             <a href="/signup" className="text-blue-500 hover:text-blue-600">
               Register
+            </a>
+          </p>
+          <p className="mb-4 text-sm">
+            Forgot your password?{" "}
+            <a href="/forgot" className="text-blue-500 hover:text-blue-600">
+              Reset
             </a>
           </p>
           <hr className="h-px border-0 bg-gray-500" />
