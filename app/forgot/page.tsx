@@ -203,9 +203,12 @@ const LoginPage = () => {
         <h1 className="text-2xl font-bold mb-2">Reset Password</h1>
         {!success ? (
           <p className="mb-5">Forgot your password? No problem! Enter your account mail address and your recovery code to reset your password.
+          <br/>
           Warning: This will disable your 2FA if you have it enabled, also this action will create a new private and public key for your account.</p>
         ) : (
-          <p className="mb-5">Please enter your new password and confirm it.</p>
+          <p className="mb-5">Please enter your new password and confirm it.
+          <br/>
+          After that you will get a new recovery code. Please save it somewhere safe.</p>
         )}
         {!success ? (
         <form onSubmit={handleSubmit} autoComplete="off">
