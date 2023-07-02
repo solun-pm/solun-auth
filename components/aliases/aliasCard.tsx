@@ -1,16 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMailBulk, faTrash, faCopy, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faMailBulk, faTrash, faCopy, faCheck, faToggleOn, faToggleOff } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useState, useEffect } from 'react';
 
-const AliasCard = ({ userInfo, aliasName, domain, refreshAliases }: any) => {
+const AliasCard = ({ userInfo, aliasName, domain, isActive, refreshAliases }: any) => {
 
   const [copySuccess, setCopySuccess] = useState(false);
 
-  const handleDeleteAlias = async (aliasName: string, domain: string) => {
+  const handleSwitchAliasState = async (aliasName: string, domain: string) => {
     const fqa = aliasName + domain;
-    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/delete_alias", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/switch_alias_state", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,13 +18,16 @@ const AliasCard = ({ userInfo, aliasName, domain, refreshAliases }: any) => {
       body: JSON.stringify({
         user_id: userInfo.user_id,
         fqa: fqa,
+        alias_state: !isActive,
       }),
     });
+
     if (!res.ok) {
       toast.error('Something went wrong');
       return;
     }
-    toast.success('Alias deleted successfully');
+
+    toast.success(`Alias ${isActive ? 'disabled' : 'enabled'} successfully`);
     refreshAliases();
   }
 
@@ -61,10 +64,10 @@ const AliasCard = ({ userInfo, aliasName, domain, refreshAliases }: any) => {
           </button>
         </CopyToClipboard>
         <button
-          onClick={() => handleDeleteAlias(aliasName, domain)}
-          className="h-10 text-white bg-red-500 py-2 px-4 rounded font-bold hover:bg-red-600 transition-all text-center"
+          onClick={() => handleSwitchAliasState(aliasName, domain)}
+          className={`h-10 text-white py-2 px-4 rounded font-bold hover:bg-${isActive ? 'green' : 'red'}-600 transition-all text-center ${isActive ? 'bg-green-500' : 'bg-red-500'}`}
         >
-          <FontAwesomeIcon icon={faTrash} className="h-5 inline-block mr-1" /> Delete
+          <FontAwesomeIcon icon={isActive ? faToggleOn : faToggleOff} className="h-5 inline-block mr-1" /> {isActive ? 'Disable' : 'Enable'}
         </button>
       </div>
     </div>
