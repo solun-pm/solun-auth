@@ -59,7 +59,7 @@ const AliasesPage = () => {
             <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
                 {aliasesToShow.map((alias: any, index: any) => (
-                <AliasCard key={index} userInfo={userInfo} aliasName={alias.alias_name} domain={alias.domain} refreshAliases={getAliases} />
+                <AliasCard key={index} userInfo={userInfo} aliasName={alias.alias_name} domain={alias.domain} isActive={alias.active} refreshAliases={getAliases} />
                 ))}
             </div>
             <div className="flex justify-center mt-4">
