@@ -55,9 +55,9 @@ function accountRecovery({ userDetails, userInfo }: any) {
     setEnableRecovery(!enableRecovery);
   
     if (!enableRecovery) {
-      setShowRecoveryModal(false);
-    } else {
       setShowRecoveryModal(true);
+    } else {
+      setShowRecoveryModal(false);
     }
   
     toast.success(data.message);
