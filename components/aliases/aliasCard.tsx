@@ -65,7 +65,7 @@ const AliasCard = ({ userInfo, aliasName, domain, isActive, refreshAliases }: an
         </CopyToClipboard>
         <button
           onClick={() => handleSwitchAliasState(aliasName, domain)}
-          className={`h-10 text-white py-2 px-4 rounded font-bold hover:bg-${isActive ? 'blue' : 'green'}-600 transition-all text-center ${isActive ? 'bg-red-500' : 'bg-blue-500'}`}
+          className={`h-10 text-white py-2 px-4 rounded font-bold hover:bg-${isActive ? 'red' : 'blue'}-600 transition-all text-center ${isActive ? 'bg-red-500' : 'bg-blue-500'}`}
         >
           <FontAwesomeIcon icon={isActive ? faToggleOn : faToggleOff} className="h-5 inline-block mr-1" /> {isActive ? 'Disable' : 'Enable'}
         </button>
