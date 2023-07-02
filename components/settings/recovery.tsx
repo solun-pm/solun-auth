@@ -31,7 +31,7 @@ function accountRecovery({ userDetails, userInfo }: any) {
       recoveryCodeHash = await hashPassword(recovery);
     }
   
-    const res = await fetch("/api/user/recovery", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/recovery", {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
