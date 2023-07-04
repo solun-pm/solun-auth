@@ -7,6 +7,7 @@ import Navigation from "@/components/navigation";
 const OverviewPage = lazy(() => import("@/pages/subpages/overview"));
 const SettingsPage = lazy(() => import("@/pages/subpages/settings"));
 const AliasesPage = lazy(() => import("@/pages/subpages/aliases"));
+const DomainsPage = lazy(() => import("@/pages/subpages/domains"));
 
 import { Toaster } from "react-hot-toast";
 
@@ -20,6 +21,8 @@ const PageContent = ({ path }: any) => {
       return <SettingsPage />;
     case "aliases":
       return <AliasesPage />;
+    case "domains":
+      return <DomainsPage />;
     default:
       return <Loader />;
   }
@@ -29,7 +32,7 @@ const MainPage = ({ params }: { params: { path: string } }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!["overview", "settings", "aliases"].includes(params.path)) {
+    if (!["overview", "settings", "aliases", "domains"].includes(params.path)) {
       router.push("/");
     }
   }, [params.path, router]);
