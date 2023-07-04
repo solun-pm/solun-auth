@@ -13,7 +13,7 @@ const DomainsPage = () => {
   const router = useRouter();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4*2;
+  const itemsPerPage = 4;
   const [domains, setDomains] = useState([]) as any;
   //const { userInfo, userDetails } = useFetchUserInfo() as any;
 
@@ -42,11 +42,11 @@ const DomainsPage = () => {
   */
 
   const initialDomains = [
-    { domain: "@test1.tld" },
-    { domain: "@test2.tld" },
-    { domain: "@test3.tld" },
-    { domain: "@test4.tld" },
-    { domain: "@test5.tld" },
+    { domain: "@test1.tld", status: "active" },
+    { domain: "@test2.tld", status: "pending" },
+    { domain: "@test3.tld", status: "inactive" },
+    { domain: "@test4.tld", status: "active" },
+    { domain: "@test5.tld", status: "pending" },
   ];
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const DomainsPage = () => {
             <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
             {domainsToShow.map((domain: any, index: any) => (
-                <DomainCard key={index} domain={domain.domain} />
+                <DomainCard key={index} domain={domain.domain} status={domain.status} />
             ))}
             </div>
             <div className="flex justify-center mt-4">
