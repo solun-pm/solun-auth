@@ -15,7 +15,7 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
 
   useEffect(() => {
     async function fetchDomainNames() {
-      const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/get_domains", {
+      const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/get_domains_alias", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

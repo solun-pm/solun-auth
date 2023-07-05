@@ -15,9 +15,9 @@ const DomainsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
   const [domains, setDomains] = useState([]) as any;
-  //const { userInfo, userDetails } = useFetchUserInfo() as any;
+  const { userInfo, userDetails } = useFetchUserInfo() as any;
 
- /* const getDomains = useCallback(async () => {
+ const getDomains = useCallback(async () => {
     const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/get_alias", {
       method: "POST",
       headers: {
@@ -34,12 +34,7 @@ const DomainsPage = () => {
     }
 
     setDomains(data);
-  }, [userInfo]);*
-
-  useEffect(() => {
-    getAliases();
-  }, [getAliases]);
-  */
+  }, [userInfo]);
 
   const initialDomains = [
     { domain: "@test1.tld", status: "active" },
@@ -53,16 +48,16 @@ const DomainsPage = () => {
     setDomains(initialDomains);
   }, []);
 
-//  if (!userInfo || !userDetails) {
-//    return null;
-//  }
+  if (!userInfo || !userDetails) {
+    return null;
+  }
 
   const domainsToShow = domains.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage);
 
   return (
     <>
         <h1 className="text-2xl font-bold">Manage Domains</h1>
-        <DomainMenuTopBar />
+        <DomainMenuTopBar userInfo={userInfo} userDetails={userDetails} />
         {domains.length === 0 ? (
             <div className="text-slate-300 text-center mt-16 mb-8 text-md">
             You don't have any domains yet, buy or add some!
