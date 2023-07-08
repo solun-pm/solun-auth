@@ -99,7 +99,7 @@ const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails }: any) => 
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-        <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div className="inline-block align-bottom bg-slate-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
           {/* More Dialog code... */}
           {step === 1 && (
             <div className="my-4">
