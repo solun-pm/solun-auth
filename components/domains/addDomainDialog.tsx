@@ -7,14 +7,18 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails }: any) => {
   const cancelButtonRef = useRef(null);
-  const [domain, setDomain] = useState("");
   const [dnsData, setDnsData] = useState([]);
   const [step, setStep] = useState(1);
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
+  const [domain, setDomain] = useState("");
 
-  const checkDomain = async (domain: any) => {
+  const checkDomain = async () => {
+    if (domain === '') {
+      toast.error('Please enter a domain');
+      setSubmitButtonLoading(false);
+      return;
+    }
     setSubmitButtonLoading(true);
-    console.log('checking domain ' + domain)
     
     const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/domain/check_domain", {
       method: "POST",
@@ -36,11 +40,11 @@ const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails }: any) => 
 
     if (data.valid === true) {
       setSubmitButtonLoading(false);
-      addDomain(domain);
+      addDomain();
     }
   };
   
-  const addDomain = async (domain: any) => {
+  const addDomain = async () => {
     const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/domain/add_domain", {
       method: "POST",
       headers: {
@@ -117,7 +121,7 @@ const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails }: any) => 
               </div>
               <div className="mt-4">
                 <button
-                  onClick={checkDomain}
+                  onClick={() => checkDomain()}
                   type="submit"
                   disabled={submitButtonLoading}
                   className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-3 rounded transition duration-200"
