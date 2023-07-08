@@ -14,6 +14,7 @@ const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails }: any) => 
 
   const checkDomain = async (domain: any) => {
     setSubmitButtonLoading(true);
+    console.log('checking domain ' + domain)
     
     const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/domain/check_domain", {
       method: "POST",
