@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGlobe, faCalendarAlt, faEnvelope, faRandom, faCheckCircle, faClock, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faEnvelope, faRandom, faCheckCircle, faClock, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import ViewDNS from './viewDNS';
 
-const DomainCard = ({ domain, status, mailboxes, aliases, mailbox_cap, alias_cap } : any) => {
+const DomainCard = ({ domain, status, mailboxes, aliases, mailbox_cap, alias_cap, created_at } : any) => {
+  const [viewDnsOpen, setViewDnsOpen] = useState(false);
+
   let statusIcon;
   switch (status) {
     case 'active':
@@ -15,6 +18,15 @@ const DomainCard = ({ domain, status, mailboxes, aliases, mailbox_cap, alias_cap
       statusIcon = faTimesCircle;
       break;
   }
+
+  const handleButtonClick = () => {
+    if (status === 'pending') {
+      setViewDnsOpen(true);
+    } else {
+      // Handle edit action
+    }
+  };
+
   return (
     <div className="bg-slate-900 rounded-lg p-4 shadow-md flex flex-col justify-between h-full relative">
       <div className="flex items-center absolute top-1/2 transform -translate-y-1/2">
@@ -29,12 +41,15 @@ const DomainCard = ({ domain, status, mailboxes, aliases, mailbox_cap, alias_cap
           <p><FontAwesomeIcon icon={statusIcon} className={`h-4 w-4 inline-block mr-1 ${status === 'active' ? 'text-green-500' : status === 'pending' ? 'text-orange-500' : 'text-red-500'}`} />Status: {status.charAt(0).toUpperCase() + status.slice(1)}</p>
           <div className="text-slate-300 flex items-center">
             <FontAwesomeIcon icon={faCalendarAlt} className="h-5 w-5 mr-1"/>
-            <p>Created: 2021-01-01</p>
+            <p>Created: {new Date(created_at).toLocaleDateString()}</p>
           </div>
         </div>
       </div>
       <div className="mt-4 flex justify-end">
-        <button className="h-10 text-white py-2 px-4 rounded font-bold bg-blue-500 hover:bg-blue-600 transition-all">Edit</button>
+        <button className="h-10 text-white py-2 px-4 rounded font-bold bg-blue-500 hover:bg-blue-600 transition-all" onClick={handleButtonClick}>
+          {status === 'pending' ? 'View DNS' : 'Edit'}
+        </button>
+        <ViewDNS isOpen={viewDnsOpen} closeModal={() => setViewDnsOpen(false)} domain={domain} />
       </div>
     </div>
   );  

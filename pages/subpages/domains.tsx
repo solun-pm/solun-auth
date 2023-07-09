@@ -63,7 +63,7 @@ const DomainsPage = () => {
             <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
             {domainsToShow.map((domain: any, index: any) => (
-              <DomainCard key={index} domain={domain.domain} status={domain.status} mailboxes={domain.mailbox_count} aliases={domain.alias_count} mailbox_cap={domain.mailbox_cap} alias_cap={domain.alias_cap} />
+              <DomainCard key={index} domain={domain.domain} status={domain.status} mailboxes={domain.mailbox_count} aliases={domain.alias_count} mailbox_cap={domain.mailbox_cap} alias_cap={domain.alias_cap} created_at={domain.created_at} />
             ))}
             </div>
             <div className="flex justify-center mt-4">
