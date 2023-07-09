@@ -37,15 +37,20 @@ const DomainsPage = () => {
   }, [userInfo]);
 
   useEffect(() => {
-    getDomains();
-  }, [getDomains]);
+    if (userInfo) {
+      getDomains();
+    }
+  }, [getDomains, userInfo]);
+  
 
   if (!userInfo || !userDetails) {
     return null;
   }
 
-  const domainsToShow = domains.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage);
-
+  const domainsToShow = Array.isArray(domains) 
+  ? domains.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage)
+  : [];
+  
   return (
     <>
         <h1 className="text-2xl font-bold">Manage Domains</h1>

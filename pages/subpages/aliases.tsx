@@ -38,8 +38,11 @@ const AliasesPage = () => {
   }, [userInfo]);
 
   useEffect(() => {
-    getAliases();
-  }, [getAliases]);
+    if (userInfo) {
+      getAliases();
+    }
+  }, [getAliases, userInfo]);
+  
 
   if (!userInfo || !userDetails) {
     return null;
