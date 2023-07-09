@@ -2,7 +2,7 @@ import React, { useEffect, useState, Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
-import DnsRecord from './dnsRecordDialog';
+import DnsRecord from './dnsRecords';
 
 const ViewDNS = ({ isOpen, closeModal, domain }: any) => {
   const [dnsData, setDnsData] = useState([]);
@@ -63,6 +63,13 @@ const ViewDNS = ({ isOpen, closeModal, domain }: any) => {
             leaveTo="opacity-0 scale-95"
           >
             <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-slate-900 shadow-xl rounded-2xl">
+                <h1 className="text-white text-2xl">DNS Data</h1>
+                <p className="text-slate-300 text-md mt-2 mb-4 break-words">
+                  Please add the following DNS records to your domain.
+                  If you don't know how to do this, please contact your domain provider or check out our <a href="https://docs.solun.pm/" target="_blank" className="text-blue-500">documentation</a>.
+                  <span className="mt-2 font-bold">If you already added the records, please wait up to 24 hours for the changes to take effect.</span>
+                  We will notify you via email once the domain is ready to use.
+                </p>
               {loading ? (
                 <div className="flex justify-center items-center">
                   <FontAwesomeIcon icon={faCog} spin size="3x" className="text-slate-300" />

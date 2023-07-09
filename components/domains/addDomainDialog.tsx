@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe, faCircleNotch, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
-import DnsRecord from './dnsRecordDialog';
+import DnsRecord from './dnsRecords';
 
 const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails, refreshDomains }: any) => {
   const cancelButtonRef = useRef(null);

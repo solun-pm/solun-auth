@@ -21,9 +21,9 @@ const DnsRecord = ({ entry }: any) => {
         <div className="flex items-center justify-between">
           <p className="text-white break-all">{entry.data}</p>
           <CopyToClipboard text={entry.data}>
-            <button onClick={handleClick}>
-              <FontAwesomeIcon icon={copyIcon ? faCopy : faCheck} className={copyIcon ? "text-slate-300" : "text-green-500"} />
-            </button>
+          <button onClick={handleClick} className="pr-2">
+            <FontAwesomeIcon icon={copyIcon ? faCopy : faCheck} className={copyIcon ? "text-slate-300" : "text-green-500"} />
+          </button>
           </CopyToClipboard>
         </div>
       </div>
