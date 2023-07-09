@@ -1,9 +1,9 @@
-import { Fragment, useRef, useState, useEffect } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faGlobe, faCircleNotch, faCheckCircle, faCopy, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faGlobe, faCircleNotch, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import DnsRecord from './dnsRecordDialog';
 
 const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails }: any) => {
   const cancelButtonRef = useRef(null);
@@ -11,9 +11,6 @@ const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails }: any) => 
   const [step, setStep] = useState(1);
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
   const [domain, setDomain] = useState("");
-  const [copyIcon, setCopyIcon] = useState(true);
-  const [timeoutId, setTimeoutId] = useState(null);
-
 
   const checkDomain = async () => {
     if (domain === '') {
@@ -165,29 +162,7 @@ const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails }: any) => 
                   After that click on the Complete button.
                 </p>
                 {dnsData && dnsData.map((entry: any, index: any) => (
-                  <div key={index} className="mb-4 p-3 bg-slate-800 rounded-lg">
-                    <div className="flex items-center">
-                      <span className="rounded-full bg-gray-500 px-3 py-1 text-white text-xs font-bold mr-3">{entry.type}</span>
-                      <h3 className="text-slate-300">{entry.name}</h3>
-                    </div>
-                    <div className="mt-2 bg-slate-900 p-2 rounded">
-                      <div className="flex items-center justify-between">
-                        <p className="text-white">{entry.data}</p>
-                        <CopyToClipboard text={`${entry.type} ${entry.name} ${entry.data}`}>
-                          <button 
-                            onClick={() => {
-                              setCopyIcon(false);
-                              clearTimeout(timeoutId as any);
-                              const id = setTimeout(() => setCopyIcon(true), 3000);
-                              setTimeoutId(id as any);
-                            }}
-                          >
-                            <FontAwesomeIcon icon={copyIcon ? faCopy : faCheck} className="text-green-500" />
-                          </button>
-                        </CopyToClipboard>
-                      </div>
-                    </div>
-                  </div>
+                    <DnsRecord key={index} entry={entry} />
                 ))}
                 <div className="mt-4">
                   <button
