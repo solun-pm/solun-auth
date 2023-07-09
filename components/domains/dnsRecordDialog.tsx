@@ -19,7 +19,7 @@ const DnsRecord = ({ entry }: any) => {
       </div>
       <div className="mt-2 bg-slate-900 p-2 rounded">
         <div className="flex items-center justify-between">
-          <p className="text-white">{entry.data}</p>
+          <p className="text-white break-all">{entry.data}</p>
           <CopyToClipboard text={entry.data}>
             <button onClick={handleClick}>
               <FontAwesomeIcon icon={copyIcon ? faCopy : faCheck} className={copyIcon ? "text-slate-300" : "text-green-500"} />
