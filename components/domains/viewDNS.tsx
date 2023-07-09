@@ -67,7 +67,9 @@ const ViewDNS = ({ isOpen, closeModal, domain }: any) => {
                 <p className="text-slate-300 text-md mt-2 mb-4 break-words">
                   Please add the following DNS records to your domain.
                   If you don't know how to do this, please contact your domain provider or check out our <a href="https://docs.solun.pm/" target="_blank" className="text-blue-500">documentation</a>.
-                  <span className="mt-2 font-bold">If you already added the records, please wait up to 24 hours for the changes to take effect.</span>
+                  <br/><br/>
+                  <span className="font-bold">If you already added the records, please wait up to 24 hours for the changes to take effect.</span>
+                  <br/>
                   We will notify you via email once the domain is ready to use.
                 </p>
               {loading ? (
