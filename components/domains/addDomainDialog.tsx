@@ -191,17 +191,25 @@ const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails }: any) => 
               </div>
             )}
             {step === 3 && (
-              <div>
-                <FontAwesomeIcon icon={faCheckCircle} />
-                <h1 className="text-white text-2xl">Domain successfully added</h1>
-                <p className="text-slate-300 text-md mt-2 mb-4 break-words">
-                  Your domain is currently being verified, you will see its status in your Domain Dashboard.
-                  If it's active you can start creating mailboxes and aliases for it.
-                  <br/>
-                  We will send you an email once your domain is active.
-                </p>
-                <button onClick={() => closeDialog()}>Finish</button>
-              </div>
+                <div className="flex flex-col items-center justify-center space-y-6">
+                    <FontAwesomeIcon 
+                        icon={faCheckCircle} 
+                        className="text-green-500 text-6xl"
+                    />
+                    <h1 className="text-white text-2xl text-center">Domain successfully added</h1>
+                    <p className="text-slate-300 text-md mt-2 mb-4 text-center break-words">
+                        Your domain is currently being verified, you will see its status in your Domain Dashboard.
+                        If it's active you can start creating mailboxes and aliases for it.
+                        <br/>
+                        We will send you an email once your domain is active.
+                    </p>
+                    <button 
+                        onClick={() => closeDialog()} 
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-3 rounded transition duration-200" // Blauer Button
+                    >
+                        Finish
+                    </button>
+                </div>
             )}
           </div>
           </Transition.Child>
