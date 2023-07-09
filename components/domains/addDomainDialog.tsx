@@ -201,7 +201,7 @@ const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails }: any) => 
                         Your domain is currently being verified, you will see its status in your Domain Dashboard.
                         If it's active you can start creating mailboxes and aliases for it.
                         <br/>
-                        We will send you an email once your domain is active.
+                        We will send you an email to your Solun email address when the verification is complete.
                     </p>
                     <button 
                         onClick={() => closeDialog()} 
