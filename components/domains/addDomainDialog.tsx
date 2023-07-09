@@ -5,7 +5,7 @@ import { faGlobe, faCircleNotch, faCheckCircle } from "@fortawesome/free-solid-s
 import toast from "react-hot-toast";
 import DnsRecord from './dnsRecordDialog';
 
-const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails }: any) => {
+const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails, refreshDomains }: any) => {
   const cancelButtonRef = useRef(null);
   const [dnsData, setDnsData] = useState([]);
   const [step, setStep] = useState(1);
@@ -62,6 +62,7 @@ const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails }: any) => 
     setStep(2);
 
     setDnsData(data.dnsData);
+    refreshDomains();
   };
 
   const closeDialog = () => {
@@ -69,6 +70,7 @@ const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails }: any) => 
     setDnsData([]);
     setStep(1);
     setDomain("");
+    refreshDomains();
   };
 
   return (

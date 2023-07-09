@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe, faCalendarAlt, faEnvelope, faRandom, faCheckCircle, faClock, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
-const DomainCard = ({ domain, status } : any) => {
+const DomainCard = ({ domain, status, mailboxes, aliases, mailbox_cap, alias_cap } : any) => {
   let statusIcon;
   switch (status) {
     case 'active':
@@ -23,8 +23,8 @@ const DomainCard = ({ domain, status } : any) => {
       <div className="pl-8">
         <h2 className="font-bold text-2xl mb-1">{domain.replace('@', '')}</h2>
         <div className="text-slate-300 mb-1">
-          <p><FontAwesomeIcon icon={faEnvelope} className="h-4 w-4 inline-block mr-1" />Mailboxes: 0 / 15</p>
-          <p><FontAwesomeIcon icon={faRandom} className="h-4 w-4 inline-block mr-1" />Aliases: 0 / 100</p>
+          <p><FontAwesomeIcon icon={faEnvelope} className="h-4 w-4 inline-block mr-1" />Mailboxes: {mailboxes} / {mailbox_cap}</p>
+          <p><FontAwesomeIcon icon={faRandom} className="h-4 w-4 inline-block mr-1" />Aliases: {aliases} / {alias_cap}</p>
           {/*@ts-ignore*/}
           <p><FontAwesomeIcon icon={statusIcon} className={`h-4 w-4 inline-block mr-1 ${status === 'active' ? 'text-green-500' : status === 'pending' ? 'text-orange-500' : 'text-red-500'}`} />Status: {status.charAt(0).toUpperCase() + status.slice(1)}</p>
           <div className="text-slate-300 flex items-center">

@@ -3,10 +3,9 @@ import { faPlus, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import AddDomainDialog from "./addDomainDialog";
 
-const  DomainMenuTopBar = ({ userInfo, userDetails }: any) => {
+const  DomainMenuTopBar = ({ userInfo, userDetails, domainCount, refreshDomains }: any) => {
     const [isAddDomainDialogOpen, setIsAddDomainDialogOpen] = useState(false);
 
-    let domainCount = 0;
   return (
     <div className="flex items-center my-4">
       <div className="px-4 py-2 bg-blue-500 text-white rounded">
@@ -19,7 +18,7 @@ const  DomainMenuTopBar = ({ userInfo, userDetails }: any) => {
       >
         <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add new
       </button>
-      <AddDomainDialog isOpen={isAddDomainDialogOpen} closeModal={() => setIsAddDomainDialogOpen(false)} userInfo={userInfo} userDetails={userDetails} />
+      <AddDomainDialog isOpen={isAddDomainDialogOpen} closeModal={() => setIsAddDomainDialogOpen(false)} userInfo={userInfo} userDetails={userDetails} refreshDomains={refreshDomains} />
     </div>
   );
 };

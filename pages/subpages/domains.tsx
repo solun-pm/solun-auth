@@ -18,7 +18,7 @@ const DomainsPage = () => {
   const { userInfo, userDetails } = useFetchUserInfo() as any;
 
  const getDomains = useCallback(async () => {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/get_alias", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/domain/get_domain", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,24 +29,16 @@ const DomainsPage = () => {
     });
     const data = await res.json();
     if (!res.ok) {
-      toast.error('Failed to fetch aliases');
+      toast.error('Failed to fetch domains');
       return;
     }
 
     setDomains(data);
   }, [userInfo]);
 
-  const initialDomains = [
-    { domain: "@test1.tld", status: "active" },
-    { domain: "@test2.tld", status: "pending" },
-    { domain: "@test3.tld", status: "inactive" },
-    { domain: "@test4.tld", status: "active" },
-    { domain: "@test5.tld", status: "pending" },
-  ];
-
   useEffect(() => {
-    setDomains(initialDomains);
-  }, []);
+    getDomains();
+  }, [getDomains]);
 
   if (!userInfo || !userDetails) {
     return null;
@@ -57,7 +49,7 @@ const DomainsPage = () => {
   return (
     <>
         <h1 className="text-2xl font-bold">Manage Domains</h1>
-        <DomainMenuTopBar userInfo={userInfo} userDetails={userDetails} />
+        <DomainMenuTopBar userInfo={userInfo} userDetails={userDetails} domainCount={domains.length} refreshDomains={getDomains} />
         {domains.length === 0 ? (
             <div className="text-slate-300 text-center mt-16 mb-8 text-md">
             You don't have any domains yet, buy or add some!
@@ -66,7 +58,7 @@ const DomainsPage = () => {
             <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
             {domainsToShow.map((domain: any, index: any) => (
-                <DomainCard key={index} domain={domain.domain} status={domain.status} />
+                <DomainCard key={index} domain={domain.domain} status={domain.status} mailboxes={domain.mailboxes} aliases={domain.aliases} mailbox_cap={domain.mailbox_cap} alias_cap={domain.alias_cap} />
             ))}
             </div>
             <div className="flex justify-center mt-4">
