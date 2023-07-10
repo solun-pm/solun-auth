@@ -30,6 +30,7 @@ const PageContent = ({ path }: any) => {
 
 const MainPage = ({ params }: { params: { path: string } }) => {
   const router = useRouter();
+  console.log(params.path)
 
   useEffect(() => {
     if (!["overview", "settings", "aliases", "domains"].includes(params.path)) {

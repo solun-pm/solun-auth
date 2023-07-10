@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faEnvelope, faRandom, faCheckCircle, faClock, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import ViewDNS from './viewDNS';
 
-const DomainCard = ({ domain, status, mailboxes, aliases, mailbox_cap, alias_cap, created_at } : any) => {
+const DomainCard = ({ id, domain, status, mailboxes, aliases, mailbox_cap, alias_cap, created_at } : any) => {
+  const router = useRouter();
   const [viewDnsOpen, setViewDnsOpen] = useState(false);
 
   let statusIcon;
@@ -23,7 +25,7 @@ const DomainCard = ({ domain, status, mailboxes, aliases, mailbox_cap, alias_cap
     if (status === 'pending') {
       setViewDnsOpen(true);
     } else {
-      // Handle edit action
+      router.push(`/dash/domain/${id}`)
     }
   };
 
