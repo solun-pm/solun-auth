@@ -15,7 +15,7 @@ import { Toaster } from "react-hot-toast";
 import Loader from "@/components/loader";
 
 const PageContent = ({ path }: any) => {
-  switch (path) {
+  switch (path[0]) {
     case "overview":
       return <OverviewPage />;
     case "settings":
@@ -25,7 +25,7 @@ const PageContent = ({ path }: any) => {
     case "domains":
       return <DomainsPage />;
     case "domain":
-      return <DomainSettingsPage id={path} />;
+      return <DomainSettingsPage id={path[1]} />;
     default:
       return <Loader />;
   }
@@ -34,10 +34,8 @@ const PageContent = ({ path }: any) => {
 const MainPage = ({ params }: { params: { path: string } }) => {
   const router = useRouter();
 
-  console.log(params.path)
-
   useEffect(() => {
-    if (!["overview", "settings", "aliases", "domains", "domain"].includes(params.path)) {
+    if (!["overview", "settings", "aliases", "domains", "domain"].includes(params.path[0])) {
       router.push("/");
     }
   }, [params.path, router]);
