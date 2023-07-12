@@ -74,7 +74,7 @@ const DomainSettingsPage = ({ id }: DomainSettingsPageProps) => {
   ? mailboxes.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage)
   : [];
 
-  const rateLimit = domain.rate_limit + domain.rate_limit_interval.toString().toUpperCase();
+  const rateLimit = domain.rate_limit + domain.rate_limit_interval;
   
   return (
     <>
