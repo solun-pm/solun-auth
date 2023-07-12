@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMailBulk, faBolt, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faMailBulk, faBolt, faTrash, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 const  DomainSettingsTopBar = ({ userInfo, userDetails, mailboxCount, rateLimit }: any) => {
@@ -7,6 +7,11 @@ const  DomainSettingsTopBar = ({ userInfo, userDetails, mailboxCount, rateLimit 
   return (
     <div className="flex items-center justify-between my-4">
       <div className="flex items-center space-x-4">
+        <button 
+          className="bg-gray-500 text-white px-4 py-2 rounded flex hover:bg-gray-600 transition-all items-center"
+        >
+          <FontAwesomeIcon icon={faArrowLeft} className="mr-2"/> Go back
+        </button>
         <div className="flex">
           <div className="px-4 py-2 bg-blue-500 text-white rounded">
             <FontAwesomeIcon icon={faMailBulk} className="mr-1" />
