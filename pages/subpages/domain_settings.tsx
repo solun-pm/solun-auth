@@ -73,11 +73,13 @@ const DomainSettingsPage = ({ id }: DomainSettingsPageProps) => {
   const mailboxesToShow = Array.isArray(mailboxes) 
   ? mailboxes.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage)
   : [];
+
+  const rateLimit = domain.rate_limit + domain.rate_limit_interval.toString().toUpperCase();
   
   return (
     <>
         <h1 className="text-2xl font-bold">{domain.domain} Settings</h1>
-        <DomainSettingsTopBar userInfo={userInfo} userDetails={userDetails} mailboxCount={mailboxes.length} rateLimit={domain.rate_limit+domain.rate_limit_interval.toUpperCase()} />
+        <DomainSettingsTopBar userInfo={userInfo} userDetails={userDetails} mailboxCount={mailboxes.length} rateLimit={rateLimit} />
         {mailboxes.length === 0 ? (
             <div className="text-slate-300 text-center mt-16 mb-8 text-md">
             You don't have any mailboxes yet, add some!
