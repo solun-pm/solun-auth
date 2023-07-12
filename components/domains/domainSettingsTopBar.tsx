@@ -6,10 +6,10 @@ import { useRouter } from 'next/navigation';
 const  DomainSettingsTopBar = ({ userInfo, userDetails, mailboxCount, rateLimit }: any) => {
   const router = useRouter();
   return (
-    <div className="flex items-center justify-between my-4">
-      <div className="flex items-center space-x-4">
+    <div className="flex flex-col sm:flex-row items-center justify-between my-4">
+      <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 space-x-0 sm:space-x-4 justify-center sm:justify-start w-full sm:w-auto">
         <button 
-          className="bg-gray-500 text-white px-4 py-2 rounded flex hover:bg-gray-600 transition-all items-center"
+          className="bg-gray-500 text-white px-4 py-2 rounded flex hover:bg-gray-600 transition-all items-center w-full sm:w-auto mb-4 sm:mb-0"
           onClick={() => router.push('/dash/domains')}
         >
           <FontAwesomeIcon icon={faArrowLeft} className="mr-2"/> Go back
@@ -25,13 +25,13 @@ const  DomainSettingsTopBar = ({ userInfo, userDetails, mailboxCount, rateLimit 
           </div>
         </div>
         <button 
-          className="bg-blue-500 text-white px-4 py-2 rounded flex hover:bg-blue-600 transition-all items-center"
+          className="bg-blue-500 text-white px-4 py-2 rounded flex hover:bg-blue-600 transition-all items-center w-full sm:w-auto mt-4 sm:mt-0"
         >
           <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Mailbox
         </button>
       </div>
       <button 
-        className="bg-red-500 text-white px-4 py-2 rounded flex hover:bg-red-600 transition-all items-center"
+        className="bg-red-500 text-white px-4 py-2 rounded flex hover:bg-red-600 transition-all items-center w-full sm:w-auto mt-4 sm:mt-0"
       >
         <FontAwesomeIcon icon={faTrash} className="mr-2"/> Delete
       </button>
