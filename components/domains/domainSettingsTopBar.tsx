@@ -1,14 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMailBulk, faBolt, faTrash, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
 
 const  DomainSettingsTopBar = ({ userInfo, userDetails, mailboxCount, rateLimit }: any) => {
-
+  const router = useRouter();
   return (
     <div className="flex items-center justify-between my-4">
       <div className="flex items-center space-x-4">
         <button 
           className="bg-gray-500 text-white px-4 py-2 rounded flex hover:bg-gray-600 transition-all items-center"
+          onClick={() => router.push('/dash/domains')}
         >
           <FontAwesomeIcon icon={faArrowLeft} className="mr-2"/> Go back
         </button>
