@@ -8,10 +8,6 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
 
   const [formData, setFormData] = useState({
     username: "",
-    domain: "",
-    password: "",
-    confirmPassword: "",
-    quota: "",
   });
 
   const cancelButtonRef = useRef(null);
@@ -26,7 +22,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
 
   useEffect(() => {
     let timer: any;
-    if (formData.username && formData.domain) {
+    if (formData.username) {
       setStatus("loading");
       timer = setTimeout(async () => {
         await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/check", {
@@ -36,7 +32,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
           },
           body: JSON.stringify({
             username: formData.username,
-            domain: formData.domain,
+            domain: domain,
           }),
         })
           .then((response) => response.json())
@@ -51,7 +47,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
       }, 1000);
     }
     return () => clearTimeout(timer);
-  }, [formData.username, formData.domain]);
+  }, [formData.username, domain]);
 
   const handleChange = (e: any) => {
     const name = e.target.name;
@@ -62,7 +58,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
   };
 
   const isValidForm = () => {
-    const trimmedUsername = username.replace(/\s/g, "");
+    const trimmedUsername = formData.username.replace(/\s/g, "");
     const specialCharsRegex = /^[a-zA-Z0-9_.-]+$/;
 
     return (
@@ -86,7 +82,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
       },
       body: JSON.stringify({
         user_id: userInfo.user_id,
-        domain: formData.domain,
+        domain: domain,
         username: formData.username,
         password: password,
         confirm_password: confirmPassword,
@@ -199,6 +195,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
                     <select
                         name="domain"
                         className="bg-slate-950 p-2 w-1/2 text-slate-300 focus:outline-none focus:border-transparent appearance-none"
+                        value={domain}
                     >
                         <option selected value={domain}>@{domain}</option>
                     </select>
