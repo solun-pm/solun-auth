@@ -116,9 +116,9 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
                     </div>
                     <select
                         name="domain"
-                        className="bg-slate-950 p-2 w-1/2 focus:outline-none focus:border-transparent appearance-none"
+                        className="bg-slate-950 p-2 w-1/2 text-white focus:outline-none focus:border-transparent appearance-none"
                     >
-                        <option selected disabled value={domain}>{domain}</option>
+                        <option selected value={domain}>{domain}</option>
                     </select>
                     </div>
                  </div>
