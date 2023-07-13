@@ -172,7 +172,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
                         placeholder="Username"
                         />
                         {status === "loading" && (
-                        <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                        <div className="absolute text-white right-2 top-1/2 transform -translate-y-1/2">
                           <FontAwesomeIcon
                             icon={faCircleNotch}
                             className="animate-spin"
