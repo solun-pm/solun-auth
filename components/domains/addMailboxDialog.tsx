@@ -32,7 +32,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
           },
           body: JSON.stringify({
             username: formData.username,
-            domain: domain,
+            domain: '@'+domain, // endpoint expects domain with @
           }),
         })
           .then((response) => response.json())
