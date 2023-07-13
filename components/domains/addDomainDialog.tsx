@@ -123,7 +123,7 @@ const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails, refreshDom
                   <FontAwesomeIcon icon={faGlobe} className="mr-3 text-gray-400" />
                   <input
                     type="text"
-                    className="bg-slate-950 text-slate-300 p-2 pr-7 w-full focus:outline-none focus:border-transparent"
+                    className="bg-slate-950 text-slate-300 rounded p-2 pr-7 w-full focus:outline-none focus:border-transparent"
                     placeholder="Enter your domain"
                     value={domain}
                     onChange={e => setDomain(e.target.value)}
@@ -207,7 +207,7 @@ const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails, refreshDom
                     </p>
                     <button 
                         onClick={() => closeDialog()} 
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-3 rounded transition duration-200" // Blauer Button
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-3 rounded transition duration-200"
                     >
                         Finish
                     </button>

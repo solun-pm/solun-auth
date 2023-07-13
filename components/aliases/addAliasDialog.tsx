@@ -127,7 +127,7 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
                 <input
                   type="text"
                   disabled
-                  className="bg-slate-950 text-slate-300 p-2 pr-7 w-full focus:outline-none focus:border-transparent"
+                  className="bg-slate-950 text-slate-300 rounded p-2 pr-7 w-full focus:outline-none focus:border-transparent"
                   placeholder="Generated Alias Name"
                   value={aliasName}
                   onChange={e => setAliasName(e.target.value)}

@@ -102,23 +102,33 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
                   </p>
                   {/* Mailbox Name input */}
                   <label className="text-slate-300 text-md">Mailbox Name</label>
-                  <div className="mb-4 flex items-center mt-1">
+                  <div className="mb-4 flex items-center">
                     <FontAwesomeIcon icon={faEnvelope} className="mr-3 text-gray-400" />
-                    <input
-                      type="text"
-                      className="bg-slate-950 text-slate-300 p-2 pr-7 w-full focus:outline-none focus:border-transparent"
-                      placeholder="Enter mailbox name"
-                      value={mailboxName}
-                      onChange={e => setMailboxName(e.target.value)}
-                    />
-                  </div>
+                    <div className="flex w-full rounded overflow-hidden">
+                    <div className="relative w-1/2">
+                        <input
+                        type="text"
+                        name="username"
+                        onChange={e => setMailboxName(e.target.value)}
+                        className="bg-slate-950 text-white p-2 pr-7 w-full focus:outline-none focus:border-transparent"
+                        placeholder="Username"
+                        />
+                    </div>
+                    <select
+                        name="domain"
+                        className="bg-slate-950 p-2 w-1/2 focus:outline-none focus:border-transparent appearance-none"
+                    >
+                        <option selected disabled value={domain}>{domain}</option>
+                    </select>
+                    </div>
+                 </div>
                   {/* Password input */}
                   <label className="text-slate-300 text-md">Password</label>
                   <div className="mb-4 flex items-center mt-1">
                     <FontAwesomeIcon icon={faKey} className="mr-3 text-gray-400" />
                     <input
                       type="password"
-                      className="bg-slate-950 text-slate-300 p-2 pr-7 w-full focus:outline-none focus:border-transparent"
+                      className="bg-slate-950 text-slate-300 rounded p-2 pr-7 w-full focus:outline-none focus:border-transparent"
                       placeholder="Enter password"
                       value={password}
                       onChange={e => setPassword(e.target.value)}
@@ -130,7 +140,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
                     <FontAwesomeIcon icon={faKey} className="mr-3 text-gray-400" />
                     <input
                       type="password"
-                      className="bg-slate-950 text-slate-300 p-2 pr-7 w-full focus:outline-none focus:border-transparent"
+                      className="bg-slate-950 text-slate-300 rounded p-2 pr-7 w-full focus:outline-none focus:border-transparent"
                       placeholder="Confirm password"
                       value={confirmPassword}
                       onChange={e => setConfirmPassword(e.target.value)}
@@ -138,13 +148,17 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
                   </div>
                   {/* Quota dropdown */}
                   <label className="text-slate-300 text-md">Quota</label>
-                  <div className="mb-4 flex items-center mt-1">
-                    <FontAwesomeIcon icon={faHdd} className="mr-3 text-gray-400" />
-                    <select value={quota} onChange={e => setQuota(e.target.value)} className="bg-slate-950 text-slate-300 p-2 pr-7 w-full focus:outline-none focus:border-transparent">
-                      <option value="512">512 MB</option>
-                      <option value="1024">1024 MB</option>
-                    </select>
-                  </div>
+                    <div className="mb-4 items-center mt-1 flex w-full rounded overflow-hidden">
+                        <FontAwesomeIcon icon={faHdd} className="mr-3 text-gray-400" />
+                        <select
+                            className="bg-slate-950 text-white p-2 w-full focus:outline-none focus:border-transparent appearance-none"
+                            value={quota}
+                            onChange={e => setQuota(e.target.value)}
+                        >
+                            <option value="512">512 MB</option>
+                            <option value="1024">1024 MB</option>
+                        </select>
+                    </div>
                   <div className="mt-4">
                     <button
                       type="button"
