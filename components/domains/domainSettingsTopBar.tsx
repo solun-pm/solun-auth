@@ -2,9 +2,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMailBulk, faBolt, faTrash, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
+import AddMailboxDialog from "./addMailboxDialog";
 
-const  DomainSettingsTopBar = ({ userInfo, userDetails, mailboxCount, rateLimit }: any) => {
+const  DomainSettingsTopBar = ({ userInfo, userDetails, mailboxCount, rateLimit, refreshMailboxes, domain }: any) => {
   const router = useRouter();
+  const [isAddMailboxDialogOpen, setIsAddMailboxDialogOpen] = useState(false);
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between my-4">
       <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 space-x-0 sm:space-x-4 justify-center sm:justify-start w-full sm:w-auto">
@@ -35,6 +37,7 @@ const  DomainSettingsTopBar = ({ userInfo, userDetails, mailboxCount, rateLimit 
       >
         <FontAwesomeIcon icon={faTrash} className="mr-2"/> Delete
       </button>
+      <AddMailboxDialog userInfo={userInfo} isOpen={isAddMailboxDialogOpen} closeModal={() => setIsAddMailboxDialogOpen(false)} domain={domain} refreshDomains={refreshMailboxes} />
     </div>
   );   
 };
