@@ -113,6 +113,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
     setQuota("512");
     setStep(1);
     refreshMailboxes();
+    status === "loading" && setStatus("idle");
   };
 
   return (
