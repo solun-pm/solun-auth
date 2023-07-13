@@ -107,14 +107,14 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
 
   const closeDialog = () => {
     closeModal();
+    setStatus("idle");
+    setExists(false);
     setUsername("");
     setPassword("");
     setConfirmPassword("");
     setQuota("512");
     setStep(1);
     refreshMailboxes();
-    setStatus("idle");
-    setExists(false);
   };
 
   return (
@@ -242,7 +242,6 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
                       type="button"
                       className="bg-gray-500 hover:bg-gray-600 text-white font-bold px-3 py-3 rounded transition duration-200 mt-4 mr-2"
                       onClick={closeDialog}
-                      ref={cancelButtonRef}
                     >
                       Cancel
                     </button>
