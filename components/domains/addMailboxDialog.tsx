@@ -1,17 +1,82 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useRef, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faCircleNotch, faCheckCircle, faKey, faHdd } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faCircleNotch, faCheckCircle, faKey, faHdd, faTimes, faCheck } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 
 const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailboxes }: any) => {
+
+  const [formData, setFormData] = useState({
+    username: "",
+    domain: "",
+    password: "",
+    confirmPassword: "",
+    quota: "",
+  });
+
   const cancelButtonRef = useRef(null);
   const [step, setStep] = useState(1);
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
-  const [mailboxName, setMailboxName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [quota, setQuota] = useState("512");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [status, setStatus] = useState("idle");
+  const [exists, setExists] = useState(false);
+
+  useEffect(() => {
+    let timer: any;
+    if (formData.username && formData.domain) {
+      setStatus("loading");
+      timer = setTimeout(async () => {
+        await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/check", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: formData.username,
+            domain: formData.domain,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setExists(data.exists);
+            setStatus("resolved");
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            setStatus("rejected");
+          });
+      }, 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [formData.username, formData.domain]);
+
+  const handleChange = (e: any) => {
+    const name = e.target.name;
+    setFormData({ ...formData, [name]: e.target.value });
+
+    // Set status back to 'idle' only when username or domain is changed.
+    if (name === "username" || name === "domain") {
+      setStatus("idle");
+    }
+  };
+
+  const isValidForm = () => {
+    const trimmedUsername = username.replace(/\s/g, "");
+    const specialCharsRegex = /^[a-zA-Z0-9_.-]+$/;
+
+    return (
+      trimmedUsername !== "" &&
+      specialCharsRegex.test(trimmedUsername) &&
+      domain &&
+      password &&
+      confirmPassword &&
+      status === "resolved" &&
+      !exists
+    );
+  };
 
   const addMailbox = async () => {
     setSubmitButtonLoading(true);
@@ -23,8 +88,8 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
       },
       body: JSON.stringify({
         user_id: userInfo.user_id,
-        domain: domain,
-        mailbox_name: mailboxName,
+        domain: formData.domain,
+        username: formData.username,
         password: password,
         confirm_password: confirmPassword,
         quota: quota
@@ -48,7 +113,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
 
   const closeDialog = () => {
     closeModal();
-    setMailboxName("");
+    setUsername("");
     setPassword("");
     setConfirmPassword("");
     setQuota("512");
@@ -100,29 +165,47 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
                     Please enter a name, password and select a quota for the mailbox. 
                     The mailbox will be created under the domain: {domain}.
                   </p>
-                  {/* Mailbox Name input */}
                   <label className="text-slate-300 text-md">Mailbox Name</label>
-                  <div className="mb-4 flex items-center">
+                  <div className="mb-4 flex items-center mt-1">
                     <FontAwesomeIcon icon={faEnvelope} className="mr-3 text-gray-400" />
                     <div className="flex w-full rounded overflow-hidden">
                     <div className="relative w-1/2">
                         <input
                         type="text"
                         name="username"
-                        onChange={e => setMailboxName(e.target.value)}
+                        onChange={handleChange}
                         className="bg-slate-950 text-white p-2 pr-7 w-full focus:outline-none focus:border-transparent"
                         placeholder="Username"
                         />
+                        {status === "loading" && (
+                        <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                          <FontAwesomeIcon
+                            icon={faCircleNotch}
+                            className="animate-spin"
+                          />
+                        </div>
+                      )}
+                      {status === "resolved" &&
+                        (exists ? (
+                          <FontAwesomeIcon
+                            icon={faTimes}
+                            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-red-500"
+                          />
+                        ) : (
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-green-500"
+                          />
+                        ))}
                     </div>
                     <select
                         name="domain"
-                        className="bg-slate-950 p-2 w-1/2 text-white focus:outline-none focus:border-transparent appearance-none"
+                        className="bg-slate-950 p-2 w-1/2 text-slate-300 focus:outline-none focus:border-transparent appearance-none"
                     >
-                        <option selected value={domain}>{domain}</option>
+                        <option selected value={domain}>@{domain}</option>
                     </select>
                     </div>
                  </div>
-                  {/* Password input */}
                   <label className="text-slate-300 text-md">Password</label>
                   <div className="mb-4 flex items-center mt-1">
                     <FontAwesomeIcon icon={faKey} className="mr-3 text-gray-400" />
@@ -134,7 +217,6 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
                       onChange={e => setPassword(e.target.value)}
                     />
                   </div>
-                  {/* Confirm Password input */}
                   <label className="text-slate-300 text-md">Confirm Password</label>
                   <div className="mb-4 flex items-center mt-1">
                     <FontAwesomeIcon icon={faKey} className="mr-3 text-gray-400" />
@@ -146,7 +228,6 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
                       onChange={e => setConfirmPassword(e.target.value)}
                     />
                   </div>
-                  {/* Quota dropdown */}
                   <label className="text-slate-300 text-md">Quota</label>
                     <div className="mb-4 items-center mt-1 flex w-full rounded overflow-hidden">
                         <FontAwesomeIcon icon={faHdd} className="mr-3 text-gray-400" />
@@ -171,7 +252,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
                     <button
                       onClick={addMailbox}
                       type="submit"
-                      disabled={submitButtonLoading}
+                      disabled={submitButtonLoading || !isValidForm()}
                       className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-3 rounded transition duration-200"
                     >
                       {submitButtonLoading && (
@@ -190,7 +271,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
                     />
                     <h1 className="text-white text-2xl text-center">Mailbox successfully added</h1>
                     <p className="text-slate-300 text-md mt-2 mb-4 text-center break-words">
-                        The mailbox {mailboxName}@{domain} has been successfully added to your account.
+                        The mailbox {username}@{domain} has been successfully added to your account.
                     </p>
                     <button 
                         onClick={() => closeDialog()} 
