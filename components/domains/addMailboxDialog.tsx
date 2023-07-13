@@ -82,7 +82,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
       },
       body: JSON.stringify({
         user_id: userInfo.user_id,
-        domain: domain,
+        domain: '@'+domain, // endpoint expects domain with '@
         username: formData.username,
         password: password,
         confirm_password: confirmPassword,
