@@ -56,9 +56,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
   const handleChange = (e: any) => {
     const name = e.target.name;
     setFormData({ ...formData, [name]: e.target.value });
-
-    // Set status back to 'idle' only when username or domain is changed.
-    if (name === "username" || name === "domain") {
+    if (name === "username") {
       setStatus("idle");
     }
   };
