@@ -28,6 +28,7 @@ const  DomainSettingsTopBar = ({ userInfo, userDetails, mailboxCount, rateLimit,
         </div>
         <button 
           className="bg-blue-500 text-white px-4 py-2 rounded flex hover:bg-blue-600 transition-all items-center w-full sm:w-auto mt-4 sm:mt-0"
+          onClick={() => setIsAddMailboxDialogOpen(true)}
         >
           <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Mailbox
         </button>
