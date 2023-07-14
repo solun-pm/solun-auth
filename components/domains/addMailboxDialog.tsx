@@ -267,7 +267,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
                     />
                     <h1 className="text-white text-2xl text-center">Mailbox successfully added</h1>
                     <p className="text-slate-300 text-md mt-2 mb-4 text-center break-words">
-                        The mailbox {username}@{domain} has been successfully added to your account.
+                        The mailbox <span className="font-bold">{formData.username}@{domain}</span> has been successfully added to your account.
                     </p>
                     <button 
                         onClick={() => closeDialog()} 
