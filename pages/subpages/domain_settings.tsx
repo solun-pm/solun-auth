@@ -39,25 +39,25 @@ const DomainSettingsPage = ({ id }: DomainSettingsPageProps) => {
     setDomain(data);
   }, [userInfo, id]);
 
-/* const getDomains = useCallback(async () => {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/domain/get_domain", {
+ const getMailboxes = useCallback(async () => {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/mailbox/get_mailbox", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         user_id: userInfo.user_id,
+        domain_id: id,
       }),
     });
     const data = await res.json();
     if (!res.ok) {
-      toast.error('Failed to fetch domains');
+      toast.error('Failed to fetch mailboxes');
       return;
     }
 
-    setDomains(data);
-  }, [userInfo]);
-  */
+    setMailboxes(data);
+  }, [userInfo, id]);
 
   useEffect(() => {
     if (userInfo) {
@@ -79,7 +79,7 @@ const DomainSettingsPage = ({ id }: DomainSettingsPageProps) => {
   return (
     <>
         <h1 className="text-2xl font-bold">{domain.domain} Settings</h1>
-        <DomainSettingsTopBar userInfo={userInfo} userDetails={userDetails} mailboxCount={mailboxes.length} rateLimit={rateLimit} refreshMailboxes={null} domain={domain.domain} />
+        <DomainSettingsTopBar userInfo={userInfo} userDetails={userDetails} mailboxCount={mailboxes.length} rateLimit={rateLimit} refreshMailboxes={getMailboxes} domain={domain.domain} />
         {mailboxes.length === 0 ? (
             <div className="text-slate-300 text-center mt-16 mb-8 text-md">
             You don't have any mailboxes yet, add some!
