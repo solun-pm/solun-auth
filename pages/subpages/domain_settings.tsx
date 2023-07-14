@@ -62,8 +62,9 @@ const DomainSettingsPage = ({ id }: DomainSettingsPageProps) => {
   useEffect(() => {
     if (userInfo) {
       getDomainDetails();
+      getMailboxes();
     }
-  }, [getDomainDetails, userInfo]);
+  }, [getDomainDetails, userInfo, getMailboxes]);
   
 
   if (!userInfo || !userDetails) {
