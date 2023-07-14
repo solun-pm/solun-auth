@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export async function two_factor_verify(req: Request, res: Response) {
+export async function POST(req: Request, res: Response) {
     const data = req.body;
     const response = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/two_factor/verify", {
         method: "POST",
