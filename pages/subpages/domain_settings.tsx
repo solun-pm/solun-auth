@@ -6,6 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { DomainSettingsPageProps } from "@/types/subpages"; 
 
 import DomainSettingsTopBar from "@/components/domains/domainSettingsTopBar";
+import MailboxCard from "@/components/domains/mailboxCard";
 
 import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
 
@@ -88,9 +89,8 @@ const DomainSettingsPage = ({ id }: DomainSettingsPageProps) => {
         ) : (
             <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
-            {mailboxesToShow.map((domain: any, index: any) => (
-              <p>test</p>
-              //<DomainCard key={index} id={domain.domain_id} domain={domain.domain} status={domain.status} mailboxes={domain.mailbox_count} aliases={domain.alias_count} mailbox_cap={domain.mailbox_cap} alias_cap={domain.alias_cap} created_at={domain.created_at} />
+            {mailboxesToShow.map((mailbox: any, index: any) => (
+              <MailboxCard key={index} id={mailboxes.mailbox_id} fqe={mailboxes.fqe} quota_used={mailboxes.quota_used} qouta={mailboxes.quota} mails={mailboxes.messages} active={mailboxes.active} created={mailboxes.created_at} />
             ))}
             </div>
             <div className="flex justify-center mt-4">
