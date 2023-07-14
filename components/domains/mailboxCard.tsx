@@ -7,6 +7,10 @@ import { formatBytes } from 'solun-general-package';
 const MailboxCard = ({ id, fqe, quota_used, quota, mails, active, created} : any) => {
   const router = useRouter();
 
+  const redirectToMailbox = () => {
+    router.push(`/dash/mailbox/${id}`);
+  };
+
   return (
     <div className="bg-slate-900 rounded-lg p-4 shadow-md flex flex-col justify-between h-full relative">
       <div className="flex items-center absolute top-1/2 transform -translate-y-1/2">
@@ -29,7 +33,7 @@ const MailboxCard = ({ id, fqe, quota_used, quota, mails, active, created} : any
         </div>
       </div>
       <div className="mt-4 flex justify-end">
-        <button className="h-10 text-white py-2 px-4 rounded font-bold bg-blue-500 hover:bg-blue-600 transition-all">
+        <button className="h-10 text-white py-2 px-4 rounded font-bold bg-blue-500 hover:bg-blue-600 transition-all" onClick={redirectToMailbox}>
           Edit
         </button>
       </div>
