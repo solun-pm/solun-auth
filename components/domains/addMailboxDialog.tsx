@@ -100,8 +100,8 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
 
     if (data.valid === true) {
       setSubmitButtonLoading(false);
-      refreshMailboxes();
       setStep(2);
+      refreshMailboxes();
     }
   };
 

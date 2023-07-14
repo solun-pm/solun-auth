@@ -38,7 +38,7 @@ const  DomainSettingsTopBar = ({ userInfo, userDetails, mailboxCount, rateLimit,
       >
         <FontAwesomeIcon icon={faTrash} className="mr-2"/> Delete Domain
       </button>
-      <AddMailboxDialog userInfo={userInfo} isOpen={isAddMailboxDialogOpen} closeModal={() => setIsAddMailboxDialogOpen(false)} domain={domain} refreshDomains={refreshMailboxes} />
+      <AddMailboxDialog userInfo={userInfo} isOpen={isAddMailboxDialogOpen} closeModal={() => setIsAddMailboxDialogOpen(false)} domain={domain} refreshMailboxes={refreshMailboxes} />
     </div>
   );   
 };
