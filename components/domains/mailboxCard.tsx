@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faEnvelope, faRandom, faCheckCircle, faClock, faTimesCircle, faHdd, faMailReplyAll } from '@fortawesome/free-solid-svg-icons';
+import { formatBytes } from 'solun-general-package';
 
 const MailboxCard = ({ id, fqe, quota_used, qouta, mails, active, created} : any) => {
   const router = useRouter();
@@ -14,7 +15,7 @@ const MailboxCard = ({ id, fqe, quota_used, qouta, mails, active, created} : any
       <div className="pl-8">
         <h2 className="font-bold text-2xl mb-1">{fqe}</h2>
         <div className="text-slate-300 mb-1">
-          <p><FontAwesomeIcon icon={faHdd} className="h-4 w-4 inline-block mr-1" />Quota: {quota_used} / {qouta}</p>
+          <p><FontAwesomeIcon icon={faHdd} className="h-4 w-4 inline-block mr-1" />Quota: {formatBytes(quota_used)} / {formatBytes(qouta)}</p>
           <p><FontAwesomeIcon icon={faMailReplyAll} className="h-4 w-4 inline-block mr-1" />Mails: {mails}</p>
           {/*@ts-ignore*/}
           <p><FontAwesomeIcon icon={active ? faCheckCircle : faTimesCircle} className={`h-4 w-4 inline-block mr-1 ${active ? 'text-green-500' : 'text-red-500'}`} />Status: {active ? 'Active' : 'Inactive'}</p>
