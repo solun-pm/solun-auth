@@ -112,7 +112,7 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
     }
 
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/login", {
+      const response = await fetch("/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -164,7 +164,7 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/two_factor/verify", {
+      const response = await fetch("/api/two_factor/verify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
