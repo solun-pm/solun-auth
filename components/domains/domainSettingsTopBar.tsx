@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMailBulk, faBolt, faTrash, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
-import AddMailboxDialog from "./addMailboxDialog";
+import AddMailboxDialog from "../mailbox/addMailboxDialog";
 
 const  DomainSettingsTopBar = ({ userInfo, userDetails, mailboxCount, rateLimit, refreshMailboxes, domain }: any) => {
   const router = useRouter();

@@ -6,7 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { DomainSettingsPageProps } from "@/types/subpages"; 
 
 import DomainSettingsTopBar from "@/components/domains/domainSettingsTopBar";
-import MailboxCard from "@/components/domains/mailboxCard";
+import MailboxCard from "@/components/mailbox/mailboxCard";
 
 import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
 

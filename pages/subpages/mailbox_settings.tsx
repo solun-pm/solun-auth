@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import { MailboxSettingsPageProps } from "@/types/subpages";
 import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
-import MailboxSettingsTopBar from "@/components/domains/mailboxSettingsTopBar";
+import MailboxSettingsTopBar from "@/components/mailbox/mailboxSettingsTopBar";
 
 const MailboxSettingsPage = ({domain_id, mailbox_id}: MailboxSettingsPageProps) => {
   const router = useRouter();
