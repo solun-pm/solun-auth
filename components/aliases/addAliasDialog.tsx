@@ -9,7 +9,6 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
   const cancelButtonRef = useRef(null);
   const [selectedDomain, setSelectedDomain] = useState("");
   const [aliasName, setAliasName] = useState("");
-  const [goto, setGoto] = useState("");
   const [addAliasLoading, setAddAliasLoading] = useState(false);
   const [domainNames, setDomainNames] = useState([]) as any;
   const [gotos, setGotos] = useState([]) as any;
@@ -105,6 +104,8 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
     setAddAliasLoading(false);
     setAliasName("");
     setSelectedDomain("");
+    setGotoOption("");
+    setCustomGoto("");
     closeModal();
   }
 

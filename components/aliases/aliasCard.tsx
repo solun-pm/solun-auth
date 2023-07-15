@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useState, useEffect } from 'react';
 
-const AliasCard = ({ userInfo, aliasName, domain, isActive, refreshAliases }: any) => {
+const AliasCard = ({ userInfo, aliasName, domain, isActive, goto, refreshAliases }: any) => {
 
   const [copySuccess, setCopySuccess] = useState(false);
 
@@ -46,32 +46,39 @@ const AliasCard = ({ userInfo, aliasName, domain, isActive, refreshAliases }: an
   }, [copySuccess]);
 
   return (
-    <div className="bg-slate-900 rounded p-4 shadow-md flex flex-col justify-between h-full text-center">
-      <div>
-        {/*<FontAwesomeIcon icon={faMailBulk} className="h-6 w-6" />*/}
-        <div className="text-center break-all">
-          <h2 className="font-bold text-xl">{aliasName}</h2>
-          <p className="text-gray-400">{domain}</p>
+    <div className="bg-white shadow-lg rounded-lg px-8 py-6 mx-4 my-4">
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-lg font-bold text-blue-500">{aliasName}</h2>
+          <p className="text-gray-600">{domain}</p>
+        </div>
+        <div>
+          <FontAwesomeIcon icon={isActive ? faToggleOn : faToggleOff} className="text-gray-500 h-6 cursor-pointer" onClick={() => handleSwitchAliasState(aliasName, domain)} />
         </div>
       </div>
-      <div className="flex justify-center gap-2 mt-4">
-        <CopyToClipboard text={aliasName + domain} onCopy={handleCopy}>
+      <div className="mt-4">
+        <p className="text-gray-600">{goto}</p>
+      </div>
+      <div className="mt-6">
+        <div className="flex justify-between items-center">
+          <CopyToClipboard text={aliasName + domain} onCopy={handleCopy}>
+            <button
+              className={`transition-colors duration-200 text-white py-2 px-4 rounded font-bold focus:outline-none ${copySuccess ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'}`}
+              disabled={copySuccess}
+            >
+              <FontAwesomeIcon icon={copySuccess ? faCheck : faCopy} className="h-5 inline-block mr-2" /> {copySuccess ? 'Copied' : 'Copy'}
+            </button>
+          </CopyToClipboard>
           <button
-            className={`h-10 py-2 px-4 rounded font-bold transition-all text-center ${copySuccess ? 'text-white bg-green-500 hover:bg-green-600' : 'text-white bg-blue-500 hover:bg-blue-600'}`}
-            disabled={copySuccess}
+            onClick={() => handleSwitchAliasState(aliasName, domain)}
+            className={`transition-colors duration-200 text-white py-2 px-4 rounded font-bold focus:outline-none ${isActive ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'}`}
           >
-            <FontAwesomeIcon icon={copySuccess ? faCheck : faCopy} className="h-5 inline-block mr-1" /> {copySuccess ? 'Copied' : 'Copy'}
+            {isActive ? 'Disable' : 'Enable'}
           </button>
-        </CopyToClipboard>
-        <button
-          onClick={() => handleSwitchAliasState(aliasName, domain)}
-          className={`h-10 text-white py-2 px-4 rounded font-bold hover:bg-${isActive ? 'red' : 'blue'}-600 transition-all text-center ${isActive ? 'bg-red-500' : 'bg-blue-500'}`}
-        >
-          <FontAwesomeIcon icon={isActive ? faToggleOn : faToggleOff} className="h-5 inline-block mr-1" /> {isActive ? 'Disable' : 'Enable'}
-        </button>
+        </div>
       </div>
     </div>
-  );  
+  );
 };
 
 export default AliasCard;
