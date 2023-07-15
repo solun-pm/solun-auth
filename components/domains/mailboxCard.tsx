@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faEnvelope, faRandom, faCheckCircle, faClock, faTimesCircle, faHdd, faMailReplyAll } from '@fortawesome/free-solid-svg-icons';
 import { formatBytes } from 'solun-general-package';
 
-const MailboxCard = ({ id, fqe, quota_used, quota, mails, active, created} : any) => {
+const MailboxCard = ({ domain_id, id, fqe, quota_used, quota, mails, active, created} : any) => {
   const router = useRouter();
 
   const redirectToMailbox = () => {
-    router.push(`/dash/mailbox/${id}`);
+    router.push(`/dash/mailbox/${domain_id}/${id}`);
   };
 
   return (
