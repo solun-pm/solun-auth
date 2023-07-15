@@ -7,6 +7,7 @@ import { MailboxSettingsPageProps } from "@/types/subpages";
 import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
 import MailboxSettingsTopBar from "@/components/mailbox/mailboxSettingsTopBar";
 import ChangeMailboxPassword from "@/components/mailbox/changeMailboxPassword";
+import ChangeMailboxQuota from "@/components/mailbox/changeMailboxQuota";
 
 const MailboxSettingsPage = ({domain_id, mailbox_id}: MailboxSettingsPageProps) => {
   const router = useRouter();
@@ -53,6 +54,7 @@ const MailboxSettingsPage = ({domain_id, mailbox_id}: MailboxSettingsPageProps) 
         <MailboxSettingsTopBar domain_id={domain_id} rateLimit={rateLimit} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <ChangeMailboxPassword userInfo={userInfo} domain_id={domain_id} mailbox_id={mailbox_id} />
+          <ChangeMailboxQuota userInfo={userInfo} userDetails={userDetails} mailboxDetails={mailbox} domain_id={domain_id} mailbox_id={mailbox_id} />
         </div>
     </>
   );
