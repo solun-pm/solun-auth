@@ -2,7 +2,7 @@ import { Fragment, useRef, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faGlobe, faCircleNotch, faReply } from "@fortawesome/free-solid-svg-icons";
-import { generateAliasName } from 'solun-general-package';
+import { generateAliasName, isValidEmail } from 'solun-general-package';
 import toast from "react-hot-toast";
 
 const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) => {
@@ -72,6 +72,11 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
     const finalGoto = gotoOption === "custom" ? customGoto : gotoOption;
     if (finalGoto === "") {
       toast.error("Please enter a goto address");
+      setAddAliasLoading(false);
+      return;
+    }
+    if (!isValidEmail(finalGoto)) {
+      toast.error("Please enter a valid goto address");
       setAddAliasLoading(false);
       return;
     }
@@ -199,13 +204,14 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
                 </div>
               </div>
               {gotoOption === "custom" && (
-                <div className="mt-2">
+                <div className="mt-2 flex items-center">
+                  <FontAwesomeIcon icon={faReply} className="mr-3 text-gray-400" />
                   <input
                     type="email"
                     className="bg-slate-950 text-slate-300 rounded p-2 pr-7 w-full focus:outline-none focus:border-transparent"
-                    placeholder="Enter custom goto"
+                    placeholder="Enter custom address"
                     value={customGoto}
-                    onChange={e => setCustomGoto(e.target.value)}
+                    onChange={e => {setCustomGoto(e.target.value);}}
                   />
                 </div>
               )}
