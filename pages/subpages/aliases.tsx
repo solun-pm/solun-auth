@@ -19,7 +19,7 @@ const AliasesPage = () => {
   const { userInfo, userDetails } = useFetchUserInfo() as any;
 
   const getAliases = useCallback(async () => {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/get_alias", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/alias/get_alias", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

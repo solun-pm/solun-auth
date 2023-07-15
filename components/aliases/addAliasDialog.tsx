@@ -1,7 +1,7 @@
 import { Fragment, useRef, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faGlobe, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faGlobe, faCircleNotch, faReply } from "@fortawesome/free-solid-svg-icons";
 import { generateAliasName } from 'solun-general-package';
 import toast from "react-hot-toast";
 
@@ -12,10 +12,13 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
   const [goto, setGoto] = useState("");
   const [addAliasLoading, setAddAliasLoading] = useState(false);
   const [domainNames, setDomainNames] = useState([]) as any;
+  const [gotos, setGotos] = useState([]) as any;
+  const [gotoOption, setGotoOption] = useState("");
+  const [customGoto, setCustomGoto] = useState("");
 
   useEffect(() => {
     async function fetchDomainNames() {
-      const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/get_domains_alias", {
+      const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/alias/get_domains_alias", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,8 +32,23 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
       setDomainNames(data);
     }
 
+    async function fetchGotos() {
+      const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/alias/get_gotos_alias", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userInfo.user_id,
+        }),
+      });
+
+      const data = await res.json();
+      setGotos(data);
+    }
+
     fetchDomainNames();
-    setGoto(userInfo.fqe);
+    fetchGotos();
   }, []);
 
   useEffect(() => {
@@ -51,8 +69,14 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
       setAddAliasLoading(false);
       return;
     }
+    const finalGoto = gotoOption === "custom" ? customGoto : gotoOption;
+    if (finalGoto === "") {
+      toast.error("Please enter a goto address");
+      setAddAliasLoading(false);
+      return;
+    }
 
-    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/add_alias", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/alias/add_alias", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +85,7 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
         user_id: userInfo.user_id,
         aliasName: aliasName,
         domain: selectedDomain,
-        goto: goto,
+        goto: finalGoto,
       }),
     });
 
@@ -153,6 +177,38 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
                   </select>
                 </div>
               </div>
+            </div>
+            <div className="my-4">
+              <label className="text-slate-300 text-md">Where should we forward the emails?</label>
+              <div className="flex items-center mt-1">
+                <FontAwesomeIcon icon={faReply} className="mr-3 text-gray-400" />
+                <div className="flex w-full rounded overflow-hidden">
+                  <select
+                    className="bg-slate-950 text-white p-2 w-full focus:outline-none focus:border-transparent appearance-none"
+                    value={gotoOption}
+                    onChange={e => setGotoOption(e.target.value)}
+                  >
+                    <option value="">Select a goto</option>
+                    <option value="custom">Enter custom address</option>
+                    {gotos.map((goto: any, index: any) => (
+                      <option key={index} value={goto}>
+                        {goto}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              {gotoOption === "custom" && (
+                <div className="mt-2">
+                  <input
+                    type="email"
+                    className="bg-slate-950 text-slate-300 rounded p-2 pr-7 w-full focus:outline-none focus:border-transparent"
+                    placeholder="Enter custom goto"
+                    value={customGoto}
+                    onChange={e => setCustomGoto(e.target.value)}
+                  />
+                </div>
+              )}
             </div>
             <div className="mt-4">
               <button

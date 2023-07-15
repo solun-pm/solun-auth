@@ -10,7 +10,7 @@ const AliasCard = ({ userInfo, aliasName, domain, isActive, refreshAliases }: an
 
   const handleSwitchAliasState = async (aliasName: string, domain: string) => {
     const fqa = aliasName + domain;
-    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/switch_alias_state", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/alias/switch_alias_state", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
