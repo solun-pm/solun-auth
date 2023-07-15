@@ -190,7 +190,7 @@ function TwoFactorAuthentication({ userDetails, userInfo }: any) {
           className="fixed inset-0 z-10 overflow-y-auto"
           initialFocus={cancelButtonRef}
           open={isOpen}
-          onClose={closeModal}
+          onClose={() => null}
         >
           <div className="px-4 min-h-screen text-center">
             <Transition.Child
