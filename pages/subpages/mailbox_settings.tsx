@@ -51,7 +51,7 @@ const MailboxSettingsPage = ({domain_id, mailbox_id}: MailboxSettingsPageProps) 
   return (
     <>
         <h1 className="text-2xl font-bold">{mailbox.fqe} Settings</h1>
-        <MailboxSettingsTopBar domain_id={domain_id} rateLimit={rateLimit} />
+        <MailboxSettingsTopBar userInfo={userInfo} domain_id={domain_id} mailbox_id={mailbox_id} rateLimit={rateLimit} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="grid grid-cols-1 gap-5 align-start">
             <ChangeMailboxPassword userInfo={userInfo} domain_id={domain_id} mailbox_id={mailbox_id} />

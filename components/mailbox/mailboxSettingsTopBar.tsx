@@ -5,17 +5,47 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import AreYouSureBro from '@/components/misc/areYouSureBro';
 
-const  MailboxSettingsTopBar = ({ domain_id, rateLimit }: any) => {
+const  MailboxSettingsTopBar = ({ userInfo, domain_id, mailbox_id, rateLimit }: any) => {
   const router = useRouter();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const confirmDelete = (confirmed: boolean) => {
+  const confirmDelete = async (confirmed: boolean) => {
     if (confirmed) {
-      toast.success('Mailbox deleted');
+      setIsDialogOpen(false);
+  
+      const promise = fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/mailbox/delete_mailbox", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userInfo.user_id,
+          domain_id: domain_id,
+          mailbox_id: mailbox_id,
+        }),
+      })
+      .then(async (res) => {
+        const data = await res.json();
+    
+        if (!res.ok) {
+          throw new Error(data.message);
+        }
+        return data.message;
+      });
+  
+      toast.promise(
+        promise,
+        {
+          loading: 'Deleting mailbox...',
+          success: (data) => 'Mailbox deleted',
+          error: (err) => 'Something went wrong'
+        }
+      );
+    } else {
+      setIsDialogOpen(false);
     }
-    setIsDialogOpen(false);
-  };
+  };  
 
   return (
     <>
