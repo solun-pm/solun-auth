@@ -43,7 +43,8 @@ function ChangeMailboxQuota({ userInfo, userDetails, mailboxDetails, domain_id, 
     <div className="bg-slate-900 p-5 rounded-lg shadow-md max-w-lg mt-4">
       <h2 className="text-xl font-bold mb-2">Change Mailbox Quota</h2>
       <p className="text-gray-300 mb-4">
-        You can change the mailbox quota here.
+        Change the quota of the mailbox. The quota is the maximum amount of disk space the mailbox can use.
+        Please note that the quota cannot be changed to a value lower than the current mailbox size.
       </p>
       <form autoComplete="off" onSubmit={handleQuotaChange}>
         <div>
