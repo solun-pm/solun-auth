@@ -1,24 +1,58 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
 import { MailboxSettingsPageProps } from "@/types/subpages";
 import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
+import MailboxSettingsTopBar from "@/components/domains/mailboxSettingsTopBar";
 
 const MailboxSettingsPage = ({domain_id, mailbox_id}: MailboxSettingsPageProps) => {
   const router = useRouter();
   const { userInfo, userDetails } = useFetchUserInfo() as any;
+  const [mailbox, setMailbox] = useState([]) as any;
+
+  const getMailboxDetails = useCallback(async () => {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/mailbox/get_mailbox_details", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: userInfo.user_id,
+        domaind_id: domain_id,
+        mailbox_id: mailbox_id,
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      toast.error('Failed to fetch mailbox details');
+      router.push("/dash/domains");
+      return;
+    }
+    setMailbox(data);
+  }, [userInfo, domain_id, mailbox_id]);
+
+  useEffect(() => {
+    if (userInfo) {
+      getMailboxDetails();
+    }
+  }, [getMailboxDetails, userInfo]);
 
   if (!userInfo || !userDetails) {
     return null;
   }
 
+  const rateLimit = mailbox.rate_limit + mailbox.rate_limit_interval;
+
+  
   return (
     <>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <h1 className="text-2xl font-bold">{mailbox_id}</h1>
-        <h1 className="text-2xl font-bold">{domain_id}</h1>
-    </div>
+        <h1 className="text-2xl font-bold">{mailbox.fqe} Settings</h1>
+        <MailboxSettingsTopBar domain_id={domain_id} rateLimit={rateLimit} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        
+        </div>
     </>
   );
 };
