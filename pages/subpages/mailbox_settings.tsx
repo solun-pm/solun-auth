@@ -20,7 +20,7 @@ const MailboxSettingsPage = ({domain_id, mailbox_id}: MailboxSettingsPageProps) 
       },
       body: JSON.stringify({
         user_id: userInfo.user_id,
-        domaind_id: domain_id,
+        domain_id: domain_id,
         mailbox_id: mailbox_id,
       }),
     });
