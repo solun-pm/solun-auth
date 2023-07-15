@@ -5,6 +5,7 @@ import { faHdd, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 
 function ChangeMailboxQuota({ userInfo, userDetails, mailboxDetails, domain_id, mailbox_id }: any) {
+  console.log(mailboxDetails);
   const router = useRouter();
   const [quotaChangeLoading, setQuotaChangeLoading] = useState(false);
   
