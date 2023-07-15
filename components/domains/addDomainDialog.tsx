@@ -58,6 +58,12 @@ const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails, refreshDom
 
     const data = await res.json();
 
+    if(data.code === 'geringverdiener') {
+      setSubmitButtonLoading(false);
+      toast.error(data.message);
+      return;
+    }
+
     setSubmitButtonLoading(false);
     setStep(2);
 

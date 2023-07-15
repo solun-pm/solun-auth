@@ -92,6 +92,12 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
 
     const data = await res.json();
 
+    if(data.code === 'geringverdiener') {
+      setSubmitButtonLoading(false);
+      toast.error(data.message);
+      return;
+    }
+
     if (!res.ok || data.valid === false) {
       setSubmitButtonLoading(false);
       toast.error(data.message);

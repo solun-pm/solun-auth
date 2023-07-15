@@ -93,6 +93,14 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
       }),
     });
 
+    const data = await res.json();
+
+    if(data.code === 'geringverdiener') {
+      setAddAliasLoading(false);
+      toast.error(data.message);
+      return;
+    }
+
     if (!res.ok) {
       toast.error('Something went wrong');
       setAddAliasLoading(false);
