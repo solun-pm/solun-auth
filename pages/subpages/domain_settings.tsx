@@ -90,7 +90,7 @@ const DomainSettingsPage = ({ id }: DomainSettingsPageProps) => {
             <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
             {mailboxesToShow.map((mailbox: any, index: any) => (
-              <MailboxCard key={index} domain_id={domain.domain_id} id={mailbox.mailbox_id} fqe={mailbox.fqe} quota_used={mailbox.quota_used} quota={mailbox.quota} mails={mailbox.messages} active={mailbox.active} created={mailbox.created_at} />
+              <MailboxCard key={index} domain_id={domain._id} id={mailbox.mailbox_id} fqe={mailbox.fqe} quota_used={mailbox.quota_used} quota={mailbox.quota} mails={mailbox.messages} active={mailbox.active} created={mailbox.created_at} />
             ))}
             </div>
             <div className="flex justify-center mt-4">
