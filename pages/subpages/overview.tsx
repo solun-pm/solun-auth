@@ -99,7 +99,7 @@ const DashboardPage = () => {
                     icon={faDiamond}
                     className="text-white mr-2"
                   />
-                  <p className="text-white">More Custom Domains
+                  <p className="text-white">More Custom Domains</p>
                 </div>
               </div>
               <div className="relative">
