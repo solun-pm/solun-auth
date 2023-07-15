@@ -81,7 +81,7 @@ const DomainSettingsPage = ({ id }: DomainSettingsPageProps) => {
   return (
     <>
         <h1 className="text-2xl font-bold">{domain.domain} Settings</h1>
-        <DomainSettingsTopBar userInfo={userInfo} userDetails={userDetails} mailboxCount={mailboxes.length} rateLimit={rateLimit} refreshMailboxes={getMailboxes} domain={domain.domain} />
+        <DomainSettingsTopBar domain_id={domain._id} userInfo={userInfo} userDetails={userDetails} mailboxCount={mailboxes.length} rateLimit={rateLimit} refreshMailboxes={getMailboxes} domain={domain.domain} />
         {mailboxes.length === 0 ? (
             <div className="text-slate-300 text-center mt-16 mb-8 text-md">
             You don't have any mailboxes yet, add some!
