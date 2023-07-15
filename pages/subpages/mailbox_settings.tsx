@@ -6,6 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { MailboxSettingsPageProps } from "@/types/subpages";
 import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
 import MailboxSettingsTopBar from "@/components/mailbox/mailboxSettingsTopBar";
+import ChangeMailboxPassword from "@/components/mailbox/changeMailboxPassword";
 
 const MailboxSettingsPage = ({domain_id, mailbox_id}: MailboxSettingsPageProps) => {
   const router = useRouter();
@@ -51,7 +52,7 @@ const MailboxSettingsPage = ({domain_id, mailbox_id}: MailboxSettingsPageProps) 
         <h1 className="text-2xl font-bold">{mailbox.fqe} Settings</h1>
         <MailboxSettingsTopBar domain_id={domain_id} rateLimit={rateLimit} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        
+          <ChangeMailboxPassword userInfo={userInfo} domain_id={domain_id} mailbox_id={mailbox_id} />
         </div>
     </>
   );
