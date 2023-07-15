@@ -5,7 +5,7 @@ import { faLock, faKey } from "@fortawesome/free-solid-svg-icons";
 import QRCode from "qrcode.react";
 import { totp } from "otplib";
 import { KeyEncodings } from "otplib/core";
-import { generate2FASecretKey } from "solun-general-package";
+import { generate2FASecretKey, encryptAuthPM } from "solun-general-package";
 import toast from "react-hot-toast";
 const base32Decode = require("base32-decode");
 
@@ -66,8 +66,7 @@ function TwoFactorAuthentication({ userDetails, userInfo }: any) {
         },
         body: JSON.stringify({
           user_id: userInfo.user_id,
-          secret: publicTotpSecret,
-          password: password,
+          secret: await encryptAuthPM(publicTotpSecret, password),
         }),
       });
 
