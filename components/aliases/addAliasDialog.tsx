@@ -100,6 +100,10 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
     }
 
     toast.success('Alias added successfully');
+    closeDialog();
+  }
+
+  const closeDialog = () => {
     refreshAliases();
     setAddAliasLoading(false);
     setAliasName("");
@@ -116,7 +120,7 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
       className="fixed inset-0 z-10 overflow-y-auto"
       initialFocus={cancelButtonRef}
       open={isOpen}
-      onClose={closeModal}
+      onClose={closeDialog}
     >
       <div className="px-4 min-h-screen text-center">
         <Transition.Child
