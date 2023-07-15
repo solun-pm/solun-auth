@@ -80,6 +80,7 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
         </div>
         <button 
           className="bg-red-500 text-white px-4 py-2 rounded flex hover:bg-red-600 transition-all items-center w-full sm:w-auto mt-4 sm:mt-0"
+          onClick={() => setIsDialogOpen(true)}
         >
           <FontAwesomeIcon icon={faTrash} className="mr-2"/> Delete Domain
         </button>
