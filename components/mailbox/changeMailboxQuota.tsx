@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 function ChangeMailboxQuota({ userInfo, userDetails, mailboxDetails, domain_id, mailbox_id }: any) {
   const router = useRouter();
   const [quotaChangeLoading, setQuotaChangeLoading] = useState(false);
+  const [currentQuota, setCurrentQuota] = useState(mailboxDetails.quota);  // Local state for quota
   
   const handleQuotaChange = async (event: any) => {
     event.preventDefault();
@@ -34,6 +35,7 @@ function ChangeMailboxQuota({ userInfo, userDetails, mailboxDetails, domain_id, 
       return;
     }
 
+    setCurrentQuota(event.target.quota.value);
     toast.success(data.message);
     setQuotaChangeLoading(false);
     return;
@@ -55,8 +57,8 @@ function ChangeMailboxQuota({ userInfo, userDetails, mailboxDetails, domain_id, 
                 name="quota"
                 className="bg-slate-950 text-white w-full p-2 pr-8 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
               >
-                <option value={512} selected={mailboxDetails.quota === 512} disabled={mailboxDetails.quota === 1024}>512MB</option>
-                <option value={1024} selected={mailboxDetails.quota === 1024}>1024MB</option>
+                <option value={512} selected={currentQuota === 512} disabled={currentQuota === 1024}>512MB</option>
+                <option value={1024} selected={currentQuota === 1024}>1024MB</option>
               </select>
             </div>
           </div>
