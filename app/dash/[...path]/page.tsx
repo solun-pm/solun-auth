@@ -9,6 +9,7 @@ const SettingsPage = lazy(() => import("@/pages/subpages/settings"));
 const AliasesPage = lazy(() => import("@/pages/subpages/aliases"));
 const DomainsPage = lazy(() => import("@/pages/subpages/domains"));
 const DomainSettingsPage = lazy(() => import("@/pages/subpages/domain_settings"));
+const MailboxSettingsPage = lazy(() => import("@/pages/subpages/mailbox_settings"));
 
 import { Toaster } from "react-hot-toast";
 
@@ -26,6 +27,8 @@ const PageContent = ({ path }: any) => {
       return <DomainsPage />;
     case "domain":
       return <DomainSettingsPage id={path[1]} />;
+    case "mailbox":
+      return <MailboxSettingsPage domain_id={path[1]} mailbox_id={path[2]} />;
     default:
       return <Loader />;
   }
@@ -35,7 +38,7 @@ const MainPage = ({ params }: { params: { path: string } }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!["overview", "settings", "aliases", "domains", "domain"].includes(params.path[0])) {
+    if (!["overview", "settings", "aliases", "domains", "domain", "mailbox"].includes(params.path[0])) {
       router.push("/");
     }
   }, [params.path, router]);
