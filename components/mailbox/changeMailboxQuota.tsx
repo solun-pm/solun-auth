@@ -52,13 +52,12 @@ function ChangeMailboxQuota({ userInfo, userDetails, mailboxDetails, domain_id, 
               <FontAwesomeIcon icon={faHdd} className="mr-3 text-gray-400" />
               <select 
                 name="quota"
-                className="bg-slate-950 text-white w-full p-2 pr-8 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                disabled={userDetails.membership === 'free' && mailboxDetails.quota === 1024}
+                className="bg-slate-950 text-white w-full p-2 pr-8 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
                 defaultValue={mailboxDetails.quota}
               >
-                <option value={512}>512MB</option>
-                <option value={1024}>1024MB</option>
-              </select>
+              <option value={512} disabled={userDetails.membership === 'free' && mailboxDetails.quota === 1024}>512MB</option>
+              <option value={1024}>1024MB</option>
+            </select>
             </div>
           </div>
           <div className="flex justify-end">
