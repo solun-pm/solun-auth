@@ -1,8 +1,16 @@
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-const AreYouSureBro = ({ isOpen, closeModal, buttonAction }: any) => {
+const AreYouSureBro = ({ isOpen, closeModal, buttonAction, task }: any) => {
   const cancelButtonRef = useRef(null);
+
+  let deletions = '';
+
+  if (task === 'mailbox') {
+    deletions = 'Mailbox, Aliases, and all associated data';
+  } else if (task === 'domain') {
+    deletions = 'Domain, Mailboxes, Aliases, and all associated data';
+  }
 
   return (
     <Transition show={isOpen} as={Fragment}>
@@ -45,6 +53,7 @@ const AreYouSureBro = ({ isOpen, closeModal, buttonAction }: any) => {
                 <h1 className="text-white text-2xl">Do you really want to take this action?</h1>
                 <p className="text-slate-300 text-md mt-2 mb-4 break-words">
                     This action cannot be undone.
+                    We will delete following: <span className="font-semibold">{deletions}</span>
                 </p>
                 <div className="mt-4">
                   <button

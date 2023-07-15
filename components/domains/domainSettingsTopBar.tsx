@@ -89,6 +89,7 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
       isOpen={isDialogOpen} 
       closeModal={() => setIsDialogOpen(false)} 
       buttonAction={confirmDelete}
+      task="domain"
     />
     </>
   );   

@@ -80,6 +80,7 @@ const  MailboxSettingsTopBar = ({ userInfo, domain_id, mailbox_id, rateLimit }: 
       isOpen={isDialogOpen} 
       closeModal={() => setIsDialogOpen(false)} 
       buttonAction={confirmDelete}
+      task="mailbox"
     />
   </>
   );   
