@@ -42,6 +42,11 @@ const  MailboxSettingsTopBar = ({ userInfo, domain_id, mailbox_id, rateLimit }: 
           error: (err) => 'Something went wrong'
         }
       );
+
+      // redirect to domain page after 2 seconds
+      setTimeout(() => {
+        router.push('/dash/domain/' + domain_id);
+      }, 2000);
     } else {
       setIsDialogOpen(false);
     }
