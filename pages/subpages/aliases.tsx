@@ -14,7 +14,7 @@ const AliasesPage = () => {
   const router = useRouter();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4*2;
+  const itemsPerPage = 3*2;
   const [aliases, setAliases] = useState([]) as any;
   const { userInfo, userDetails } = useFetchUserInfo() as any;
 
