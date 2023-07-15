@@ -9,7 +9,7 @@ import {
   faDatabase,
   faBolt,
   faUser,
-  faUserSecret,
+  faDiamond,
 } from "@fortawesome/free-solid-svg-icons";
 import toast, { Toaster } from "react-hot-toast";
 import { generateTempToken } from "solun-general-package";
@@ -75,7 +75,7 @@ const DashboardPage = () => {
               <h2 className="text text-xl font-bold mb-2">
                 Solun{" "}
                 <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-blue-300">
-                  Mail Pro
+                  Professional
                 </span>
               </h2>
               <div className="flex flex-wrap justify-between">
@@ -84,11 +84,11 @@ const DashboardPage = () => {
                     icon={faDatabase}
                     className="text-white mr-2"
                   />
-                  <p className="text-white">50GB storage space</p>
+                  <p className="text-white">10 GB Storage</p>
                 </div>
                 <div className="flex items-center mb-2 w-full md:w-1/2">
                   <FontAwesomeIcon icon={faBolt} className="text-white mr-2" />
-                  <p className="text-white">No Limits</p>
+                  <p className="text-white">Higher Rate Limit</p>
                 </div>
                 <div className="flex items-center mb-2 w-full md:w-1/2">
                   <FontAwesomeIcon icon={faUser} className="text-white mr-2" />
@@ -96,17 +96,16 @@ const DashboardPage = () => {
                 </div>
                 <div className="flex items-center mb-2 w-full md:w-1/2">
                   <FontAwesomeIcon
-                    icon={faUserSecret}
+                    icon={faDiamond}
                     className="text-white mr-2"
                   />
-                  <p className="text-white">Hide my E-Mail</p>
+                  <p className="text-white">More Custom Domains
                 </div>
               </div>
               <div className="relative">
                 {showTooltipMailPro && (
                   <div className="absolute w-64 left-1/2 transform md:-translate-x-72 -translate-x-52 -translate-y-20 bg-black text-white p-2 text-md rounded-md shadow-lg mt-2">
-                    This feature is currently in development. Mail Pro will be
-                    available in the near future.
+                    This feature is currently in development.
                   </div>
                 )}
                 <button
@@ -127,7 +126,7 @@ const DashboardPage = () => {
                   Webmail
                 </h2>
                 <p className="text-gray-400">
-                  This feature is currently in development. You can already use your Mail in software like Thunderbird or Outlook.
+                  This feature is currently in development.
                 </p>
                 <div className="flex items-center justify-center flex-col gap-2">
                 <button
