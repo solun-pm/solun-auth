@@ -72,8 +72,10 @@ const handleRemoveEmail = (email: string) => {
 };
 
 const handleChangeEmail = (e: any) => {
-  setInputEmail(e.target.value);
-  setEmailValid(isValidEmail(e.target.value));
+  if(isValidEmail(e.target.value)) {
+    setInputEmail(e.target.value);
+    setEmailValid(isValidEmail(e.target.value));
+  }
 }
 
   return (
