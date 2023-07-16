@@ -65,7 +65,7 @@ const AliasCard = ({ userInfo, aliasName, domain, isActive, goto, refreshAliases
             className={`transition-colors duration-200 py-2 px-4 rounded font-bold focus:outline-none ${copySuccess ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'}`}
             disabled={copySuccess}
           >
-            <FontAwesomeIcon icon={copySuccess ? faCheck : faCopy} className="h-5 inline-block mr-2" /> {copySuccess ? 'Copied' : 'Copy'}
+            <FontAwesomeIcon icon={copySuccess ? faCheck : faCopy} className="h-5 hidden md:inline-block mr-2" /> {copySuccess ? 'Copied' : 'Copy'}
           </button>
         </CopyToClipboard>
         <button
