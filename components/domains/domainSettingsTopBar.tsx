@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMailBulk, faBolt, faTrash, faArrowLeft, faCocktail, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import AddMailboxDialog from "../mailbox/addMailboxDialog";
 import toast from 'react-hot-toast';
@@ -13,6 +13,7 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isCatchAllDialogOpen, setIsCatchAllDialogOpen] = useState(false);
   const [catchAllEnabled, setCatchAllEnabled] = useState(catch_all);
+  const [rerender, setRerender] = useState(false);
 
   const confirmDelete = async (confirmed: boolean) => {
     if (confirmed) {
@@ -66,18 +67,16 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
         domain_id: domain_id,
       }),
     });
-
+  
     if (!res.ok) {
       toast.error('Something went wrong');
       return;
     }
-
+  
     toast.success('Catch-all has been disabled');
     setCatchAllEnabled(false);
-    setTimeout(() => {
-      router.refresh();
-    } , 1500);
-  };
+    setRerender(!rerender);
+  };  
 
   return (
     <>
