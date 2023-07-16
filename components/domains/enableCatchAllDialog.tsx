@@ -18,12 +18,14 @@ const enableCatchAll = async () => {
 
   if(forwardingAddresses.length === 0) {
     toast.error('Please enter at least one forwarding address to enable catch-all');
+    setSubmitButtonLoading(false);
     return;
   }
 
   for (let i = 0; i < forwardingAddresses.length; i++) {
     if (!isValidEmail(forwardingAddresses[i])) {
       toast.error('Please enter a valid email address');
+      setSubmitButtonLoading(false);
       return;
     }
   }
