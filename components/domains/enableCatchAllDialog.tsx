@@ -20,6 +20,13 @@ const enableCatchAll = async () => {
     return;
   }
 
+  for (let i = 0; i < forwardingAddresses.length; i++) {
+    if (!isValidEmail(forwardingAddresses[i])) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+  }
+
   const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/domain/enable_catch_all", {
     method: "POST",
     headers: {
@@ -63,10 +70,6 @@ const handleAddEmail = () => {
   }
   if (forwardingAddresses.length >= 25) {
     toast.error('You can only add up to 25 forwarding addresses');
-    return;
-  }
-  if(!isValidEmail(inputEmail)) {
-    toast.error('Invalid email address');
     return;
   }
   if(isValidEmail(inputEmail)) {
