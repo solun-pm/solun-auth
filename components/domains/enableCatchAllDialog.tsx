@@ -57,13 +57,24 @@ const handleAddEmail = () => {
     toast.error('Please enter an email address');
     return;
   }
+  if(forwardingAddresses.includes(inputEmail)) {
+    toast.error('This email address is already added');
+    return;
+  }
+  if (forwardingAddresses.length >= 25) {
+    toast.error('You can only add up to 25 forwarding addresses');
+    return;
+  }
+  if(!isValidEmail(inputEmail)) {
+    toast.error('Invalid email address');
+    return;
+  }
   if(isValidEmail(inputEmail)) {
     setForwardingAddresses([...forwardingAddresses, inputEmail]);
     setInputEmail("");
     setEmailValid(true);
   } else {
     setEmailValid(false);
-    toast.error('Invalid email address');
   }
 };
 
@@ -72,10 +83,8 @@ const handleRemoveEmail = (email: string) => {
 };
 
 const handleChangeEmail = (e: any) => {
-  if(isValidEmail(e.target.value)) {
-    setInputEmail(e.target.value);
-    setEmailValid(isValidEmail(e.target.value));
-  }
+  setInputEmail(e.target.value);
+  setEmailValid(isValidEmail(e.target.value));
 }
 
   return (
