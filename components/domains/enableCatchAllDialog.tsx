@@ -5,7 +5,7 @@ import { faGlobe, faCircleNotch, faCheckCircle } from "@fortawesome/free-solid-s
 import toast from "react-hot-toast";
 import { isValidEmail } from 'solun-general-package';
 
-const EnableCatchAllDialog = ({ isOpen, closeModal, userInfo, userDetails, domain_id }: any) => {
+const EnableCatchAllDialog = ({ isOpen, closeModal, userInfo, userDetails, domain_id, updateCatchAll }: any) => {
   const cancelButtonRef = useRef(null);
   const [step, setStep] = useState(1);
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
@@ -25,17 +25,19 @@ const EnableCatchAllDialog = ({ isOpen, closeModal, userInfo, userDetails, domai
         forwarding_addresses: forwardingAddresses,
       }),
     });
-
+  
     const data = await res.json();
-
+  
     if (!res.ok) {
       toast.error(data.message);
       return;
     }
-
+  
     setSubmitButtonLoading(false);
     setStep(2);
-  };
+    
+    updateCatchAll(true);
+  };  
 
   const closeDialog = () => {
     closeModal();

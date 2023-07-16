@@ -12,6 +12,7 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
   const [isAddMailboxDialogOpen, setIsAddMailboxDialogOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isCatchAllDialogOpen, setIsCatchAllDialogOpen] = useState(false);
+  const [catchAllEnabled, setCatchAllEnabled] = useState(catch_all);
 
   const confirmDelete = async (confirmed: boolean) => {
     if (confirmed) {
@@ -72,7 +73,7 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
     }
 
     toast.success('Catch-all has been disabled');
-    setIsCatchAllDialogOpen(false);
+    setCatchAllEnabled(false);
   };
 
   return (
@@ -98,6 +99,7 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
           <button 
             className="bg-blue-500 text-white px-4 py-2 rounded flex hover:bg-blue-600 transition-all items-center w-full sm:w-auto mt-4 sm:mt-0"
             onClick={() => setIsAddMailboxDialogOpen(true)}
+            disabled={catchAllEnabled && catch_all}
           >
             <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Mailbox
           </button>
@@ -124,7 +126,13 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
           <FontAwesomeIcon icon={faTrash} className="mr-2"/> Delete Domain
         </button>
         <AddMailboxDialog userInfo={userInfo} isOpen={isAddMailboxDialogOpen} closeModal={() => setIsAddMailboxDialogOpen(false)} domain={domain} refreshMailboxes={refreshMailboxes} />
-        <EnableCatchAllDialog userInfo={userInfo} isOpen={isCatchAllDialogOpen} closeModal={() => setIsCatchAllDialogOpen(false)} domain_id={domain_id} />
+        <EnableCatchAllDialog 
+          userInfo={userInfo} 
+          isOpen={isCatchAllDialogOpen} 
+          closeModal={() => setIsCatchAllDialogOpen(false)} 
+          domain_id={domain_id} 
+          updateCatchAll={setCatchAllEnabled}
+        />
       </div>
       <AreYouSureBro 
       isOpen={isDialogOpen} 
