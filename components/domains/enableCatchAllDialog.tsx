@@ -1,7 +1,7 @@
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGlobe, faCircleNotch, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { faGlobe, faCircleNotch, faCheckCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 import { isValidEmail } from 'solun-general-package';
 
@@ -47,6 +47,8 @@ const EnableCatchAllDialog = ({ isOpen, closeModal, userInfo, userDetails, domai
 
   const closeDialog = () => {
     closeModal();
+    setSubmitButtonLoading(false);
+    setForwardingAddresses([]);
     setStep(1);
   };
 
@@ -58,6 +60,10 @@ const EnableCatchAllDialog = ({ isOpen, closeModal, userInfo, userDetails, domai
     } else {
       setEmailValid(false);
     }
+  };
+
+  const handleRemoveEmail = (email: string) => {
+    setForwardingAddresses(forwardingAddresses.filter((e: string) => e !== email));
   };
 
   return (
@@ -126,6 +132,11 @@ const EnableCatchAllDialog = ({ isOpen, closeModal, userInfo, userDetails, domai
                     {forwardingAddresses.map((email: string, index: number) => (
                         <div key={index} className="text-white bg-blue-500 px-3 py-1 rounded">
                             <p>{email}</p>
+                            <FontAwesomeIcon
+                                icon={faTrash}
+                                className="text-white ml-2 cursor-pointer"
+                                onClick={() => handleRemoveEmail(email)}
+                            />
                         </div>
                     ))}
                 </div>
