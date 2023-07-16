@@ -74,6 +74,9 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
 
     toast.success('Catch-all has been disabled');
     setCatchAllEnabled(false);
+    setTimeout(() => {
+      router.refresh();
+    } , 1500);
   };
 
   return (
