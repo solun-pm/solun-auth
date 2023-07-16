@@ -49,14 +49,14 @@ const AliasCard = ({ userInfo, aliasName, domain, isActive, goto, refreshAliases
     <div className="bg-slate-900 rounded-lg shadow-lg px-8 py-6 mx-4 my-4 text-white">
       <div className="mb-4">
         <h2 className="text-xs font-bold text-gray-500">Alias Name</h2>
-        <p className="text-lg font-bold text-blue-500">{aliasName}</p>
+        <p className="text-lg font-bold text-blue-500 break-all">{aliasName}</p>
       </div>
       <div className="mb-4">
-        <h2 className="text-xs font-bold text-gray-500">Domain</h2>
+        <h2 className="text-xs font-bold text-gray-500 break-all">Domain</h2>
         <p className="text-gray-400">{domain}</p>
       </div>
       <div className="mb-4">
-        <h2 className="text-xs font-bold text-gray-500">Forwarding/Goto Mail</h2>
+        <h2 className="text-xs font-bold text-gray-500 break-all">Forwarding/Goto Mail</h2>
         <p className="text-gray-400">{goto}</p>
       </div>
       <div className="flex justify-between items-center">
