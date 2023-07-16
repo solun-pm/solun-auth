@@ -53,6 +53,10 @@ const closeDialog = () => {
 };
 
 const handleAddEmail = () => {
+  if(inputEmail === "") {
+    toast.error('Please enter an email address');
+    return;
+  }
   if(isValidEmail(inputEmail)) {
     setForwardingAddresses([...forwardingAddresses, inputEmail]);
     setInputEmail("");
