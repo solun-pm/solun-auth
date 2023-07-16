@@ -1,15 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMailBulk, faBolt, faTrash, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { faPlus, faMailBulk, faBolt, faTrash, faArrowLeft, faCocktail, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import AddMailboxDialog from "../mailbox/addMailboxDialog";
 import toast from 'react-hot-toast';
 import AreYouSureBro from '@/components/misc/areYouSureBro';
+import EnableCatchAllDialog from "./enableCatchAllDialog";
 
-const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount, rateLimit, refreshMailboxes, domain }: any) => {
+const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount, rateLimit, refreshMailboxes, domain, catch_all }: any) => {
   const router = useRouter();
   const [isAddMailboxDialogOpen, setIsAddMailboxDialogOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isCatchAllDialogOpen, setIsCatchAllDialogOpen] = useState(false);
+  const [catchAllEnabled, setCatchAllEnabled] = useState(catch_all);
+  const [rerender, setRerender] = useState(false);
 
   const confirmDelete = async (confirmed: boolean) => {
     if (confirmed) {
@@ -50,7 +54,30 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
     } else {
       setIsDialogOpen(false);
     }
+  };
+
+  const disableCatchAll = async () => {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/domain/disable_catch_all", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: userInfo.user_id,
+        domain_id: domain_id,
+      }),
+    });
+  
+    if (!res.ok) {
+      toast.error('Something went wrong');
+      return;
+    }
+  
+    toast.success('Catch-all has been disabled');
+    setCatchAllEnabled(false);
+    setRerender(!rerender);
   };  
+
   return (
     <>
       <div className="flex flex-col sm:flex-row items-center justify-between my-4">
@@ -74,9 +101,25 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
           <button 
             className="bg-blue-500 text-white px-4 py-2 rounded flex hover:bg-blue-600 transition-all items-center w-full sm:w-auto mt-4 sm:mt-0"
             onClick={() => setIsAddMailboxDialogOpen(true)}
+            disabled={catch_all && !catchAllEnabled}
           >
             <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Mailbox
           </button>
+          {!catch_all && !catchAllEnabled ? (
+          <button 
+            className="bg-blue-500 text-white px-4 py-2 rounded flex hover:bg-blue-600 transition-all items-center w-full sm:w-auto mt-4 sm:mt-0"
+            onClick={() => setIsCatchAllDialogOpen(true)}
+          >
+            <FontAwesomeIcon icon={faCocktail} className="mr-2"/> Enable Catch-All
+          </button>
+          ) : (
+            <button 
+            className="bg-red-500 text-white px-4 py-2 rounded flex hover:bg-red-600 transition-all items-center w-full sm:w-auto mt-4 sm:mt-0"
+            onClick={() => disableCatchAll()}
+          >
+            <FontAwesomeIcon icon={faTimes} className="mr-2"/> Disable Catch-All
+          </button>
+          )}
         </div>
         <button 
           className="bg-red-500 text-white px-4 py-2 rounded flex hover:bg-red-600 transition-all items-center w-full sm:w-auto mt-4 sm:mt-0"
@@ -85,6 +128,13 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
           <FontAwesomeIcon icon={faTrash} className="mr-2"/> Delete Domain
         </button>
         <AddMailboxDialog userInfo={userInfo} isOpen={isAddMailboxDialogOpen} closeModal={() => setIsAddMailboxDialogOpen(false)} domain={domain} refreshMailboxes={refreshMailboxes} />
+        <EnableCatchAllDialog 
+          userInfo={userInfo} 
+          isOpen={isCatchAllDialogOpen} 
+          closeModal={() => setIsCatchAllDialogOpen(false)} 
+          domain_id={domain_id} 
+          updateCatchAll={setCatchAllEnabled}
+        />
       </div>
       <AreYouSureBro 
       isOpen={isDialogOpen} 
