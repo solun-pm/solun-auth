@@ -77,6 +77,7 @@ const handleAddEmail = () => {
     setInputEmail("");
     setEmailValid(true);
   } else {
+    toast.error('Please enter a valid email address');
     setEmailValid(false);
   }
 };
@@ -149,9 +150,6 @@ const handleChangeEmail = (e: any) => {
                         Add
                     </button>
                 </div>
-
-                {!emailValid && (toast.error('Invalid email address'))}
-
                 <div className="mt-4 flex flex-wrap gap-3">
                     {forwardingAddresses.map((email: string, index: number) => (
                         <div key={index} className="text-white bg-blue-500 px-3 py-1 rounded">
