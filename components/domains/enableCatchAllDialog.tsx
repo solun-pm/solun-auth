@@ -14,6 +14,7 @@ const [inputEmail, setInputEmail] = useState("");
 const [emailValid, setEmailValid] = useState(true);
 
 const enableCatchAll = async () => {
+  setSubmitButtonLoading(true);
 
   if(forwardingAddresses.length === 0) {
     toast.error('Please enter at least one forwarding address to enable catch-all');
@@ -168,6 +169,7 @@ const handleChangeEmail = (e: any) => {
                     type="button"
                     className="bg-gray-500 hover:bg-gray-600 text-white font-bold px-3 py-3 rounded transition duration-200 mt-4 mr-2"
                     onClick={closeDialog}
+                    disabled={submitButtonLoading}
                     ref={cancelButtonRef}
                   >
                     Cancel
