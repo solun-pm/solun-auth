@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faCircleNotch, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
-import RecoveryModal from "@/components/recoveryModal";
+import RecoveryModal from "@/components/settings/recoveryModal";
 import { generateRecoveryCode, hashPassword } from "solun-general-package";
 
 function accountRecovery({ userDetails, userInfo }: any) {

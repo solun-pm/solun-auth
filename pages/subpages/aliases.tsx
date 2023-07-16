@@ -14,12 +14,12 @@ const AliasesPage = () => {
   const router = useRouter();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4*2;
+  const itemsPerPage = 3*2;
   const [aliases, setAliases] = useState([]) as any;
   const { userInfo, userDetails } = useFetchUserInfo() as any;
 
   const getAliases = useCallback(async () => {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/get_alias", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/alias/get_alias", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -38,8 +38,11 @@ const AliasesPage = () => {
   }, [userInfo]);
 
   useEffect(() => {
-    getAliases();
-  }, [getAliases]);
+    if (userInfo) {
+      getAliases();
+    }
+  }, [getAliases, userInfo]);
+  
 
   if (!userInfo || !userDetails) {
     return null;
@@ -57,9 +60,9 @@ const AliasesPage = () => {
             </div>
         ) : (
             <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                 {aliasesToShow.map((alias: any, index: any) => (
-                <AliasCard key={index} userInfo={userInfo} aliasName={alias.alias_name} domain={alias.domain} isActive={alias.active} refreshAliases={getAliases} />
+                <AliasCard key={index} userInfo={userInfo} aliasName={alias.alias_name} domain={alias.domain} isActive={alias.active} goto={alias.goto} refreshAliases={getAliases} />
                 ))}
             </div>
             <div className="flex justify-center mt-4">

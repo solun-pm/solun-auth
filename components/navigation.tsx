@@ -43,17 +43,15 @@ const Navigation = () => {
             >
               Aliases
           </Link>
-          {/*
           <Link href="/dash/domains"
               className={`text-white font-bold py-2 px-4 rounded transition-all w-full md:w-auto text-center ${
-                pathname === "/dash/domains"
+                pathname === "/dash/domains" || pathname?.startsWith("/dash/domain") || pathname?.startsWith("/dash/mailbox")
                   ? "bg-blue-500"
                   : "hover:bg-blue-500"
               }`}
             >
               Domains
           </Link>
-          */}
         </div>
         <button
           onClick={handleLogout}

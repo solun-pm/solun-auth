@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
-import RecoveryModal from "@/components/recoveryModal";
+import RecoveryModal from "@/components/settings/recoveryModal";
 import { generateRecoveryCode, hashPassword } from "solun-general-package";
 
 const { version } = require("../../package.json");

@@ -5,7 +5,7 @@ import { faLock, faKey } from "@fortawesome/free-solid-svg-icons";
 import QRCode from "qrcode.react";
 import { totp } from "otplib";
 import { KeyEncodings } from "otplib/core";
-import { generate2FASecretKey } from "solun-general-package";
+import { generate2FASecretKey, encryptAuthPM } from "solun-general-package";
 import toast from "react-hot-toast";
 const base32Decode = require("base32-decode");
 
@@ -66,8 +66,7 @@ function TwoFactorAuthentication({ userDetails, userInfo }: any) {
         },
         body: JSON.stringify({
           user_id: userInfo.user_id,
-          secret: publicTotpSecret,
-          password: password,
+          secret: await encryptAuthPM(publicTotpSecret, password),
         }),
       });
 
@@ -191,7 +190,7 @@ function TwoFactorAuthentication({ userDetails, userInfo }: any) {
           className="fixed inset-0 z-10 overflow-y-auto"
           initialFocus={cancelButtonRef}
           open={isOpen}
-          onClose={closeModal}
+          onClose={() => null}
         >
           <div className="px-4 min-h-screen text-center">
             <Transition.Child
