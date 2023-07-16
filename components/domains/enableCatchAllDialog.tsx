@@ -21,13 +21,15 @@ const EnableCatchAllDialog = ({ isOpen, closeModal, userInfo, userDetails, domai
       },
       body: JSON.stringify({
         user_id: userInfo.user_id,
-        domain: domain_id,
+        domain_id: domain_id,
         forwarding_addresses: forwardingAddresses,
       }),
     });
 
+    const data = await res.json();
+
     if (!res.ok) {
-      toast.error('Something went wrong');
+      toast.error(data.message);
       return;
     }
 
