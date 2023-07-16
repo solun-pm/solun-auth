@@ -102,7 +102,7 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
     }
 
     if (!res.ok) {
-      toast.error('Something went wrong');
+      toast.error(data.message);
       setAddAliasLoading(false);
       return;
     }
