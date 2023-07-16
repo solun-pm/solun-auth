@@ -59,7 +59,7 @@ const AliasCard = ({ userInfo, aliasName, domain, isActive, goto, refreshAliases
         <h2 className="text-xs font-bold text-gray-500 break-all">Forwarding/Goto Mail</h2>
         <p className="text-gray-400">{goto}</p>
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between gap-5 items-center">
         <CopyToClipboard text={aliasName + domain} onCopy={handleCopy}>
           <button
             className={`transition-colors duration-200 py-2 px-4 rounded font-bold focus:outline-none ${copySuccess ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'}`}
