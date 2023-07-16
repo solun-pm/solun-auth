@@ -116,10 +116,10 @@ const EnableCatchAllDialog = ({ isOpen, closeModal, userInfo, userDetails, domai
 
                 {!emailValid && (toast.error('Invalid email address'))}
 
-                <div className="mt-4 bg-white rounded shadow-md p-6">
+                <div className="mt-4 flex flex-wrap gap-3">
                     {forwardingAddresses.map((email: string, index: number) => (
-                        <div key={index} className="border-b border-gray-200 py-4">
-                            <p className="text-gray-800">{email}</p>
+                        <div key={index} className="text-white bg-blue-500 px-3 py-1 rounded">
+                            <p>{email}</p>
                         </div>
                     ))}
                 </div>
