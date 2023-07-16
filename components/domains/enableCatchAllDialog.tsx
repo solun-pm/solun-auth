@@ -6,65 +6,71 @@ import toast from "react-hot-toast";
 import { isValidEmail } from 'solun-general-package';
 
 const EnableCatchAllDialog = ({ isOpen, closeModal, userInfo, userDetails, domain_id, updateCatchAll }: any) => {
-  const cancelButtonRef = useRef(null);
-  const [step, setStep] = useState(1);
-  const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
-  const [forwardingAddresses, setForwardingAddresses] = useState([] as any);
-  const [inputEmail, setInputEmail] = useState("");
-  const [emailValid, setEmailValid] = useState(true);
+const cancelButtonRef = useRef(null);
+const [step, setStep] = useState(1);
+const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
+const [forwardingAddresses, setForwardingAddresses] = useState([] as any);
+const [inputEmail, setInputEmail] = useState("");
+const [emailValid, setEmailValid] = useState(true);
 
-  const enableCatchAll = async () => {
+const enableCatchAll = async () => {
 
-    if(forwardingAddresses.length === 0) {
-      toast.error('Please enter at least one forwarding address to enable catch-all');
-      return;
-    }
+  if(forwardingAddresses.length === 0) {
+    toast.error('Please enter at least one forwarding address to enable catch-all');
+    return;
+  }
 
-    const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/domain/enable_catch_all", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: userInfo.user_id,
-        domain_id: domain_id,
-        forwarding_addresses: forwardingAddresses,
-      }),
-    });
+  const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/domain/enable_catch_all", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user_id: userInfo.user_id,
+      domain_id: domain_id,
+      forwarding_addresses: forwardingAddresses,
+    }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    toast.error(data.message);
+    return;
+  }
+
+  setSubmitButtonLoading(false);
+  setStep(2);
   
-    const data = await res.json();
-  
-    if (!res.ok) {
-      toast.error(data.message);
-      return;
-    }
-  
-    setSubmitButtonLoading(false);
-    setStep(2);
-    
-    updateCatchAll(true);
-  };  
+  updateCatchAll(true);
+};  
 
-  const closeDialog = () => {
-    closeModal();
-    setSubmitButtonLoading(false);
-    setForwardingAddresses([]);
-    setStep(1);
-  };
+const closeDialog = () => {
+  closeModal();
+  setSubmitButtonLoading(false);
+  setForwardingAddresses([]);
+  setStep(1);
+};
 
-  const handleAddEmail = () => {
-    if(isValidEmail(inputEmail)) {
-      setForwardingAddresses([...forwardingAddresses, inputEmail]);
-      setInputEmail("");
-      setEmailValid(true);
-    } else {
-      setEmailValid(false);
-    }
-  };
+const handleAddEmail = () => {
+  if(isValidEmail(inputEmail)) {
+    setForwardingAddresses([...forwardingAddresses, inputEmail]);
+    setInputEmail("");
+    setEmailValid(true);
+  } else {
+    setEmailValid(false);
+    toast.error('Invalid email address');
+  }
+};
 
-  const handleRemoveEmail = (email: string) => {
-    setForwardingAddresses(forwardingAddresses.filter((e: string) => e !== email));
-  };
+const handleRemoveEmail = (email: string) => {
+  setForwardingAddresses(forwardingAddresses.filter((e: string) => e !== email));
+};
+
+const handleChangeEmail = (e: any) => {
+  setInputEmail(e.target.value);
+  setEmailValid(isValidEmail(e.target.value));
+}
 
   return (
     <Transition show={isOpen} as={Fragment}>
@@ -116,7 +122,7 @@ const EnableCatchAllDialog = ({ isOpen, closeModal, userInfo, userDetails, domai
                         className="bg-slate-950 text-slate-300 rounded p-2 pr-7 w-full focus:outline-none focus:border-transparent"
                         placeholder="Enter forwarding email"
                         value={inputEmail}
-                        onChange={e => setInputEmail(e.target.value)}
+                        onChange={handleChangeEmail}
                     />
                     <button 
                         onClick={handleAddEmail} 
@@ -131,12 +137,13 @@ const EnableCatchAllDialog = ({ isOpen, closeModal, userInfo, userDetails, domai
                 <div className="mt-4 flex flex-wrap gap-3">
                     {forwardingAddresses.map((email: string, index: number) => (
                         <div key={index} className="text-white bg-blue-500 px-3 py-1 rounded">
-                            <p>{email}</p>
+                            <p>{email}
                             <FontAwesomeIcon
                                 icon={faTrash}
                                 className="text-white ml-2 cursor-pointer"
                                 onClick={() => handleRemoveEmail(email)}
                             />
+                            </p>
                         </div>
                     ))}
                 </div>
