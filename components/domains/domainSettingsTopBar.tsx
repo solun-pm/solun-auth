@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMailBulk, faBolt, faTrash, faArrowLeft, faCocktail } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faMailBulk, faBolt, faTrash, faArrowLeft, faCocktail, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import AddMailboxDialog from "../mailbox/addMailboxDialog";
@@ -103,19 +103,19 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
           >
             <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Mailbox
           </button>
-          {!catch_all && (
+          {!catch_all ? (
           <button 
             className="bg-blue-500 text-white px-4 py-2 rounded flex hover:bg-blue-600 transition-all items-center w-full sm:w-auto mt-4 sm:mt-0"
             onClick={() => setIsCatchAllDialogOpen(true)}
           >
             <FontAwesomeIcon icon={faCocktail} className="mr-2"/> Enable Catch-All
           </button>
-          )} : {(
+          ) : (
             <button 
             className="bg-red-500 text-white px-4 py-2 rounded flex hover:bg-red-600 transition-all items-center w-full sm:w-auto mt-4 sm:mt-0"
             onClick={() => disableCatchAll()}
           >
-            <FontAwesomeIcon icon={faCocktail} className="mr-2"/> Disable Catch-All
+            <FontAwesomeIcon icon={faTimes} className="mr-2"/> Disable Catch-All
           </button>
           )}
         </div>

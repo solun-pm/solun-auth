@@ -98,20 +98,31 @@ const EnableCatchAllDialog = ({ isOpen, closeModal, userInfo, userDetails, domai
                     Where should we forward all the emails?
                 </p>
                 <div className="mb-4 flex items-center mt-1">
-                  <FontAwesomeIcon icon={faGlobe} className="mr-3 text-gray-400" />
-                  <input
-                    type="text"
-                    className="bg-slate-950 text-slate-300 rounded p-2 pr-7 w-full focus:outline-none focus:border-transparent"
-                    placeholder="Enter forwarding email"
-                    value={inputEmail}
-                    onChange={e => setInputEmail(e.target.value)}
-                  />
-                  <button onClick={handleAddEmail} className="ml-2">Add</button>
+                    <FontAwesomeIcon icon={faGlobe} className="mr-3 text-gray-400" />
+                    <input
+                        type="text"
+                        className="bg-slate-950 text-slate-300 rounded p-2 pr-7 w-full focus:outline-none focus:border-transparent"
+                        placeholder="Enter forwarding email"
+                        value={inputEmail}
+                        onChange={e => setInputEmail(e.target.value)}
+                    />
+                    <button 
+                        onClick={handleAddEmail} 
+                        className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Add
+                    </button>
                 </div>
-                {!emailValid && <p className="text-red-600">Invalid Email</p>}
-                {forwardingAddresses.map((email: string, index: number) => (
-                  <p key={index}>{email}</p>
-                ))}
+
+                {!emailValid && (toast.error('Invalid email address'))}
+
+                <div className="mt-4 bg-white rounded shadow-md p-6">
+                    {forwardingAddresses.map((email: string, index: number) => (
+                        <div key={index} className="border-b border-gray-200 py-4">
+                            <p className="text-gray-800">{email}</p>
+                        </div>
+                    ))}
+                </div>
                 <div className="mt-4">
                   <button
                     type="button"
