@@ -14,6 +14,12 @@ const EnableCatchAllDialog = ({ isOpen, closeModal, userInfo, userDetails, domai
   const [emailValid, setEmailValid] = useState(true);
 
   const enableCatchAll = async () => {
+
+    if(forwardingAddresses.length === 0) {
+      toast.error('Please enter at least one forwarding address to enable catch-all');
+      return;
+    }
+
     const res = await fetch(process.env.NEXT_PUBLIC_API_DOMAIN + "/user/domain/enable_catch_all", {
       method: "POST",
       headers: {
