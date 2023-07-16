@@ -44,6 +44,7 @@ const enableCatchAll = async () => {
 
   if (!res.ok) {
     toast.error(data.message);
+    setSubmitButtonLoading(false);
     return;
   }
 
