@@ -104,13 +104,12 @@ function ApiAccess({ userDetails, userApiDetails }: any) {
             </p>
             <div className="flex justify-between gap-4">
                 <div className="bg-slate-800 rounded-lg p-3">
-                    <p className="text-md text-slate-300 blur-md hover:blur-none">{token}</p>
+                    <p className="text-md text-slate-300 blur-md hover:blur-none transition-all">{token}</p>
                 </div>
                 <CopyToClipboard text={token}>
                     <button
                         type="button"
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-3 rounded transition duration-200"
-                    >
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-3 py-3 rounded transition duration-200">
                         Copy
                     </button>
                 </CopyToClipboard>
