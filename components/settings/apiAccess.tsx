@@ -13,7 +13,11 @@ function ApiAccess({ userDetails, userApiDetails }: any) {
   useEffect(() => {
     if (userDetails.api_access) {
       setApiAccess(true);
-      console.log(userApiDetails);
+      if(userApiDetails = null) {
+        setToken("No token found.");
+        toast.error("No token found, please re-enable API access.");
+        return;
+      }
       setToken(userApiDetails.token);
     } else {
       setApiAccess(false);
