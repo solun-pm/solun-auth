@@ -53,18 +53,15 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           
-      - name: Restart Node 1
+      - name: Restart Node 1 Main
+        if: github.ref == 'refs/heads/main'
         run: |
-          curl -X POST ${{ secrets.WEBHOOK_DOMAIN }}/hooks/restart-app-1
-          
-      - name: Wait for server 1 to restart
-        run: |
-          sleep 60s
+          curl -X POST ${{ secrets.RESTART_URL }}
 
-      - name: Restart Node 2
+      - name: Restart Node 1 Dev
+        if: github.ref == 'refs/heads/dev'
         run: |
-          curl -X POST ${{ secrets.WEBHOOK_DOMAIN }}/hooks/restart-app-2
-          
+          curl -X POST ${{ secrets.RESTART_URL_DEV }}
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.4.1
