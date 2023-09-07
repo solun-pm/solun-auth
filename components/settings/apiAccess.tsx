@@ -13,6 +13,7 @@ function ApiAccess({ userDetails, userApiDetails }: any) {
   useEffect(() => {
     if (userDetails.api_access) {
       setApiAccess(true);
+      console.log(userApiDetails);
       setToken(userApiDetails.token);
     } else {
       setApiAccess(false);
