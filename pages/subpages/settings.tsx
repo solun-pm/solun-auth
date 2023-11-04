@@ -9,10 +9,13 @@ import ChangePassword from "@/components/settings/changePassword";
 import PrivacySettings from "@/components/settings/privacySettings";
 import { useFetchUserInfo } from "@/hooks/fetchUserInfo";
 import Recovery from "@/components/settings/recovery";
+import { useFetchUserApiToken } from "@/hooks/fetchUserApiToken";
+import ApiAccess from "@/components/settings/apiAccess";
 
 const SettingsPage = () => {
   const router = useRouter();
   const { userInfo, userDetails } = useFetchUserInfo() as any;
+  const { userApiDetails } = useFetchUserApiToken() as any;
 
   if (!userInfo || !userDetails) {
     return null;
@@ -25,6 +28,7 @@ const SettingsPage = () => {
         <ChangePassword userInfo={userInfo} />
         <TwoFactorAuthSetup userDetails={userDetails} userInfo={userInfo} />
         <Recovery userDetails={userDetails} userInfo={userInfo} />
+        <ApiAccess userDetails={userDetails} userApiDetails={userApiDetails} />
         </div>
         <div className="flex flex-col">
         <PrivacySettings userDetails={userDetails} userInfo={userInfo} />
