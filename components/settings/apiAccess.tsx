@@ -34,6 +34,7 @@ function ApiAccess({ userDetails, userApiDetails }: any) {
       body: JSON.stringify({
         user_id: userDetails.user_id,
         api_access: !apiAccess,
+        token: localStorage.getItem("jwt"),
       }),
     });
 

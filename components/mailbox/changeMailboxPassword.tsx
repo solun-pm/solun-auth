@@ -44,6 +44,7 @@ function ChangeMailboxPassword({ userInfo, domain_id, mailbox_id }: any) {
         mailbox_id: mailbox_id,
         currentPassword: currentPassword,
         newPassword: newPassword,
+        token: localStorage.getItem("jwt"),
       }),
     });
 

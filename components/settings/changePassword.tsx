@@ -42,6 +42,7 @@ function ChangePassword({ userInfo }: any) {
         user_id: userInfo.user_id,
         currentPassword: currentPassword,
         newPassword: newPassword,
+        token: localStorage.getItem("jwt"),
       }),
     });
 

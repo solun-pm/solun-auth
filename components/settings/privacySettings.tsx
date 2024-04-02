@@ -191,6 +191,7 @@ function PrivacySettings({ userDetails, userInfo }: any) {
       body: JSON.stringify({
         user_id: userInfo.user_id,
         password: password,
+        token: localStorage.getItem("jwt"),
       }),
     });
 
@@ -255,6 +256,7 @@ function PrivacySettings({ userDetails, userInfo }: any) {
       body: JSON.stringify({
         user_id: userInfo.user_id,
         fast_login: !fastLogin,
+        token: localStorage.getItem("jwt"),
       }),
     });
 
@@ -281,6 +283,7 @@ function PrivacySettings({ userDetails, userInfo }: any) {
       body: JSON.stringify({
         user_id: userInfo.user_id,
         beta_features: !betaFeatures,
+        token: localStorage.getItem("jwt"),
       }),
     });
 

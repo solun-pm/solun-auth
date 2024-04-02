@@ -39,6 +39,7 @@ const enableCatchAll = async () => {
       user_id: userInfo.user_id,
       domain_id: domain_id,
       forwarding_addresses: forwardingAddresses,
+      token: localStorage.getItem("jwt"),
     }),
   });
 

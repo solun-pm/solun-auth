@@ -27,6 +27,7 @@ const AddDomainDialog = ({ isOpen, closeModal, userInfo, userDetails, refreshDom
       },
       body: JSON.stringify({
         domain: domain,
+        token: localStorage.getItem("jwt"),
       }),
     });
 

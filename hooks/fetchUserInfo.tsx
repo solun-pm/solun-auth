@@ -41,6 +41,7 @@ export const useFetchUserInfo = () => {
         },
         body: JSON.stringify({
           user_id: data.user_id,
+          token: localStorage.getItem("jwt"),
         }),
       });
 

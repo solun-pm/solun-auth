@@ -24,6 +24,7 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
         },
         body: JSON.stringify({
           user_id: userInfo.user_id,
+          token: localStorage.getItem("jwt"),
         }),
       });
 
@@ -39,6 +40,7 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
         },
         body: JSON.stringify({
           user_id: userInfo.user_id,
+          token: localStorage.getItem("jwt"),
         }),
       });
 
@@ -90,6 +92,7 @@ const AddAliasDialog = ({ isOpen, closeModal, userInfo, refreshAliases }: any) =
         aliasName: aliasName,
         domain: selectedDomain,
         goto: finalGoto,
+        token: localStorage.getItem("jwt"),
       }),
     });
 

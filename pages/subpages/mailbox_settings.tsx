@@ -24,6 +24,7 @@ const MailboxSettingsPage = ({domain_id, mailbox_id}: MailboxSettingsPageProps) 
         user_id: userInfo.user_id,
         domain_id: domain_id,
         mailbox_id: mailbox_id,
+        token: localStorage.getItem("jwt"),
       }),
     });
     const data = await res.json();
