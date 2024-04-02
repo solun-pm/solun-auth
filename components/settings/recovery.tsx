@@ -40,7 +40,6 @@ function accountRecovery({ userDetails, userInfo }: any) {
           user_id: userInfo.user_id,
           enableRecovery: !enableRecovery,
           recoveryCode: recoveryCodeHash,
-          token: localStorage.getItem("jwt"),
       }),
     });
   
