@@ -23,6 +23,7 @@ const  MailboxSettingsTopBar = ({ userInfo, domain_id, mailbox_id, rateLimit }: 
           user_id: userInfo.user_id,
           domain_id: domain_id,
           mailbox_id: mailbox_id,
+          token: localStorage.getItem("jwt"),
         }),
       })
       .then(async (res) => {

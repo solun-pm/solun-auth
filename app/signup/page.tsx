@@ -160,10 +160,6 @@ const RegisterPage = () => {
   // TODO: Move to config file.
   const domains = [
     "@solun.pm",
-    "@6crypt.com",
-    "@seal.pm",
-    "@xolus.de",
-    "@cipher.pm",
   ];
 
   return (

@@ -27,6 +27,7 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
         body: JSON.stringify({
           user_id: userInfo.user_id,
           domain_id: domain_id,
+          token: localStorage.getItem("jwt"),
         }),
       })
       .then(async (res) => {
@@ -65,6 +66,7 @@ const  DomainSettingsTopBar = ({ domain_id, userInfo, userDetails, mailboxCount,
       body: JSON.stringify({
         user_id: userInfo.user_id,
         domain_id: domain_id,
+        token: localStorage.getItem("jwt"),
       }),
     });
   

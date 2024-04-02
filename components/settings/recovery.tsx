@@ -39,7 +39,7 @@ function accountRecovery({ userDetails, userInfo }: any) {
       body: JSON.stringify({
           user_id: userInfo.user_id,
           enableRecovery: !enableRecovery,
-          recoveryCode: recoveryCodeHash
+          recoveryCode: recoveryCodeHash,
       }),
     });
   

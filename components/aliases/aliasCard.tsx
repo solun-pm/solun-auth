@@ -19,6 +19,7 @@ const AliasCard = ({ userInfo, aliasName, domain, isActive, goto, refreshAliases
         user_id: userInfo.user_id,
         fqa: fqa,
         alias_state: !isActive,
+        token: localStorage.getItem("jwt"),
       }),
     });
 

@@ -22,10 +22,6 @@ const LoginPage = () => {
   // TODO: Move this to a config file.
   const domains = [
     "@solun.pm",
-    "@6crypt.com",
-    "@seal.pm",
-    "@xolus.de",
-    "@cipher.pm",
   ];
 
   const [suggestedDomain, setSuggestedDomain] = useState("");

@@ -24,6 +24,7 @@ function ChangeMailboxQuota({ userInfo, userDetails, mailboxDetails, domain_id, 
         domain_id: domain_id,
         mailbox_id: mailbox_id,
         quota: event.target.quota.value,
+        token: localStorage.getItem("jwt"),
       }),
     });
 

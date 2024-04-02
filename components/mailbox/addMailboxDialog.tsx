@@ -33,6 +33,7 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
           body: JSON.stringify({
             username: formData.username,
             domain: '@'+domain, // endpoint expects domain with @
+            token: localStorage.getItem("jwt"),
           }),
         })
           .then((response) => response.json())
@@ -86,7 +87,8 @@ const AddMailboxDialog = ({ userInfo, isOpen, closeModal, domain, refreshMailbox
         username: formData.username,
         password: password,
         confirm_password: confirmPassword,
-        quota: quota
+        quota: quota,
+        token: localStorage.getItem("jwt"),
       }),
     });
 

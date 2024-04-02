@@ -29,6 +29,7 @@ const DomainSettingsPage = ({ id }: DomainSettingsPageProps) => {
       body: JSON.stringify({
         user_id: userInfo.user_id,
         domain_id: id,
+        token: localStorage.getItem("jwt"),
       }),
     });
     const data = await res.json();
@@ -49,6 +50,7 @@ const DomainSettingsPage = ({ id }: DomainSettingsPageProps) => {
       body: JSON.stringify({
         user_id: userInfo.user_id,
         domain_id: id,
+        token: localStorage.getItem("jwt"),
       }),
     });
     const data = await res.json();

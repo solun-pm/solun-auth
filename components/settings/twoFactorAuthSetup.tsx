@@ -67,6 +67,7 @@ function TwoFactorAuthentication({ userDetails, userInfo }: any) {
         body: JSON.stringify({
           user_id: userInfo.user_id,
           secret: await encryptAuthPM(publicTotpSecret, password),
+          token: localStorage.getItem("jwt"),
         }),
       });
 
@@ -94,6 +95,7 @@ function TwoFactorAuthentication({ userDetails, userInfo }: any) {
       },
       body: JSON.stringify({
         user_id: userInfo.user_id,
+        token: localStorage.getItem("jwt"),
       }),
     });
 
@@ -132,6 +134,7 @@ function TwoFactorAuthentication({ userDetails, userInfo }: any) {
       body: JSON.stringify({
         user_id: userInfo.user_id,
         password: password,
+        token: localStorage.getItem("jwt"),
       }),
     });
 

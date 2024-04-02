@@ -25,6 +25,7 @@ const DomainsPage = () => {
       },
       body: JSON.stringify({
         user_id: userInfo.user_id,
+        token: localStorage.getItem("jwt"),
       }),
     });
     const data = await res.json();
