@@ -265,7 +265,7 @@ const RegisterPage = () => {
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-3 rounded transition duration-200 flex justify-center items-center"
-            disabled={!isValidForm() || isSubmitting || disabled}
+            disabled={isValidForm() ? false : true || isSubmitting || disabled}
           >
             {isSubmitting && (
               <FontAwesomeIcon

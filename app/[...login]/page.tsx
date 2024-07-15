@@ -93,16 +93,12 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
     setPassword(event.target.value);
   };
 
-  const isValidForm = () => {
-    return formData.fqe && password;
-  };
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     setIsSubmitting(true);
 
-    if (!isValidForm()) {
+    if (!formData.fqe || !password) {
       setIsSubmitting(false);
       return;
     }
@@ -336,7 +332,7 @@ const LoginPage = ({ params }: { params: { login: string[] } }) => {
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-3 rounded transition duration-200 flex justify-center items-center"
-            disabled={!isValidForm() || isSubmitting}
+            disabled={isSubmitting || !formData.fqe || !password}
           >
             {isSubmitting && (
               <FontAwesomeIcon
